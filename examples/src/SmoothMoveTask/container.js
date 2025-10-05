@@ -5312,6 +5312,7 @@ var $author$project$SmoothMoveTask$Container$SmoothScroll = F2(
 	function (a, b) {
 		return {$: 'SmoothScroll', a: a, b: b};
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$core$String$append = _String_append;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -5353,6 +5354,12 @@ var $author$project$SmoothMoveTask$Container$columnStyles = _List_fromArray(
 		A2($elm$html$Html$Attributes$style, 'border', '1px solid #ccc')
 	]);
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5397,87 +5404,104 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 		body: _List_fromArray(
 			[
 				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href('index.html'),
+						A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+						A2($elm$html$Html$Attributes$style, 'top', '10px'),
+						A2($elm$html$Html$Attributes$style, 'left', '10px'),
+						A2($elm$html$Html$Attributes$style, 'background', '#666'),
+						A2($elm$html$Html$Attributes$style, 'color', 'white'),
+						A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+						A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
+						A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+						A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+						A2($elm$html$Html$Attributes$style, 'z-index', '1000')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('← Back')
+					])),
+				A2(
 				$elm$html$Html$div,
-				$author$project$SmoothMoveTask$Container$topBarStyles,
+				A2(
+					$elm$core$List$cons,
+					A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
+					$author$project$SmoothMoveTask$Container$topBarStyles),
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$div,
-						_List_Nil,
+						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-100'))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('100')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-25'))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('25')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-1'))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('1')
-									]))
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-100'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('100')
 							])),
 						A2(
-						$elm$html$Html$div,
-						_List_Nil,
+						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-100'))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('100')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-25'))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('25')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-1'))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('1')
-									]))
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-25'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('25')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-1'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('1')
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-100'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('100')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-25'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('25')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-1'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('1')
 							]))
 					])),
 				A2(
@@ -5525,7 +5549,7 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 							]))
 					]))
 			]),
-		title: 'Scroll Inside Elements'
+		title: 'SmoothMoveTask Container Example'
 	};
 };
 var $author$project$SmoothMoveTask$Container$main = $elm$browser$Browser$document(

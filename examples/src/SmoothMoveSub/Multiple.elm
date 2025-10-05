@@ -113,9 +113,11 @@ view model =
                 Just pos -> transform pos.x pos.y
                 Nothing -> transform defaultX defaultY
     in
-    { title = "Multiple Smooth Animations - Fully Managed"
+    { title = "SmoothMoveSub Multiple Example"
     , body =
-        [ div [ style "position" "relative", style "width" "100vw", style "height" "100vh", style "background" "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" ]
+        [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
+        ] ++
+        [ div [ style "position" "relative", style "width" "100vw", style "height" "100vh", style "background" "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", style "padding-top" "60px", style "box-sizing" "border-box" ]
             [ -- Element A (Red)
               div
                 [ id "element-a"

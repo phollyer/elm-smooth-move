@@ -48,19 +48,18 @@ update msg model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Scroll Inside Elements"
+    { title = "SmoothMoveTask Container Example"
     , body =
-        [ div topBarStyles
-            [ div []
-                [ button [ onClick (SmoothScroll "left-half" "anchor-left-100") ] [ text "100" ]
-                , button [ onClick (SmoothScroll "left-half" "anchor-left-25") ] [ text "25" ]
-                , button [ onClick (SmoothScroll "left-half" "anchor-left-1") ] [ text "1" ]
-                ]
-            , div []
-                [ button [ onClick (SmoothScroll "right-half" "anchor-right-100") ] [ text "100" ]
-                , button [ onClick (SmoothScroll "right-half" "anchor-right-25") ] [ text "25" ]
-                , button [ onClick (SmoothScroll "right-half" "anchor-right-1") ] [ text "1" ]
-                ]
+        [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
+        , div (style "padding-top" "60px" :: topBarStyles)
+            [ button [ onClick (SmoothScroll "left-half" "anchor-left-100") ] [ text "100" ]
+            , button [ onClick (SmoothScroll "left-half" "anchor-left-25") ] [ text "25" ]
+            , button [ onClick (SmoothScroll "left-half" "anchor-left-1") ] [ text "1" ]
+            ]
+        , div []
+            [ button [ onClick (SmoothScroll "right-half" "anchor-right-100") ] [ text "100" ]
+            , button [ onClick (SmoothScroll "right-half" "anchor-right-25") ] [ text "25" ]
+            , button [ onClick (SmoothScroll "right-half" "anchor-right-1") ] [ text "1" ]
             ]
         , div rowStyles
             [ div ([ id "left-half", style "background" "cornflowerblue" ] ++ columnStyles)

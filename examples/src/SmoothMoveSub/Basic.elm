@@ -92,9 +92,10 @@ view model =
             getPosition "moving-element" model.smoothMove
                 |> Maybe.withDefault { x = 200, y = 150 }
     in
-    { title = "Smooth Move Example - Fully Managed Positions"
+    { title = "SmoothMoveSub Basic Example"
     , body =
-        [ div [ style "position" "relative", style "width" "100vw", style "height" "100vh" ]
+        [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
+        , div [ style "position" "relative", style "width" "100vw", style "height" "100vh", style "padding-top" "60px", style "box-sizing" "border-box" ]
             [ div
                 [ id "moving-element"
                 , style "position" "absolute"

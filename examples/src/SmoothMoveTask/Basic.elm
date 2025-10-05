@@ -46,9 +46,11 @@ update msg model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Foo"
+    { title = "SmoothMoveTask Basic Example"
     , body =
-        [ div []
+        [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
+        ] ++
+        [ div [ style "padding-top" "60px" ]
             [ p
                 [ id "p-one"
                 , onClick (SmoothScroll "p-two")

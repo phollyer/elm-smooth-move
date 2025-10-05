@@ -5370,6 +5370,7 @@ var $author$project$SmoothMoveTask$Basic$update = F2(
 var $author$project$SmoothMoveTask$Basic$SmoothScroll = function (a) {
 	return {$: 'SmoothScroll', a: a};
 };
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -5379,6 +5380,12 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
@@ -5404,41 +5411,68 @@ var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$SmoothMoveTask$Basic$view = function (model) {
 	return {
-		body: _List_fromArray(
-			[
-				A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$id('p-one'),
-								$elm$html$Html$Events$onClick(
-								$author$project$SmoothMoveTask$Basic$SmoothScroll('p-two'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('p one')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$id('p-two'),
-								A2($elm$html$Html$Attributes$style, 'margin-top', '2500px'),
-								$elm$html$Html$Events$onClick(
-								$author$project$SmoothMoveTask$Basic$SmoothScroll('p-one'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('p two')
-							]))
-					]))
-			]),
-		title: 'Foo'
+		body: _Utils_ap(
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('index.html'),
+							A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+							A2($elm$html$Html$Attributes$style, 'top', '10px'),
+							A2($elm$html$Html$Attributes$style, 'left', '10px'),
+							A2($elm$html$Html$Attributes$style, 'background', '#666'),
+							A2($elm$html$Html$Attributes$style, 'color', 'white'),
+							A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+							A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
+							A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+							A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+							A2($elm$html$Html$Attributes$style, 'z-index', '1000')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('← Back')
+						]))
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'padding-top', '60px')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$id('p-one'),
+									$elm$html$Html$Events$onClick(
+									$author$project$SmoothMoveTask$Basic$SmoothScroll('p-two'))
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('p one')
+								])),
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$id('p-two'),
+									A2($elm$html$Html$Attributes$style, 'margin-top', '2500px'),
+									$elm$html$Html$Events$onClick(
+									$author$project$SmoothMoveTask$Basic$SmoothScroll('p-one'))
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('p two')
+								]))
+						]))
+				])),
+		title: 'SmoothMoveTask Basic Example'
 	};
 };
 var $author$project$SmoothMoveTask$Basic$main = $elm$browser$Browser$document(

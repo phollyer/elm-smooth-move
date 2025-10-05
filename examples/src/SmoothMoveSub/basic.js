@@ -5707,6 +5707,7 @@ var $author$project$SmoothMoveSub$Basic$StartMove = F2(
 	function (a, b) {
 		return {$: 'StartMove', a: a, b: b};
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
@@ -5719,6 +5720,12 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $author$project$SmoothMoveSub$isAnimating = function (_v0) {
 	var elementsDict = _v0.a;
@@ -5764,12 +5771,34 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 		body: _List_fromArray(
 			[
 				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href('index.html'),
+						A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+						A2($elm$html$Html$Attributes$style, 'top', '10px'),
+						A2($elm$html$Html$Attributes$style, 'left', '10px'),
+						A2($elm$html$Html$Attributes$style, 'background', '#666'),
+						A2($elm$html$Html$Attributes$style, 'color', 'white'),
+						A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+						A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
+						A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+						A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+						A2($elm$html$Html$Attributes$style, 'z-index', '1000')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('← Back')
+					])),
+				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'position', 'relative'),
 						A2($elm$html$Html$Attributes$style, 'width', '100vw'),
-						A2($elm$html$Html$Attributes$style, 'height', '100vh')
+						A2($elm$html$Html$Attributes$style, 'height', '100vh'),
+						A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
+						A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box')
 					]),
 				_List_fromArray(
 					[
@@ -5878,7 +5907,7 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 							]))
 					]))
 			]),
-		title: 'Smooth Move Example - Fully Managed Positions'
+		title: 'SmoothMoveSub Basic Example'
 	};
 };
 var $author$project$SmoothMoveSub$Basic$main = $elm$browser$Browser$document(
