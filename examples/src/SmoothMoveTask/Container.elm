@@ -6,7 +6,7 @@ import Dict exposing (Dict)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveTask exposing (containerElement, defaultConfig, scrollToWithOptions)
+import SmoothMoveTask exposing (containerElement, defaultConfig, animateToWithConfig)
 import Task exposing (Task)
 
 

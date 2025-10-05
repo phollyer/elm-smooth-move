@@ -61,11 +61,11 @@ import Dict exposing (Dict)
 import Ease
 
 
-{-| Configuration options for smooth moving. Has options:
+{-| Configuration options for subscription-based animations
 
-  - speed: The higher this number, the faster the movement!
-  - easing: The easing function to use. Check out the [easing functions](https://package.elm-lang.org/packages/elm-community/easing-functions/latest/) package for more information.
-  - axis: Which axis to move along (X, Y, or Both)
+  - speed: Animation speed in pixels per second (higher = faster movement)
+  - easing: Easing function from elm-community/easing-functions
+  - axis: Movement axis (X, Y, or Both)
 
 -}
 type alias Config =

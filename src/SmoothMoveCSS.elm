@@ -69,11 +69,16 @@ import Dict exposing (Dict)
 
 
 {-| Configuration for CSS-based animations
+
+  - axis: Movement axis (X, Y, or Both)
+  - duration: Animation duration in milliseconds
+  - easing: CSS easing function ("ease-out", "cubic-bezier(0.4, 0.0, 0.2, 1)", etc.)
+
 -}
 type alias Config =
     { axis : Axis
-    , duration : Float -- Duration in milliseconds
-    , easing : String -- CSS easing function like "ease-out", "cubic-bezier(0.4, 0.0, 0.2, 1)"
+    , duration : Float
+    , easing : String
     }
 
 
@@ -187,7 +192,15 @@ getPosition elementId (Model elements) =
         |> Maybe.map
             (\elementData ->
                 if elementData.isAnimating then
-                    { x = elementData.targetX, y = elementData.targetY }
+                    case elementData.config.axis of
+                        X ->
+                            { x = elementData.targetX, y = elementData.currentY }
+
+                        Y ->
+                            { x = elementData.currentX, y = elementData.targetY }
+
+                        Both ->
+                            { x = elementData.targetX, y = elementData.targetY }
 
                 else
                     { x = elementData.currentX, y = elementData.currentY }
@@ -201,7 +214,15 @@ getAllPositions (Model elements) =
     Dict.map
         (\_ elementData ->
             if elementData.isAnimating then
-                { x = elementData.targetX, y = elementData.targetY }
+                case elementData.config.axis of
+                    X ->
+                        { x = elementData.targetX, y = elementData.currentY }
+
+                    Y ->
+                        { x = elementData.currentX, y = elementData.targetY }
+
+                    Both ->
+                        { x = elementData.targetX, y = elementData.targetY }
 
             else
                 { x = elementData.currentX, y = elementData.currentY }
@@ -219,10 +240,26 @@ transform x y =
 {-| Create a CSS transform string by looking up the element's current position
 -}
 transformElement : String -> Model -> String
-transformElement elementId model =
-    case getPosition elementId model of
-        Just pos ->
-            transform pos.x pos.y
+transformElement elementId (Model elements) =
+    case Dict.get elementId elements of
+        Just elementData ->
+            let
+                ( targetX, targetY ) =
+                    if elementData.isAnimating then
+                        case elementData.config.axis of
+                            X ->
+                                ( elementData.targetX, elementData.currentY )
+
+                            Y ->
+                                ( elementData.currentX, elementData.targetY )
+
+                            Both ->
+                                ( elementData.targetX, elementData.targetY )
+
+                    else
+                        ( elementData.currentX, elementData.currentY )
+            in
+            transform targetX targetY
 
         Nothing ->
             transform 0 0

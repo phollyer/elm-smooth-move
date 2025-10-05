@@ -84,11 +84,16 @@ import Dict exposing (Dict)
 
 
 {-| Configuration for port-based animations
+
+  - axis: Movement axis (X, Y, or Both)
+  - duration: Animation duration in milliseconds
+  - easing: Web Animations API easing ("ease-out", "cubic-bezier(0.4, 0.0, 0.2, 1)", etc.)
+
 -}
 type alias Config =
     { axis : Axis
-    , duration : Float -- Duration in milliseconds
-    , easing : String -- JavaScript easing function name or CSS easing
+    , duration : Float
+    , easing : String
     }
 
 

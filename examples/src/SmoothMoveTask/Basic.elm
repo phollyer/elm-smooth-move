@@ -7,7 +7,7 @@ import Ease
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveTask exposing (scrollTo)
+import SmoothMoveTask exposing (animateTo)
 import Task exposing (Task)
 
 
@@ -41,7 +41,7 @@ update msg model =
             ( model, Cmd.none )
 
         SmoothScroll id ->
-            ( model, Task.attempt (always NoOp) (scrollTo id) )
+            ( model, Task.attempt (always NoOp) (animateTo id) )
 
 
 view : Model -> Document Msg

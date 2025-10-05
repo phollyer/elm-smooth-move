@@ -1,9 +1,11 @@
 module SmoothMoveTask exposing
-    ( Config
+    ( Axis(..)
+    , Config
+    , animateTo
+    , animateToWithConfig
     , containerElement
+    , containerElementWithConfig
     , defaultConfig
-    , scrollTo
-    , scrollToWithOptions
     )
 
 import Browser.Dom as Dom
@@ -13,47 +15,105 @@ import Process
 import Task exposing (Task)
 
 
+{-| Configuration for task-based animations
+
+  - speed: Animation frames to generate (higher = smoother but more steps)
+  - offset: Vertical offset in pixels from the target position
+  - easing: Easing function from elm-community/easing-functions
+  - axis: Movement axis (Y for scrolling, X for horizontal, Both for diagonal)
+
+-}
 type alias Config =
-    { speed : Int
+    { speed : Float
     , offset : Float
     , easing : Ease.Easing
+    , axis : Axis
     }
+
+
+type Axis
+    = X
+    | Y
+    | Both
 
 
 defaultConfig : Config
 defaultConfig =
-    { speed = 10
+    { speed = 400.0
     , offset = 0
-    , easing = Ease.linear
+    , easing = Ease.outCubic
+    , axis = Y -- Task-based animations are primarily for scrolling (Y-axis)
     }
 
 
-scrollTo : String -> Task Dom.Error (List ())
-scrollTo elementId =
-    scrollToWithOptions defaultConfig elementId
+animateTo : String -> Task Dom.Error (List ())
+animateTo elementId =
+    animateToWithConfig defaultConfig elementId
 
 
-scrollToWithOptions : Config -> String -> Task Dom.Error (List ())
-scrollToWithOptions config elementId =
+animateToWithConfig : Config -> String -> Task Dom.Error (List ())
+animateToWithConfig config elementId =
     Task.map2 Tuple.pair Dom.getViewport (Dom.getElement elementId)
         |> Task.andThen
             (\( viewport, element ) ->
-                let
-                    targetY =
-                        element.element.y + element.element.height / 2 - viewport.viewport.height / 2 + config.offset
+                case config.axis of
+                    Y ->
+                        let
+                            targetY =
+                                element.element.y + element.element.height / 2 - viewport.viewport.height / 2 + config.offset
 
-                    clampedY =
-                        clamp 0 (viewport.scene.height - viewport.viewport.height) targetY
+                            clampedY =
+                                clamp 0 (viewport.scene.height - viewport.viewport.height) targetY
 
-                    steps =
-                        Internal.interpolate config.speed config.easing viewport.viewport.y clampedY
-                in
-                animateSteps steps
+                            steps =
+                                Internal.interpolate (round config.speed) config.easing viewport.viewport.y clampedY
+                        in
+                        animateSteps steps
+
+                    X ->
+                        let
+                            targetX =
+                                element.element.x + element.element.width / 2 - viewport.viewport.width / 2 + config.offset
+
+                            clampedX =
+                                clamp 0 (viewport.scene.width - viewport.viewport.width) targetX
+
+                            steps =
+                                Internal.interpolate (round config.speed) config.easing viewport.viewport.x clampedX
+                        in
+                        animateStepsX steps
+
+                    Both ->
+                        let
+                            targetY =
+                                element.element.y + element.element.height / 2 - viewport.viewport.height / 2 + config.offset
+
+                            targetX =
+                                element.element.x + element.element.width / 2 - viewport.viewport.width / 2 + config.offset
+
+                            clampedY =
+                                clamp 0 (viewport.scene.height - viewport.viewport.height) targetY
+
+                            clampedX =
+                                clamp 0 (viewport.scene.width - viewport.viewport.width) targetX
+
+                            stepsY =
+                                Internal.interpolate (round config.speed) config.easing viewport.viewport.y clampedY
+
+                            stepsX =
+                                Internal.interpolate (round config.speed) config.easing viewport.viewport.x clampedX
+                        in
+                        animateStepsBoth stepsX stepsY
             )
 
 
 containerElement : String -> String -> Task Dom.Error (List ())
 containerElement containerId elementId =
+    containerElementWithConfig defaultConfig containerId elementId
+
+
+containerElementWithConfig : Config -> String -> String -> Task Dom.Error (List ())
+containerElementWithConfig config containerId elementId =
     Task.map2 Tuple.pair (Dom.getElement containerId) (Dom.getElement elementId)
         |> Task.andThen
             (\( container, element ) ->
@@ -74,7 +134,7 @@ containerElement containerId elementId =
                         clamp 0 (container.element.height - container.viewport.height) targetY
 
                     steps =
-                        Internal.interpolate defaultConfig.speed defaultConfig.easing container.viewport.y clampedY
+                        Internal.interpolate (round config.speed) config.easing container.viewport.y clampedY
                 in
                 animateContainerSteps containerId steps
             )
@@ -84,6 +144,25 @@ animateSteps : List Float -> Task Dom.Error (List ())
 animateSteps steps =
     steps
         |> List.map (\y -> Process.sleep 16 |> Task.andThen (\_ -> Dom.setViewport 0 y))
+        |> Task.sequence
+
+
+animateStepsX : List Float -> Task Dom.Error (List ())
+animateStepsX steps =
+    steps
+        |> List.map (\x -> Process.sleep 16 |> Task.andThen (\_ -> Dom.setViewport x 0))
+        |> Task.sequence
+
+
+animateStepsBoth : List Float -> List Float -> Task Dom.Error (List ())
+animateStepsBoth stepsX stepsY =
+    let
+        -- Zip the two step lists together, taking the minimum length
+        combinedSteps =
+            List.map2 Tuple.pair stepsX stepsY
+    in
+    combinedSteps
+        |> List.map (\( x, y ) -> Process.sleep 16 |> Task.andThen (\_ -> Dom.setViewport x y))
         |> Task.sequence
 
 
