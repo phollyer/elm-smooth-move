@@ -1,8 +1,27 @@
-# Examples
+# Elm Smooth Move Examples
 
-This directory contains examples demonstrating all five animation approaches provided by the smooth-move package:
+Interactive examples showcasing all 5 animation approaches. Each example is compiled and ready to run directly in your browser!
 
-## Structure
+## 🚀 Quick Start
+
+**Just open `index.html`** in your browser to see the examples dashboard, or open any specific example directly:
+
+- `src/SmoothMoveTask/basic.html` - Basic scrolling
+- `src/SmoothMoveState/basic.html` - Simple element movement (recommended for beginners)
+- `src/SmoothMoveCSS/basic.html` - Hardware-accelerated animations
+- And many more...
+
+## 🔧 Rebuilding Examples
+
+If you modify any `.elm` files, run the build script to recompile:
+
+```bash
+./build.sh
+```
+
+This will regenerate all the `.js` files needed by the HTML examples.
+
+## 📚 Example Structure
 
 Each animation approach has its own subdirectory with properly organized Elm modules:
 

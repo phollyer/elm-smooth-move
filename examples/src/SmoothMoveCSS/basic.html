@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmoothMoveCSS Basic Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #666;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        .back-link:hover {
+            background: #444;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-link">← Back</a>
+    <div id="elm"></div>
+    <script src="basic.js"></script>
+    <script>
+        var app = Elm.SmoothMoveCSS.Basic.init({
+            node: document.getElementById('elm')
+        });
+    </script>
+</body>
+
+</html>

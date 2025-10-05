@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmoothMoveTask Basic Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .clickable {
+            background: #007cba;
+            color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .clickable:hover {
+            background: #005a87;
+        }
+
+        .spacer {
+            height: 1000px;
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 24px;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #666;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            background: #444;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-link">← Back</a>
+    <div id="elm"></div>
+    <script src="basic.js"></script>
+    <script>
+        var app = Elm.SmoothMoveTask.Basic.init({
+            node: document.getElementById('elm')
+        });
+    </script>
+</body>
+
+</html>

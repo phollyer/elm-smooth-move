@@ -92,6 +92,16 @@ subscriptions model = SmoothMoveState.subscriptions model.animations
 ```
 
 ### 3. Explore the examples
+
+**Option A: Direct HTML files (recommended)**
+```bash
+cd examples/
+open index.html  # Opens main examples page in your browser
+# Or open any specific example directly, e.g.:
+open src/SmoothMoveState/basic.html
+```
+
+**Option B: Using elm reactor**
 ```bash
 cd examples/
 elm reactor
@@ -103,13 +113,15 @@ Once you're comfortable, try switching `SmoothMoveState` to `SmoothMoveCSS` in y
 
 ## 📚 Examples
 
-Comprehensive examples for each approach are available in the `examples/` directory:
+Interactive examples are ready to run! Each approach has its own folder with compiled HTML files:
 
-- **`SmoothMoveTask/`** - Task-based scrolling (Basic.elm, Container.elm)
-- **`SmoothMoveSub/`** - Subscription-based positioning (Basic.elm, Multiple.elm)  
-- **`SmoothMoveState/`** - State-based convenience (Basic.elm, Multiple.elm)
-- **`SmoothMoveCSS/`** - CSS transition-based (Basic.elm, Multiple.elm)
-- **`SmoothMovePorts/`** - JavaScript Web Animations API (Basic.elm, Multiple.elm, README.md)
+- **`SmoothMoveTask/`** - Task-based scrolling ([basic.html](examples/src/SmoothMoveTask/basic.html), [container.html](examples/src/SmoothMoveTask/container.html))
+- **`SmoothMoveSub/`** - Subscription-based positioning ([basic.html](examples/src/SmoothMoveSub/basic.html), [multiple.html](examples/src/SmoothMoveSub/multiple.html))  
+- **`SmoothMoveState/`** - State-based convenience ([basic.html](examples/src/SmoothMoveState/basic.html), [multiple.html](examples/src/SmoothMoveState/multiple.html))
+- **`SmoothMoveCSS/`** - CSS transition-based ([basic.html](examples/src/SmoothMoveCSS/basic.html), [multiple.html](examples/src/SmoothMoveCSS/multiple.html))
+- **`SmoothMovePorts/`** - JavaScript Web Animations API ([basic.html](examples/src/SmoothMovePorts/basic.html), [multiple.html](examples/src/SmoothMovePorts/multiple.html))
+
+**🎯 Start here: [examples/index.html](examples/index.html)** - Main examples dashboard
 
 ## 🎨 Choosing the Right Approach
 
