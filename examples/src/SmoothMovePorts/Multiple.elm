@@ -80,45 +80,16 @@ update msg model =
 
         AnimateToCenter ->
             let
-                -- All boxes animate to center as a 2x2 grid with proper centering within each quadrant
-                -- Mathematical calculation: Container(600×400) → Grid(160×160) centered → 4 quadrants(80×80) → center 50×50 boxes
-                containerWidth = 600
-                containerHeight = 400
-                gridSize = 160  -- Total grid area (2×80px quadrants)
-                quadrantSize = 80  -- Each quadrant size
-                boxSize = 50
-                
-                -- Grid top-left position (centered in container)
-                gridStartX = (containerWidth - gridSize) // 2   -- (600-160)/2 = 220
-                gridStartY = (containerHeight - gridSize) // 2  -- (400-160)/2 = 120
-                
-                -- Offset to center box within quadrant
-                centerOffset = (quadrantSize - boxSize) // 2    -- (80-50)/2 = 15
-                
-                -- Actual animated box size is 40x40, target outlines are 50x50
-                actualBoxSize = 40
-                targetBoxSize = 50
-                boxCenteringOffset = (targetBoxSize - actualBoxSize) // 4  -- (50-40)/4 = 2.5 ≈ 2
-                
-                -- Box positions (accounting for size difference between animated boxes and target outlines)
-                box1X = gridStartX + centerOffset + boxCenteringOffset                    -- 220 + 15 + 5 = 240
-                box1Y = gridStartY + centerOffset + boxCenteringOffset                    -- 120 + 15 + 5 = 140
-                box2X = gridStartX + quadrantSize + centerOffset + boxCenteringOffset     -- 220 + 80 + 15 + 5 = 320
-                box2Y = gridStartY + centerOffset + boxCenteringOffset                    -- 120 + 15 + 5 = 140
-                box3X = gridStartX + centerOffset + boxCenteringOffset                    -- 220 + 15 + 5 = 240
-                box3Y = gridStartY + quadrantSize + centerOffset + boxCenteringOffset     -- 120 + 80 + 15 + 5 = 220
-                box4X = gridStartX + quadrantSize + centerOffset + boxCenteringOffset     -- 220 + 80 + 15 + 5 = 320
-                box4Y = gridStartY + quadrantSize + centerOffset + boxCenteringOffset     -- 120 + 80 + 15 + 5 = 220
-
+                -- Simple 2x2 grid centered in container - just the positions that work
                 config1 = { axis = SmoothMovePorts.Both, duration = 500, easing = "ease-out" }
                 config2 = { axis = SmoothMovePorts.Both, duration = 750, easing = "ease-out" }
                 config3 = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-out" }
                 config4 = { axis = SmoothMovePorts.Both, duration = 900, easing = "ease-out" }
 
-                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" (toFloat box1X) (toFloat box1Y) model.animations
-                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" (toFloat box2X) (toFloat box2Y) animations1
-                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" (toFloat box3X) (toFloat box3Y) animations2
-                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" (toFloat box4X) (toFloat box4Y) animations3
+                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" 237 137 model.animations
+                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" 317 137 animations1
+                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" 237 217 animations2
+                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" 317 217 animations3
                 
                 cmd1 = animateElement (SmoothMovePorts.encodeAnimationCommand command1)
                 cmd2 = animateElement (SmoothMovePorts.encodeAnimationCommand command2)
