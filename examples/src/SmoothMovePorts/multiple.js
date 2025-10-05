@@ -5311,8 +5311,6 @@ var $author$project$SmoothMovePorts$Multiple$positionUpdates = _Platform_incomin
 var $author$project$SmoothMovePorts$Multiple$subscriptions = function (_v0) {
 	return $author$project$SmoothMovePorts$Multiple$positionUpdates($author$project$SmoothMovePorts$Multiple$PositionUpdateMsg);
 };
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$SmoothMovePorts$Multiple$animateElement = _Platform_outgoingPort('animateElement', $elm$json$Json$Encode$string);
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -5401,6 +5399,40 @@ var $author$project$SmoothMovePorts$animateToWithConfig = F5(
 			$author$project$SmoothMovePorts$Model(updatedElements),
 			command);
 	});
+var $elm$core$Tuple$mapSecond = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			x,
+			func(y));
+	});
+var $author$project$SmoothMovePorts$animateBatch = F2(
+	function (specs, model) {
+		return A2(
+			$elm$core$Tuple$mapSecond,
+			$elm$core$List$reverse,
+			A3(
+				$elm$core$List$foldl,
+				F2(
+					function (spec, _v0) {
+						var currentModel = _v0.a;
+						var commands = _v0.b;
+						var _v1 = A5($author$project$SmoothMovePorts$animateToWithConfig, spec.config, spec.elementId, spec.targetX, spec.targetY, currentModel);
+						var newModel = _v1.a;
+						var command = _v1.b;
+						return _Utils_Tuple2(
+							newModel,
+							A2($elm$core$List$cons, command, commands));
+					}),
+				_Utils_Tuple2(model, _List_Nil),
+				specs));
+	});
+var $elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $author$project$SmoothMovePorts$encodeAnimationCommand = function (cmd) {
 	return A2(
@@ -5416,6 +5448,21 @@ var $author$project$SmoothMovePorts$encodeAnimationCommand = function (cmd) {
 				cmd.axis
 			]));
 };
+var $author$project$SmoothMovePorts$animateBatchWithPort = F3(
+	function (portFunction, specs, model) {
+		var _v0 = A2($author$project$SmoothMovePorts$animateBatch, specs, model);
+		var newModel = _v0.a;
+		var commands = _v0.b;
+		return _Utils_Tuple2(
+			newModel,
+			$elm$core$Platform$Cmd$batch(
+				A2(
+					$elm$core$List$map,
+					A2($elm$core$Basics$composeL, portFunction, $author$project$SmoothMovePorts$encodeAnimationCommand),
+					commands)));
+	});
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$SmoothMovePorts$Multiple$animateElement = _Platform_outgoingPort('animateElement', $elm$json$Json$Encode$string);
 var $author$project$SmoothMovePorts$encodeStopCommand = function (elementId) {
 	return elementId;
 };
@@ -5443,101 +5490,113 @@ var $author$project$SmoothMovePorts$Multiple$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'AnimateToCorners':
-				var config4 = {axis: $author$project$SmoothMovePorts$Both, duration: 700, easing: 'ease-in-out'};
-				var config3 = {axis: $author$project$SmoothMovePorts$Both, duration: 1000, easing: 'ease-out'};
-				var config2 = {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'};
-				var config1 = {axis: $author$project$SmoothMovePorts$Both, duration: 800, easing: 'ease-in-out'};
-				var _v1 = A5($author$project$SmoothMovePorts$animateToWithConfig, config1, 'box1', 50, 50, model.animations);
-				var animations1 = _v1.a;
-				var command1 = _v1.b;
-				var _v2 = A5($author$project$SmoothMovePorts$animateToWithConfig, config2, 'box2', 450, 50, animations1);
-				var animations2 = _v2.a;
-				var command2 = _v2.b;
-				var _v3 = A5($author$project$SmoothMovePorts$animateToWithConfig, config3, 'box3', 450, 350, animations2);
-				var animations3 = _v3.a;
-				var command3 = _v3.b;
-				var _v4 = A5($author$project$SmoothMovePorts$animateToWithConfig, config4, 'box4', 50, 350, animations3);
-				var finalAnimations = _v4.a;
-				var command4 = _v4.b;
-				var cmd4 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command4));
-				var cmd3 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command3));
-				var cmd2 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command2));
-				var cmd1 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command1));
+				var animationSpecs = _List_fromArray(
+					[
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 800, easing: 'ease-in-out'},
+						elementId: 'box1',
+						targetX: 50,
+						targetY: 50
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'},
+						elementId: 'box2',
+						targetX: 450,
+						targetY: 50
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 1000, easing: 'ease-out'},
+						elementId: 'box3',
+						targetX: 450,
+						targetY: 350
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 700, easing: 'ease-in-out'},
+						elementId: 'box4',
+						targetX: 50,
+						targetY: 350
+					}
+					]);
+				var _v1 = A3($author$project$SmoothMovePorts$animateBatchWithPort, $author$project$SmoothMovePorts$Multiple$animateElement, animationSpecs, model.animations);
+				var newAnimations = _v1.a;
+				var cmd = _v1.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{animations: finalAnimations}),
-					$elm$core$Platform$Cmd$batch(
-						_List_fromArray(
-							[cmd1, cmd2, cmd3, cmd4])));
+						{animations: newAnimations}),
+					cmd);
 			case 'AnimateToCenter':
-				var config4 = {axis: $author$project$SmoothMovePorts$Both, duration: 900, easing: 'ease-out'};
-				var config3 = {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'ease-out'};
-				var config2 = {axis: $author$project$SmoothMovePorts$Both, duration: 750, easing: 'ease-out'};
-				var config1 = {axis: $author$project$SmoothMovePorts$Both, duration: 500, easing: 'ease-out'};
-				var _v5 = A5($author$project$SmoothMovePorts$animateToWithConfig, config1, 'box1', 237, 137, model.animations);
-				var animations1 = _v5.a;
-				var command1 = _v5.b;
-				var _v6 = A5($author$project$SmoothMovePorts$animateToWithConfig, config2, 'box2', 317, 137, animations1);
-				var animations2 = _v6.a;
-				var command2 = _v6.b;
-				var _v7 = A5($author$project$SmoothMovePorts$animateToWithConfig, config3, 'box3', 237, 217, animations2);
-				var animations3 = _v7.a;
-				var command3 = _v7.b;
-				var _v8 = A5($author$project$SmoothMovePorts$animateToWithConfig, config4, 'box4', 317, 217, animations3);
-				var finalAnimations = _v8.a;
-				var command4 = _v8.b;
-				var cmd4 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command4));
-				var cmd3 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command3));
-				var cmd2 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command2));
-				var cmd1 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command1));
+				var animationSpecs = _List_fromArray(
+					[
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 500, easing: 'ease-out'},
+						elementId: 'box1',
+						targetX: 237,
+						targetY: 137
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 750, easing: 'ease-out'},
+						elementId: 'box2',
+						targetX: 317,
+						targetY: 137
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'ease-out'},
+						elementId: 'box3',
+						targetX: 237,
+						targetY: 217
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 900, easing: 'ease-out'},
+						elementId: 'box4',
+						targetX: 317,
+						targetY: 217
+					}
+					]);
+				var _v2 = A3($author$project$SmoothMovePorts$animateBatchWithPort, $author$project$SmoothMovePorts$Multiple$animateElement, animationSpecs, model.animations);
+				var newAnimations = _v2.a;
+				var cmd = _v2.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{animations: finalAnimations}),
-					$elm$core$Platform$Cmd$batch(
-						_List_fromArray(
-							[cmd1, cmd2, cmd3, cmd4])));
+						{animations: newAnimations}),
+					cmd);
 			case 'AnimateInSequence':
-				var config4 = {axis: $author$project$SmoothMovePorts$Both, duration: 1000, easing: 'ease-in-out'};
-				var config3 = {axis: $author$project$SmoothMovePorts$Both, duration: 800, easing: 'ease-in-out'};
-				var config2 = {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'ease-in-out'};
-				var config1 = {axis: $author$project$SmoothMovePorts$Both, duration: 400, easing: 'ease-in-out'};
-				var _v9 = A5($author$project$SmoothMovePorts$animateToWithConfig, config1, 'box1', 100, 100, model.animations);
-				var animations1 = _v9.a;
-				var command1 = _v9.b;
-				var _v10 = A5($author$project$SmoothMovePorts$animateToWithConfig, config2, 'box2', 200, 150, animations1);
-				var animations2 = _v10.a;
-				var command2 = _v10.b;
-				var _v11 = A5($author$project$SmoothMovePorts$animateToWithConfig, config3, 'box3', 300, 200, animations2);
-				var animations3 = _v11.a;
-				var command3 = _v11.b;
-				var _v12 = A5($author$project$SmoothMovePorts$animateToWithConfig, config4, 'box4', 400, 250, animations3);
-				var finalAnimations = _v12.a;
-				var command4 = _v12.b;
-				var cmd4 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command4));
-				var cmd3 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command3));
-				var cmd2 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command2));
-				var cmd1 = $author$project$SmoothMovePorts$Multiple$animateElement(
-					$author$project$SmoothMovePorts$encodeAnimationCommand(command1));
+				var animationSpecs = _List_fromArray(
+					[
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 400, easing: 'ease-in-out'},
+						elementId: 'box1',
+						targetX: 100,
+						targetY: 100
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'ease-in-out'},
+						elementId: 'box2',
+						targetX: 200,
+						targetY: 150
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 800, easing: 'ease-in-out'},
+						elementId: 'box3',
+						targetX: 300,
+						targetY: 200
+					},
+						{
+						config: {axis: $author$project$SmoothMovePorts$Both, duration: 1000, easing: 'ease-in-out'},
+						elementId: 'box4',
+						targetX: 400,
+						targetY: 250
+					}
+					]);
+				var _v3 = A3($author$project$SmoothMovePorts$animateBatchWithPort, $author$project$SmoothMovePorts$Multiple$animateElement, animationSpecs, model.animations);
+				var newAnimations = _v3.a;
+				var cmd = _v3.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{animations: finalAnimations}),
-					$elm$core$Platform$Cmd$batch(
-						_List_fromArray(
-							[cmd1, cmd2, cmd3, cmd4])));
+						{animations: newAnimations}),
+					cmd);
 			case 'StopAll':
 				var cmd4 = $author$project$SmoothMovePorts$Multiple$stopElementAnimation(
 					$author$project$SmoothMovePorts$encodeStopCommand('box4'));
@@ -5547,14 +5606,14 @@ var $author$project$SmoothMovePorts$Multiple$update = F2(
 					$author$project$SmoothMovePorts$encodeStopCommand('box2'));
 				var cmd1 = $author$project$SmoothMovePorts$Multiple$stopElementAnimation(
 					$author$project$SmoothMovePorts$encodeStopCommand('box1'));
-				var _v13 = A2($author$project$SmoothMovePorts$stopAnimation, 'box1', model.animations);
-				var animations1 = _v13.a;
-				var _v14 = A2($author$project$SmoothMovePorts$stopAnimation, 'box2', animations1);
-				var animations2 = _v14.a;
-				var _v15 = A2($author$project$SmoothMovePorts$stopAnimation, 'box3', animations2);
-				var animations3 = _v15.a;
-				var _v16 = A2($author$project$SmoothMovePorts$stopAnimation, 'box4', animations3);
-				var finalAnimations = _v16.a;
+				var _v4 = A2($author$project$SmoothMovePorts$stopAnimation, 'box1', model.animations);
+				var animations1 = _v4.a;
+				var _v5 = A2($author$project$SmoothMovePorts$stopAnimation, 'box2', animations1);
+				var animations2 = _v5.a;
+				var _v6 = A2($author$project$SmoothMovePorts$stopAnimation, 'box3', animations2);
+				var animations3 = _v6.a;
+				var _v7 = A2($author$project$SmoothMovePorts$stopAnimation, 'box4', animations3);
+				var finalAnimations = _v7.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,

@@ -33,7 +33,7 @@ init : () -> ( Model, Cmd Msg )
 init _ =
     let
         -- Initialize with starting position to prevent jump to (0,0)
-        (initialAnimations, _) =
+        initialAnimations =
             SmoothMovePorts.init
                 |> SmoothMovePorts.setInitialPosition "box" 50 50
     in

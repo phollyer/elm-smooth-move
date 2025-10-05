@@ -6,8 +6,12 @@ module SmoothMovePorts exposing
     , init
     , animateTo
     , animateToWithConfig
+    , animateBatch
+    , animateBatchWithPort
     , setInitialPosition
     , stopAnimation
+    , stopBatch
+    , stopBatchWithPort
     , isAnimating
     , getPosition
     , getAllPositions
@@ -18,6 +22,7 @@ module SmoothMovePorts exposing
     , encodeAnimationCommand
     , encodeStopCommand
     , AnimationCommand
+    , AnimationSpec
     , PositionUpdate
     )
 
@@ -53,8 +58,12 @@ See the accompanying `smooth-move-ports.js` file for the JavaScript implementati
 
 @docs animateTo
 @docs animateToWithConfig
+@docs animateBatch
+@docs animateBatchWithPort
 @docs setInitialPosition
 @docs stopAnimation
+@docs stopBatch
+@docs stopBatchWithPort
 
 
 # State Queries
@@ -78,6 +87,7 @@ See the accompanying `smooth-move-ports.js` file for the JavaScript implementati
 @docs encodeStopCommand
 @docs positionUpdateDecoder
 @docs AnimationCommand
+@docs AnimationSpec
 @docs PositionUpdate
 
 -}
@@ -159,6 +169,19 @@ type alias AnimationCommand =
     }
 
 
+{-| Animation specification for batch operations
+
+Use this with `animateBatch` to animate multiple elements at once.
+
+-}
+type alias AnimationSpec =
+    { elementId : String
+    , targetX : Float
+    , targetY : Float
+    , config : Config
+    }
+
+
 {-| Position update data received from JavaScript
 
 Use this with your own port:
@@ -235,21 +258,73 @@ animateToWithConfig config elementId targetX targetY (Model elements) =
     ( Model updatedElements, command )
 
 
+{-| Animate multiple elements at once
+
+Takes a list of animation specifications and returns the updated model and list of commands.
+This is much more convenient than chaining individual animateToWithConfig calls.
+
+    specs =
+        [ { elementId = "box1", targetX = 100, targetY = 200, config = defaultConfig }
+        , { elementId = "box2", targetX = 300, targetY = 150, config = { defaultConfig | duration = 800 } }
+        ]
+
+    ( newModel, commands ) =
+        animateBatch specs model
+
+-}
+animateBatch : List AnimationSpec -> Model -> ( Model, List AnimationCommand )
+animateBatch specs model =
+    specs
+        |> List.foldl
+            (\spec ( currentModel, commands ) ->
+                let
+                    ( newModel, command ) =
+                        animateToWithConfig spec.config spec.elementId spec.targetX spec.targetY currentModel
+                in
+                ( newModel, command :: commands )
+            )
+            ( model, [] )
+        |> Tuple.mapSecond List.reverse
+
+
+{-| Animate multiple elements with automatic port handling
+
+This is the most convenient way to animate multiple elements - it handles all the
+encoding and batching internally. Just provide your animation specs and port function.
+
+    animationSpecs =
+        [ { elementId = "box1", targetX = 100, targetY = 200, config = defaultConfig }
+        , { elementId = "box2", targetX = 300, targetY = 150, config = { defaultConfig | duration = 800 } }
+        ]
+
+    ( newModel, cmd ) =
+        animateBatchWithPort animateElement animationSpecs model
+
+-}
+animateBatchWithPort : (String -> Cmd msg) -> List AnimationSpec -> Model -> ( Model, Cmd msg )
+animateBatchWithPort portFunction specs model =
+    let
+        ( newModel, commands ) =
+            animateBatch specs model
+    in
+    ( newModel
+    , commands
+        |> List.map (portFunction << encodeAnimationCommand)
+        |> Cmd.batch
+    )
+
+
 {-| Set the initial position of an element without animation
 
 This is useful for preventing the "jump to (0,0)" behavior on first animation.
 Call this during initialization to establish element positions.
 
-
     initialModel =
         SmoothMovePorts.init
             |> SmoothMovePorts.setInitialPosition "element-a" 100 150
-            |> Tuple.first
-
-    -- Extract model from (Model, Nothing) tuple
 
 -}
-setInitialPosition : String -> Float -> Float -> Model -> ( Model, Maybe a )
+setInitialPosition : String -> Float -> Float -> Model -> Model
 setInitialPosition elementId x y (Model elements) =
     let
         elementData =
@@ -264,7 +339,7 @@ setInitialPosition elementId x y (Model elements) =
         updatedElements =
             Dict.insert elementId elementData elements
     in
-    ( Model updatedElements, Nothing )
+    Model updatedElements
 
 
 {-| Stop animation for a specific element
@@ -287,6 +362,56 @@ stopAnimation elementId (Model elements) =
 
         Nothing ->
             ( Model elements, Nothing )
+
+
+{-| Stop multiple animations at once
+
+Takes a list of element IDs and returns the updated model and list of element IDs that were actually stopped.
+
+    ( newModel, stoppedElements ) =
+        stopBatch [ "box1", "box2", "box3", "box4" ] model
+
+-}
+stopBatch : List String -> Model -> ( Model, List String )
+stopBatch elementIds model =
+    elementIds
+        |> List.foldl
+            (\elementId ( currentModel, stoppedElements ) ->
+                let
+                    ( newModel, maybeStoppedId ) =
+                        stopAnimation elementId currentModel
+                in
+                case maybeStoppedId of
+                    Just stoppedId ->
+                        ( newModel, stoppedId :: stoppedElements )
+
+                    Nothing ->
+                        ( newModel, stoppedElements )
+            )
+            ( model, [] )
+        |> Tuple.mapSecond List.reverse
+
+
+{-| Stop multiple animations with automatic port handling
+
+This is the most convenient way to stop multiple animations - it handles all the
+encoding and batching internally. Just provide your element IDs and port function.
+
+    ( newModel, cmd ) =
+        stopBatchWithPort stopElementAnimation [ "box1", "box2", "box3", "box4" ] model
+
+-}
+stopBatchWithPort : (String -> Cmd msg) -> List String -> Model -> ( Model, Cmd msg )
+stopBatchWithPort portFunction elementIds model =
+    let
+        ( newModel, stoppedElements ) =
+            stopBatch elementIds model
+    in
+    ( newModel
+    , stoppedElements
+        |> List.map (portFunction << encodeStopCommand)
+        |> Cmd.batch
+    )
 
 
 {-| Check if any animations are currently running

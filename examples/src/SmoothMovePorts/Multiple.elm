@@ -39,11 +39,8 @@ init _ =
         initialAnimations =
             SmoothMovePorts.init
                 |> SmoothMovePorts.setInitialPosition "element-a" 100 100
-                |> Tuple.first
                 |> SmoothMovePorts.setInitialPosition "element-b" 200 150
-                |> Tuple.first
                 |> SmoothMovePorts.setInitialPosition "element-c" 150 200
-                |> Tuple.first
     in
     ( { animations = initialAnimations
       }
@@ -58,85 +55,51 @@ update msg model =
     case msg of
         AnimateToCorners ->
             let
-                -- Animate multiple boxes to different corners simultaneously
-                config1 = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" }
-                config2 = { axis = SmoothMovePorts.Both, duration = 600, easing = "cubic-bezier(0.68, -0.55, 0.265, 1.55)" }
-                config3 = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-out" }
-                config4 = { axis = SmoothMovePorts.Both, duration = 700, easing = "ease-in-out" }
+                -- Animate multiple boxes to different corners using batch animation
+                animationSpecs =
+                    [ { elementId = "box1", targetX = 50, targetY = 50, config = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" }}
+                    , { elementId = "box2", targetX = 450, targetY = 50, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "cubic-bezier(0.68, -0.55, 0.265, 1.55)" }}
+                    , { elementId = "box3", targetX = 450, targetY = 350, config = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-out" }}
+                    , { elementId = "box4", targetX = 50, targetY = 350, config = { axis = SmoothMovePorts.Both, duration = 700, easing = "ease-in-out" }}
+                    ]
 
-                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" 50 50 model.animations
-                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" 450 50 animations1
-                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" 450 350 animations2
-                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" 50 350 animations3
-                
-                cmd1 = animateElement (SmoothMovePorts.encodeAnimationCommand command1)
-                cmd2 = animateElement (SmoothMovePorts.encodeAnimationCommand command2)
-                cmd3 = animateElement (SmoothMovePorts.encodeAnimationCommand command3)
-                cmd4 = animateElement (SmoothMovePorts.encodeAnimationCommand command4)
+                ( newAnimations, cmd ) = SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
             in
-            ( { model | animations = finalAnimations }
-            , Cmd.batch [ cmd1, cmd2, cmd3, cmd4 ]
-            )
+            ( { model | animations = newAnimations }, cmd )
 
         AnimateToCenter ->
             let
-                -- Simple 2x2 grid centered in container - just the positions that work
-                config1 = { axis = SmoothMovePorts.Both, duration = 500, easing = "ease-out" }
-                config2 = { axis = SmoothMovePorts.Both, duration = 750, easing = "ease-out" }
-                config3 = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-out" }
-                config4 = { axis = SmoothMovePorts.Both, duration = 900, easing = "ease-out" }
+                -- Simple 2x2 grid using batch animation - much cleaner!
+                animationSpecs =
+                    [ { elementId = "box1", targetX = 237, targetY = 137, config = { axis = SmoothMovePorts.Both, duration = 500, easing = "ease-out" }}
+                    , { elementId = "box2", targetX = 317, targetY = 137, config = { axis = SmoothMovePorts.Both, duration = 750, easing = "ease-out" }}
+                    , { elementId = "box3", targetX = 237, targetY = 217, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-out" }}
+                    , { elementId = "box4", targetX = 317, targetY = 217, config = { axis = SmoothMovePorts.Both, duration = 900, easing = "ease-out" }}
+                    ]
 
-                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" 237 137 model.animations
-                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" 317 137 animations1
-                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" 237 217 animations2
-                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" 317 217 animations3
-                
-                cmd1 = animateElement (SmoothMovePorts.encodeAnimationCommand command1)
-                cmd2 = animateElement (SmoothMovePorts.encodeAnimationCommand command2)
-                cmd3 = animateElement (SmoothMovePorts.encodeAnimationCommand command3)
-                cmd4 = animateElement (SmoothMovePorts.encodeAnimationCommand command4)
+                ( newAnimations, cmd ) = SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
             in
-            ( { model | animations = finalAnimations }
-            , Cmd.batch [ cmd1, cmd2, cmd3, cmd4 ]
-            )
+            ( { model | animations = newAnimations }, cmd )
 
         AnimateInSequence ->
             let
                 -- Sequential animation with staggered delays using different durations
-                config1 = { axis = SmoothMovePorts.Both, duration = 400, easing = "ease-in-out" }
-                config2 = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-in-out" }
-                config3 = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" }
-                config4 = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-in-out" }
+                animationSpecs =
+                    [ { elementId = "box1", targetX = 100, targetY = 100, config = { axis = SmoothMovePorts.Both, duration = 400, easing = "ease-in-out" }}
+                    , { elementId = "box2", targetX = 200, targetY = 150, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-in-out" }}
+                    , { elementId = "box3", targetX = 300, targetY = 200, config = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" }}
+                    , { elementId = "box4", targetX = 400, targetY = 250, config = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-in-out" }}
+                    ]
 
-                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" 100 100 model.animations
-                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" 200 150 animations1
-                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" 300 200 animations2
-                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" 400 250 animations3
-                
-                cmd1 = animateElement (SmoothMovePorts.encodeAnimationCommand command1)
-                cmd2 = animateElement (SmoothMovePorts.encodeAnimationCommand command2)
-                cmd3 = animateElement (SmoothMovePorts.encodeAnimationCommand command3)
-                cmd4 = animateElement (SmoothMovePorts.encodeAnimationCommand command4)
+                ( newAnimations, cmd ) = SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
             in
-            ( { model | animations = finalAnimations }
-            , Cmd.batch [ cmd1, cmd2, cmd3, cmd4 ]
-            )
+            ( { model | animations = newAnimations }, cmd )
 
         StopAll ->
             let
-                ( animations1, _ ) = SmoothMovePorts.stopAnimation "box1" model.animations
-                ( animations2, _ ) = SmoothMovePorts.stopAnimation "box2" animations1
-                ( animations3, _ ) = SmoothMovePorts.stopAnimation "box3" animations2
-                ( finalAnimations, _ ) = SmoothMovePorts.stopAnimation "box4" animations3
-                
-                cmd1 = stopElementAnimation (SmoothMovePorts.encodeStopCommand "box1")
-                cmd2 = stopElementAnimation (SmoothMovePorts.encodeStopCommand "box2")
-                cmd3 = stopElementAnimation (SmoothMovePorts.encodeStopCommand "box3")
-                cmd4 = stopElementAnimation (SmoothMovePorts.encodeStopCommand "box4")
+                ( newAnimations, cmd ) = SmoothMovePorts.stopBatchWithPort stopElementAnimation [ "box1", "box2", "box3", "box4" ] model.animations
             in
-            ( { model | animations = finalAnimations }
-            , Cmd.batch [ cmd1, cmd2, cmd3, cmd4 ]
-            )
+            ( { model | animations = newAnimations }, cmd )
 
         PositionUpdateMsg _ ->
             -- For simplicity, not handling position updates in this example
