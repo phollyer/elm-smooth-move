@@ -8,6 +8,7 @@ module SmoothMoveState exposing
     , subscriptions
     , animateTo
     , animateToWithConfig
+    , setInitialPosition
     , stopAnimation
     , isAnimating
     , getPosition
@@ -41,6 +42,7 @@ state explicitly in your model and call `step` on each animation frame.
 
 @docs animateTo
 @docs animateToWithConfig
+@docs setInitialPosition
 @docs stopAnimation
 
 
@@ -307,6 +309,32 @@ animateToWithConfig config elementId targetX targetY (State elements) =
             { lastX = currentPos.x
             , lastY = currentPos.y
             , animation = Just animation
+            }
+
+        updatedElements =
+            Dict.insert elementId elementData elements
+    in
+    State updatedElements
+
+
+{-| Set the initial position of an element without animation
+
+This is useful for preventing the "jump to (0,0)" behavior on first animation.
+Call this during initialization to establish element positions.
+
+    initialState =
+        SmoothMoveState.init
+            |> SmoothMoveState.setInitialPosition "element-a" 100 150
+            |> SmoothMoveState.setInitialPosition "element-b" 200 250
+
+-}
+setInitialPosition : String -> Float -> Float -> State -> State
+setInitialPosition elementId x y (State elements) =
+    let
+        elementData =
+            { lastX = x
+            , lastY = y
+            , animation = Nothing
             }
 
         updatedElements =

@@ -5167,73 +5167,8 @@ var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $author$project$SmoothMovePorts$init = $author$project$SmoothMovePorts$Model($elm$core$Dict$empty);
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$SmoothMovePorts$Basic$init = function (_v0) {
-	return _Utils_Tuple2(
-		{animations: $author$project$SmoothMovePorts$init},
-		$elm$core$Platform$Cmd$none);
-};
-var $author$project$SmoothMovePorts$Basic$PositionUpdateMsg = function (a) {
-	return {$: 'PositionUpdateMsg', a: a};
-};
-var $elm$json$Json$Decode$value = _Json_decodeValue;
-var $author$project$SmoothMovePorts$Basic$positionUpdates = _Platform_incomingPort('positionUpdates', $elm$json$Json$Decode$value);
-var $author$project$SmoothMovePorts$Basic$subscriptions = function (model) {
-	return $author$project$SmoothMovePorts$Basic$positionUpdates($author$project$SmoothMovePorts$Basic$PositionUpdateMsg);
-};
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$SmoothMovePorts$Basic$animateElement = _Platform_outgoingPort('animateElement', $elm$json$Json$Encode$string);
-var $elm$core$Basics$compare = _Utils_compare;
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $author$project$SmoothMovePorts$getPosition = F2(
-	function (elementId, _v0) {
-		var elements = _v0.a;
-		return A2(
-			$elm$core$Maybe$map,
-			function (elementData) {
-				return {x: elementData.currentX, y: elementData.currentY};
-			},
-			A2($elm$core$Dict$get, elementId, elements));
-	});
+var $author$project$SmoothMovePorts$Both = {$: 'Both'};
+var $author$project$SmoothMovePorts$defaultConfig = {axis: $author$project$SmoothMovePorts$Both, duration: 400, easing: 'ease-out'};
 var $elm$core$Dict$Black = {$: 'Black'};
 var $elm$core$Dict$RBNode_elm_builtin = F5(
 	function (a, b, c, d, e) {
@@ -5294,6 +5229,7 @@ var $elm$core$Dict$balance = F5(
 			}
 		}
 	});
+var $elm$core$Basics$compare = _Utils_compare;
 var $elm$core$Dict$insertHelp = F3(
 	function (key, value, dict) {
 		if (dict.$ === 'RBEmpty_elm_builtin') {
@@ -5342,6 +5278,83 @@ var $elm$core$Dict$insert = F3(
 			return x;
 		}
 	});
+var $author$project$SmoothMovePorts$setInitialPosition = F4(
+	function (elementId, x, y, _v0) {
+		var elements = _v0.a;
+		var elementData = {config: $author$project$SmoothMovePorts$defaultConfig, currentX: x, currentY: y, isAnimating: false, targetX: x, targetY: y};
+		var updatedElements = A3($elm$core$Dict$insert, elementId, elementData, elements);
+		return _Utils_Tuple2(
+			$author$project$SmoothMovePorts$Model(updatedElements),
+			$elm$core$Maybe$Nothing);
+	});
+var $author$project$SmoothMovePorts$Basic$init = function (_v0) {
+	var _v1 = A4($author$project$SmoothMovePorts$setInitialPosition, 'box', 50, 50, $author$project$SmoothMovePorts$init);
+	var initialAnimations = _v1.a;
+	return _Utils_Tuple2(
+		{animations: initialAnimations},
+		$elm$core$Platform$Cmd$none);
+};
+var $author$project$SmoothMovePorts$Basic$PositionUpdateMsg = function (a) {
+	return {$: 'PositionUpdateMsg', a: a};
+};
+var $elm$json$Json$Decode$value = _Json_decodeValue;
+var $author$project$SmoothMovePorts$Basic$positionUpdates = _Platform_incomingPort('positionUpdates', $elm$json$Json$Decode$value);
+var $author$project$SmoothMovePorts$Basic$subscriptions = function (model) {
+	return $author$project$SmoothMovePorts$Basic$positionUpdates($author$project$SmoothMovePorts$Basic$PositionUpdateMsg);
+};
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$SmoothMovePorts$Basic$animateElement = _Platform_outgoingPort('animateElement', $elm$json$Json$Encode$string);
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $author$project$SmoothMovePorts$getPosition = F2(
+	function (elementId, _v0) {
+		var elements = _v0.a;
+		return A2(
+			$elm$core$Maybe$map,
+			function (elementData) {
+				return {x: elementData.currentX, y: elementData.currentY};
+			},
+			A2($elm$core$Dict$get, elementId, elements));
+	});
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
 		if (maybe.$ === 'Just') {
@@ -5379,8 +5392,6 @@ var $author$project$SmoothMovePorts$animateToWithConfig = F5(
 			$author$project$SmoothMovePorts$Model(updatedElements),
 			command);
 	});
-var $author$project$SmoothMovePorts$Both = {$: 'Both'};
-var $author$project$SmoothMovePorts$defaultConfig = {axis: $author$project$SmoothMovePorts$Both, duration: 400, easing: 'ease-out'};
 var $author$project$SmoothMovePorts$animateTo = F4(
 	function (elementId, targetX, targetY, model) {
 		return A5($author$project$SmoothMovePorts$animateToWithConfig, $author$project$SmoothMovePorts$defaultConfig, elementId, targetX, targetY, model);
@@ -5471,7 +5482,7 @@ var $author$project$SmoothMovePorts$Basic$update = F2(
 					$author$project$SmoothMovePorts$Basic$animateElement(
 						$author$project$SmoothMovePorts$encodeAnimationCommand(command)));
 			case 'MoveToCenter':
-				var _v2 = A4($author$project$SmoothMovePorts$animateTo, 'box', 150, 100, model.animations);
+				var _v2 = A4($author$project$SmoothMovePorts$animateTo, 'box', 175, 125, model.animations);
 				var newAnimations = _v2.a;
 				var command = _v2.b;
 				return _Utils_Tuple2(

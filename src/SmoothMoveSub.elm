@@ -8,6 +8,7 @@ module SmoothMoveSub exposing
     , subscriptions
     , animateTo
     , animateToWithConfig
+    , setInitialPosition
     , stopAnimation
     , isAnimating
     , getPosition
@@ -40,6 +41,7 @@ automatically through subscriptions to animation frames.
 
 @docs animateTo
 @docs animateToWithConfig
+@docs setInitialPosition
 @docs stopAnimation
 
 
@@ -195,6 +197,32 @@ animateToWithConfig config elementId targetX targetY (Model elementsDict) =
             { lastX = startX
             , lastY = startY
             , animation = Just animationState
+            }
+
+        updatedDict =
+            Dict.insert elementId elementData elementsDict
+    in
+    Model updatedDict
+
+
+{-| Set the initial position of an element without animation
+
+This is useful for preventing the "jump to (0,0)" behavior on first animation.
+Call this during initialization to establish element positions.
+
+    initialModel =
+        SmoothMoveSub.init
+            |> SmoothMoveSub.setInitialPosition "element-a" 100 150
+            |> SmoothMoveSub.setInitialPosition "element-b" 200 250
+
+-}
+setInitialPosition : String -> Float -> Float -> Model -> Model
+setInitialPosition elementId x y (Model elementsDict) =
+    let
+        elementData =
+            { lastX = x
+            , lastY = y
+            , animation = Nothing
             }
 
         updatedDict =

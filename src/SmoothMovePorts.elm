@@ -6,6 +6,7 @@ module SmoothMovePorts exposing
     , init
     , animateTo
     , animateToWithConfig
+    , setInitialPosition
     , stopAnimation
     , isAnimating
     , getPosition
@@ -52,6 +53,7 @@ See the accompanying `smooth-move-ports.js` file for the JavaScript implementati
 
 @docs animateTo
 @docs animateToWithConfig
+@docs setInitialPosition
 @docs stopAnimation
 
 
@@ -231,6 +233,38 @@ animateToWithConfig config elementId targetX targetY (Model elements) =
             }
     in
     ( Model updatedElements, command )
+
+
+{-| Set the initial position of an element without animation
+
+This is useful for preventing the "jump to (0,0)" behavior on first animation.
+Call this during initialization to establish element positions.
+
+
+    initialModel =
+        SmoothMovePorts.init
+            |> SmoothMovePorts.setInitialPosition "element-a" 100 150
+            |> Tuple.first
+
+    -- Extract model from (Model, Nothing) tuple
+
+-}
+setInitialPosition : String -> Float -> Float -> Model -> ( Model, Maybe a )
+setInitialPosition elementId x y (Model elements) =
+    let
+        elementData =
+            { currentX = x
+            , currentY = y
+            , targetX = x
+            , targetY = y
+            , isAnimating = False
+            , config = defaultConfig
+            }
+
+        updatedElements =
+            Dict.insert elementId elementData elements
+    in
+    ( Model updatedElements, Nothing )
 
 
 {-| Stop animation for a specific element

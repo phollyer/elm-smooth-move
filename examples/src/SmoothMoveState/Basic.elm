@@ -21,7 +21,13 @@ type Msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { animationState = SmoothMoveState.init
+    let
+        -- Initialize with starting position to prevent jump to (0,0)
+        initialState =
+            SmoothMoveState.init
+                |> SmoothMoveState.setInitialPosition "box" 50 50
+    in
+    ( { animationState = initialState
       }
     , Cmd.none
     )

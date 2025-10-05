@@ -31,7 +31,13 @@ type Msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { animations = SmoothMovePorts.init
+    let
+        -- Initialize with starting position to prevent jump to (0,0)
+        (initialAnimations, _) =
+            SmoothMovePorts.init
+                |> SmoothMovePorts.setInitialPosition "box" 50 50
+    in
+    ( { animations = initialAnimations
       }
     , Cmd.none
     )
@@ -54,7 +60,7 @@ update msg model =
         MoveToCenter ->
             let
                 ( newAnimations, command ) =
-                    SmoothMovePorts.animateTo "box" 150 100 model.animations
+                    SmoothMovePorts.animateTo "box" 175 125 model.animations
             in
             ( { model | animations = newAnimations }
             , animateElement (SmoothMovePorts.encodeAnimationCommand command)

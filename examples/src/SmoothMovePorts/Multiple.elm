@@ -34,7 +34,18 @@ type Msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { animations = SmoothMovePorts.init
+    let
+        -- Initialize with starting positions to prevent jump to (0,0)
+        initialAnimations =
+            SmoothMovePorts.init
+                |> SmoothMovePorts.setInitialPosition "element-a" 100 100
+                |> Tuple.first
+                |> SmoothMovePorts.setInitialPosition "element-b" 200 150
+                |> Tuple.first
+                |> SmoothMovePorts.setInitialPosition "element-c" 150 200
+                |> Tuple.first
+    in
+    ( { animations = initialAnimations
       }
     , Cmd.none
     )
@@ -69,19 +80,45 @@ update msg model =
 
         AnimateToCenter ->
             let
-                -- All boxes animate to center with different timings
-                centerX = 250
-                centerY = 200
+                -- All boxes animate to center as a 2x2 grid with proper centering within each quadrant
+                -- Mathematical calculation: Container(600×400) → Grid(160×160) centered → 4 quadrants(80×80) → center 50×50 boxes
+                containerWidth = 600
+                containerHeight = 400
+                gridSize = 160  -- Total grid area (2×80px quadrants)
+                quadrantSize = 80  -- Each quadrant size
+                boxSize = 50
+                
+                -- Grid top-left position (centered in container)
+                gridStartX = (containerWidth - gridSize) // 2   -- (600-160)/2 = 220
+                gridStartY = (containerHeight - gridSize) // 2  -- (400-160)/2 = 120
+                
+                -- Offset to center box within quadrant
+                centerOffset = (quadrantSize - boxSize) // 2    -- (80-50)/2 = 15
+                
+                -- Actual animated box size is 40x40, target outlines are 50x50
+                actualBoxSize = 40
+                targetBoxSize = 50
+                boxCenteringOffset = (targetBoxSize - actualBoxSize) // 4  -- (50-40)/4 = 2.5 ≈ 2
+                
+                -- Box positions (accounting for size difference between animated boxes and target outlines)
+                box1X = gridStartX + centerOffset + boxCenteringOffset                    -- 220 + 15 + 5 = 240
+                box1Y = gridStartY + centerOffset + boxCenteringOffset                    -- 120 + 15 + 5 = 140
+                box2X = gridStartX + quadrantSize + centerOffset + boxCenteringOffset     -- 220 + 80 + 15 + 5 = 320
+                box2Y = gridStartY + centerOffset + boxCenteringOffset                    -- 120 + 15 + 5 = 140
+                box3X = gridStartX + centerOffset + boxCenteringOffset                    -- 220 + 15 + 5 = 240
+                box3Y = gridStartY + quadrantSize + centerOffset + boxCenteringOffset     -- 120 + 80 + 15 + 5 = 220
+                box4X = gridStartX + quadrantSize + centerOffset + boxCenteringOffset     -- 220 + 80 + 15 + 5 = 320
+                box4Y = gridStartY + quadrantSize + centerOffset + boxCenteringOffset     -- 120 + 80 + 15 + 5 = 220
 
                 config1 = { axis = SmoothMovePorts.Both, duration = 500, easing = "ease-out" }
                 config2 = { axis = SmoothMovePorts.Both, duration = 750, easing = "ease-out" }
                 config3 = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-out" }
                 config4 = { axis = SmoothMovePorts.Both, duration = 900, easing = "ease-out" }
 
-                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" centerX centerY model.animations
-                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" (centerX + 60) centerY animations1
-                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" centerX (centerY + 60) animations2
-                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" (centerX + 60) (centerY + 60) animations3
+                ( animations1, command1 ) = SmoothMovePorts.animateToWithConfig config1 "box1" (toFloat box1X) (toFloat box1Y) model.animations
+                ( animations2, command2 ) = SmoothMovePorts.animateToWithConfig config2 "box2" (toFloat box2X) (toFloat box2Y) animations1
+                ( animations3, command3 ) = SmoothMovePorts.animateToWithConfig config3 "box3" (toFloat box3X) (toFloat box3Y) animations2
+                ( finalAnimations, command4 ) = SmoothMovePorts.animateToWithConfig config4 "box4" (toFloat box4X) (toFloat box4Y) animations3
                 
                 cmd1 = animateElement (SmoothMovePorts.encodeAnimationCommand command1)
                 cmd2 = animateElement (SmoothMovePorts.encodeAnimationCommand command2)
@@ -215,7 +252,82 @@ view model =
             , style "margin" "20px 0"
             , style "background-color" "#f9f9f9"
             ]
-            [ animatedBox "box1" "#FF6B6B" model.animations  -- Red
+            [ -- Center guidelines (temporary for debugging)
+              div
+                [ style "position" "absolute"
+                , style "left" "299px"  -- Vertical center line
+                , style "top" "0"
+                , style "width" "2px"
+                , style "height" "100%"
+                , style "background-color" "rgba(255, 0, 0, 0.3)"
+                , style "pointer-events" "none"
+                ] []
+            , div
+                [ style "position" "absolute"
+                , style "left" "0"
+                , style "top" "199px"  -- Horizontal center line
+                , style "width" "100%"
+                , style "height" "2px"
+                , style "background-color" "rgba(255, 0, 0, 0.3)"
+                , style "pointer-events" "none"
+                ] []
+            
+            -- Grid target area (where the 2x2 should be centered)
+            , div
+                [ style "position" "absolute"
+                , style "left" "220px"  -- Grid start X
+                , style "top" "120px"   -- Grid start Y
+                , style "width" "160px" -- Grid total width (50+60+50)
+                , style "height" "160px" -- Grid total height (50+60+50)
+                , style "border" "2px dashed rgba(0, 0, 255, 0.5)"
+                , style "background-color" "rgba(0, 0, 255, 0.1)"
+                , style "pointer-events" "none"
+                ] []
+            
+            -- Individual box target positions (centered within each 80x80 quadrant)
+            , div
+                [ style "position" "absolute"
+                , style "left" "235px"  -- box1 target: 220 + (80-50)/2 = 235
+                , style "top" "135px"   -- 120 + (80-50)/2 = 135
+                , style "width" "50px"
+                , style "height" "50px"
+                , style "border" "1px solid rgba(255, 0, 0, 0.7)"
+                , style "background-color" "rgba(255, 0, 0, 0.1)"
+                , style "pointer-events" "none"
+                ] []
+            , div
+                [ style "position" "absolute"
+                , style "left" "315px"  -- box2 target: 220 + 80 + (80-50)/2 = 315
+                , style "top" "135px"
+                , style "width" "50px"
+                , style "height" "50px"
+                , style "border" "1px solid rgba(0, 255, 0, 0.7)"
+                , style "background-color" "rgba(0, 255, 0, 0.1)"
+                , style "pointer-events" "none"
+                ] []
+            , div
+                [ style "position" "absolute"
+                , style "left" "235px"  -- box3 target: 220 + (80-50)/2 = 235
+                , style "top" "215px"   -- 120 + 80 + (80-50)/2 = 215
+                , style "width" "50px"
+                , style "height" "50px"
+                , style "border" "1px solid rgba(0, 0, 255, 0.7)"
+                , style "background-color" "rgba(0, 0, 255, 0.1)"
+                , style "pointer-events" "none"
+                ] []
+            , div
+                [ style "position" "absolute"
+                , style "left" "315px"  -- box4 target: 220 + 80 + (80-50)/2 = 315
+                , style "top" "215px"   -- 120 + 80 + (80-50)/2 = 215
+                , style "width" "50px"
+                , style "height" "50px"
+                , style "border" "1px solid rgba(255, 165, 0, 0.7)"
+                , style "background-color" "rgba(255, 165, 0, 0.1)"
+                , style "pointer-events" "none"
+                ] []
+            
+            -- The actual animated boxes
+            , animatedBox "box1" "#FF6B6B" model.animations  -- Red
             , animatedBox "box2" "#4ECDC4" model.animations  -- Teal
             , animatedBox "box3" "#45B7D1" model.animations  -- Blue
             , animatedBox "box4" "#96CEB4" model.animations  -- Green

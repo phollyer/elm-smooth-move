@@ -5167,9 +5167,136 @@ var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $author$project$SmoothMoveSub$init = $author$project$SmoothMoveSub$Model($elm$core$Dict$empty);
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$core$Dict$Black = {$: 'Black'};
+var $elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+	});
+var $elm$core$Dict$Red = {$: 'Red'};
+var $elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+			var _v1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+				var _v3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Red,
+					key,
+					value,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+				var _v5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _v6 = left.d;
+				var _v7 = _v6.a;
+				var llK = _v6.b;
+				var llV = _v6.c;
+				var llLeft = _v6.d;
+				var llRight = _v6.e;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Red,
+					lK,
+					lV,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
+			} else {
+				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === 'RBEmpty_elm_builtin') {
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _v1 = A2($elm$core$Basics$compare, key, nKey);
+			switch (_v1.$) {
+				case 'LT':
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3($elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 'EQ':
+					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3($elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var $elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
+		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $author$project$SmoothMoveSub$setInitialPosition = F4(
+	function (elementId, x, y, _v0) {
+		var elementsDict = _v0.a;
+		var elementData = {animation: $elm$core$Maybe$Nothing, lastX: x, lastY: y};
+		var updatedDict = A3($elm$core$Dict$insert, elementId, elementData, elementsDict);
+		return $author$project$SmoothMoveSub$Model(updatedDict);
+	});
 var $author$project$SmoothMoveSub$Multiple$init = function (_v0) {
+	var initialSmoothMove = A4(
+		$author$project$SmoothMoveSub$setInitialPosition,
+		'element-c',
+		500,
+		120,
+		A4(
+			$author$project$SmoothMoveSub$setInitialPosition,
+			'element-b',
+			400,
+			180,
+			A4($author$project$SmoothMoveSub$setInitialPosition, 'element-a', 300, 120, $author$project$SmoothMoveSub$init)));
 	return _Utils_Tuple2(
-		{smoothMove: $author$project$SmoothMoveSub$init},
+		{smoothMove: initialSmoothMove},
 		$elm$core$Platform$Cmd$none);
 };
 var $author$project$SmoothMoveSub$Multiple$AnimationFrame = function (a) {
@@ -5363,7 +5490,6 @@ var $elm$core$Basics$negate = function (n) {
 var $elm$core$Basics$abs = function (n) {
 	return (n < 0) ? (-n) : n;
 };
-var $elm$core$Basics$compare = _Utils_compare;
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -5420,114 +5546,6 @@ var $author$project$SmoothMoveSub$getPosition = F2(
 				}
 			},
 			A2($elm$core$Dict$get, elementId, elementsDict));
-	});
-var $elm$core$Dict$Black = {$: 'Black'};
-var $elm$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
-	});
-var $elm$core$Dict$Red = {$: 'Red'};
-var $elm$core$Dict$balance = F5(
-	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
-			var _v1 = right.a;
-			var rK = right.b;
-			var rV = right.c;
-			var rLeft = right.d;
-			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
-				var _v3 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var lLeft = left.d;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
-					key,
-					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					color,
-					rK,
-					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
-					rRight);
-			}
-		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
-				var _v5 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var _v6 = left.d;
-				var _v7 = _v6.a;
-				var llK = _v6.b;
-				var llV = _v6.c;
-				var llLeft = _v6.d;
-				var llRight = _v6.e;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
-					lK,
-					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
-			} else {
-				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
-			}
-		}
-	});
-var $elm$core$Dict$insertHelp = F3(
-	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
-		} else {
-			var nColor = dict.a;
-			var nKey = dict.b;
-			var nValue = dict.c;
-			var nLeft = dict.d;
-			var nRight = dict.e;
-			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1.$) {
-				case 'LT':
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						A3($elm$core$Dict$insertHelp, key, value, nLeft),
-						nRight);
-				case 'EQ':
-					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
-				default:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						nLeft,
-						A3($elm$core$Dict$insertHelp, key, value, nRight));
-			}
-		}
-	});
-var $elm$core$Dict$insert = F3(
-	function (key, value, dict) {
-		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
-			var _v1 = _v0.a;
-			var k = _v0.b;
-			var v = _v0.c;
-			var l = _v0.d;
-			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
-		} else {
-			var x = _v0;
-			return x;
-		}
 	});
 var $elm$core$Basics$pow = _Basics_pow;
 var $elm$core$Basics$sqrt = _Basics_sqrt;
@@ -5682,21 +5700,21 @@ var $author$project$SmoothMoveSub$Multiple$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'StartElementA':
-				var newSmoothMove = A4($author$project$SmoothMoveSub$animateTo, 'element-a', 350, 80, model.smoothMove);
+				var newSmoothMove = A4($author$project$SmoothMoveSub$animateTo, 'element-a', 600, 180, model.smoothMove);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{smoothMove: newSmoothMove}),
 					$elm$core$Platform$Cmd$none);
 			case 'StartElementB':
-				var newSmoothMove = A4($author$project$SmoothMoveSub$animateTo, 'element-b', 200, 250, model.smoothMove);
+				var newSmoothMove = A4($author$project$SmoothMoveSub$animateTo, 'element-b', 300, 350, model.smoothMove);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{smoothMove: newSmoothMove}),
 					$elm$core$Platform$Cmd$none);
 			case 'StartElementC':
-				var newSmoothMove = A4($author$project$SmoothMoveSub$animateTo, 'element-c', 80, 120, model.smoothMove);
+				var newSmoothMove = A4($author$project$SmoothMoveSub$animateTo, 'element-c', 200, 280, model.smoothMove);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -5706,14 +5724,14 @@ var $author$project$SmoothMoveSub$Multiple$update = F2(
 				var newSmoothMove = A4(
 					$author$project$SmoothMoveSub$animateTo,
 					'element-c',
-					250,
+					700,
 					250,
 					A4(
 						$author$project$SmoothMoveSub$animateTo,
 						'element-b',
-						50,
-						400,
-						A4($author$project$SmoothMoveSub$animateTo, 'element-a', 400, 50, model.smoothMove)));
+						300,
+						150,
+						A4($author$project$SmoothMoveSub$animateTo, 'element-a', 500, 300, model.smoothMove)));
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -5801,293 +5819,301 @@ var $author$project$SmoothMoveSub$Multiple$view = function (model) {
 			}
 		});
 	return {
-		body: _Utils_ap(
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$a,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$href('index.html'),
-							A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
-							A2($elm$html$Html$Attributes$style, 'top', '10px'),
-							A2($elm$html$Html$Attributes$style, 'left', '10px'),
-							A2($elm$html$Html$Attributes$style, 'background', '#666'),
-							A2($elm$html$Html$Attributes$style, 'color', 'white'),
-							A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-							A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
-							A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
-							A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
-							A2($elm$html$Html$Attributes$style, 'z-index', '1000')
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text('← Back')
-						]))
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'position', 'relative'),
-							A2($elm$html$Html$Attributes$style, 'width', '100vw'),
-							A2($elm$html$Html$Attributes$style, 'height', '100vh'),
-							A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'),
-							A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
-							A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box')
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('element-a'),
-									A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-									A2($elm$html$Html$Attributes$style, 'width', '60px'),
-									A2($elm$html$Html$Attributes$style, 'height', '60px'),
-									A2($elm$html$Html$Attributes$style, 'background-color', '#ff6b6b'),
-									A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
-									A2(
-									$elm$html$Html$Attributes$style,
-									'transform',
-									A3(getTransform, 'element-a', 200, 100)),
-									A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0,0,0,0.2)'),
-									A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-									A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
-									A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
-								]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$div,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'color', 'white'),
-											A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
-											A2($elm$html$Html$Attributes$style, 'font-size', '18px')
-										]),
-									_List_fromArray(
-										[
-											$elm$html$Html$text('A')
-										]))
-								])),
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('element-b'),
-									A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-									A2($elm$html$Html$Attributes$style, 'width', '60px'),
-									A2($elm$html$Html$Attributes$style, 'height', '60px'),
-									A2($elm$html$Html$Attributes$style, 'background-color', '#4ecdc4'),
-									A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
-									A2(
-									$elm$html$Html$Attributes$style,
-									'transform',
-									A3(getTransform, 'element-b', 150, 150)),
-									A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0,0,0,0.2)'),
-									A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-									A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
-									A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
-								]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$div,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'color', 'white'),
-											A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
-											A2($elm$html$Html$Attributes$style, 'font-size', '18px')
-										]),
-									_List_fromArray(
-										[
-											$elm$html$Html$text('B')
-										]))
-								])),
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('element-c'),
-									A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-									A2($elm$html$Html$Attributes$style, 'width', '60px'),
-									A2($elm$html$Html$Attributes$style, 'height', '60px'),
-									A2($elm$html$Html$Attributes$style, 'background-color', '#95e1d3'),
-									A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
-									A2(
-									$elm$html$Html$Attributes$style,
-									'transform',
-									A3(getTransform, 'element-c', 100, 200)),
-									A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0,0,0,0.2)'),
-									A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-									A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
-									A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
-								]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$div,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'color', 'white'),
-											A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
-											A2($elm$html$Html$Attributes$style, 'font-size', '18px')
-										]),
-									_List_fromArray(
-										[
-											$elm$html$Html$text('C')
-										]))
-								])),
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[
-									A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
-									A2($elm$html$Html$Attributes$style, 'top', '20px'),
-									A2($elm$html$Html$Attributes$style, 'left', '20px'),
-									A2($elm$html$Html$Attributes$style, 'background', 'rgba(255,255,255,0.9)'),
-									A2($elm$html$Html$Attributes$style, 'padding', '20px'),
-									A2($elm$html$Html$Attributes$style, 'border-radius', '10px'),
-									A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 12px rgba(0,0,0,0.15)')
-								]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$h3,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'margin-top', '0'),
-											A2($elm$html$Html$Attributes$style, 'color', '#333')
-										]),
-									_List_fromArray(
-										[
-											$elm$html$Html$text('🎮 Animation Controls')
-										])),
-									A2(
-									$elm$html$Html$div,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-											A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-											A2($elm$html$Html$Attributes$style, 'gap', '10px')
-										]),
-									_List_fromArray(
-										[
-											A2(
-											$elm$html$Html$button,
-											_List_fromArray(
-												[
-													$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartElementA),
-													A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-													A2($elm$html$Html$Attributes$style, 'background', '#ff6b6b'),
-													A2($elm$html$Html$Attributes$style, 'color', 'white'),
-													A2($elm$html$Html$Attributes$style, 'border', 'none'),
-													A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
-													A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
-												]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('🔴 Move A')
-												])),
-											A2(
-											$elm$html$Html$button,
-											_List_fromArray(
-												[
-													$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartElementB),
-													A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-													A2($elm$html$Html$Attributes$style, 'background', '#4ecdc4'),
-													A2($elm$html$Html$Attributes$style, 'color', 'white'),
-													A2($elm$html$Html$Attributes$style, 'border', 'none'),
-													A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
-													A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
-												]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('🔵 Move B')
-												])),
-											A2(
-											$elm$html$Html$button,
-											_List_fromArray(
-												[
-													$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartElementC),
-													A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-													A2($elm$html$Html$Attributes$style, 'background', '#95e1d3'),
-													A2($elm$html$Html$Attributes$style, 'color', 'white'),
-													A2($elm$html$Html$Attributes$style, 'border', 'none'),
-													A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
-													A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
-												]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('🟢 Move C')
-												])),
-											A2(
-											$elm$html$Html$button,
-											_List_fromArray(
-												[
-													$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartAll),
-													A2($elm$html$Html$Attributes$style, 'padding', '12px 20px'),
-													A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(45deg, #667eea, #764ba2)'),
-													A2($elm$html$Html$Attributes$style, 'color', 'white'),
-													A2($elm$html$Html$Attributes$style, 'border', 'none'),
-													A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
-													A2($elm$html$Html$Attributes$style, 'cursor', 'pointer'),
-													A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
-												]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('🎉 Move ALL Simultaneously!')
-												]))
-										]))
-								])),
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[
-									A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
-									A2($elm$html$Html$Attributes$style, 'bottom', '20px'),
-									A2($elm$html$Html$Attributes$style, 'left', '20px'),
-									A2($elm$html$Html$Attributes$style, 'background', 'rgba(255,255,255,0.9)'),
-									A2($elm$html$Html$Attributes$style, 'padding', '15px'),
-									A2($elm$html$Html$Attributes$style, 'border-radius', '10px'),
-									A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 12px rgba(0,0,0,0.15)'),
-									A2($elm$html$Html$Attributes$style, 'font-family', 'monospace')
-								]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$div,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'color', '#333'),
-											A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
-										]),
-									_List_fromArray(
-										[
-											$elm$html$Html$text('📊 Animation Status:')
-										])),
-									A2(
-									$elm$html$Html$div,
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'margin-top', '5px'),
-											A2(
-											$elm$html$Html$Attributes$style,
-											'color',
-											$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? '#27ae60' : '#e74c3c')
-										]),
-									_List_fromArray(
-										[
-											$elm$html$Html$text(
-											$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? '🟢 RUNNING' : '🔴 IDLE')
-										]))
-								]))
-						]))
-				])),
+		body: _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+						A2($elm$html$Html$Attributes$style, 'top', '0'),
+						A2($elm$html$Html$Attributes$style, 'left', '0'),
+						A2($elm$html$Html$Attributes$style, 'width', '100vw'),
+						A2($elm$html$Html$Attributes$style, 'height', '100vh'),
+						A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'),
+						A2($elm$html$Html$Attributes$style, 'z-index', '-1')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href('index.html'),
+						A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+						A2($elm$html$Html$Attributes$style, 'top', '10px'),
+						A2($elm$html$Html$Attributes$style, 'left', '10px'),
+						A2($elm$html$Html$Attributes$style, 'background', '#666'),
+						A2($elm$html$Html$Attributes$style, 'color', 'white'),
+						A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+						A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
+						A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+						A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+						A2($elm$html$Html$Attributes$style, 'z-index', '1000')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('← Back')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'position', 'relative'),
+						A2($elm$html$Html$Attributes$style, 'width', '100vw'),
+						A2($elm$html$Html$Attributes$style, 'height', '100vh'),
+						A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
+						A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id('element-a'),
+								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+								A2($elm$html$Html$Attributes$style, 'width', '60px'),
+								A2($elm$html$Html$Attributes$style, 'height', '60px'),
+								A2($elm$html$Html$Attributes$style, 'background-color', '#ff6b6b'),
+								A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'transform',
+								A3(getTransform, 'element-a', 300, 120)),
+								A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0,0,0,0.2)'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+								A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
+										A2($elm$html$Html$Attributes$style, 'font-size', '18px')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('A')
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id('element-b'),
+								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+								A2($elm$html$Html$Attributes$style, 'width', '60px'),
+								A2($elm$html$Html$Attributes$style, 'height', '60px'),
+								A2($elm$html$Html$Attributes$style, 'background-color', '#4ecdc4'),
+								A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'transform',
+								A3(getTransform, 'element-b', 400, 180)),
+								A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0,0,0,0.2)'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+								A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
+										A2($elm$html$Html$Attributes$style, 'font-size', '18px')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('B')
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id('element-c'),
+								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+								A2($elm$html$Html$Attributes$style, 'width', '60px'),
+								A2($elm$html$Html$Attributes$style, 'height', '60px'),
+								A2($elm$html$Html$Attributes$style, 'background-color', '#95e1d3'),
+								A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'transform',
+								A3(getTransform, 'element-c', 500, 120)),
+								A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0,0,0,0.2)'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+								A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
+										A2($elm$html$Html$Attributes$style, 'font-size', '18px')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('C')
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+								A2($elm$html$Html$Attributes$style, 'top', '60px'),
+								A2($elm$html$Html$Attributes$style, 'right', '20px'),
+								A2($elm$html$Html$Attributes$style, 'background', 'rgba(255,255,255,0.9)'),
+								A2($elm$html$Html$Attributes$style, 'padding', '20px'),
+								A2($elm$html$Html$Attributes$style, 'border-radius', '10px'),
+								A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 12px rgba(0,0,0,0.15)')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h3,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'margin-top', '0'),
+										A2($elm$html$Html$Attributes$style, 'color', '#333')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('🎮 Animation Controls')
+									])),
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+										A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+										A2($elm$html$Html$Attributes$style, 'gap', '10px')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_fromArray(
+											[
+												$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartElementA),
+												A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+												A2($elm$html$Html$Attributes$style, 'background', '#ff6b6b'),
+												A2($elm$html$Html$Attributes$style, 'color', 'white'),
+												A2($elm$html$Html$Attributes$style, 'border', 'none'),
+												A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+												A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('🔴 Move A')
+											])),
+										A2(
+										$elm$html$Html$button,
+										_List_fromArray(
+											[
+												$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartElementB),
+												A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+												A2($elm$html$Html$Attributes$style, 'background', '#4ecdc4'),
+												A2($elm$html$Html$Attributes$style, 'color', 'white'),
+												A2($elm$html$Html$Attributes$style, 'border', 'none'),
+												A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+												A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('🔵 Move B')
+											])),
+										A2(
+										$elm$html$Html$button,
+										_List_fromArray(
+											[
+												$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartElementC),
+												A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+												A2($elm$html$Html$Attributes$style, 'background', '#95e1d3'),
+												A2($elm$html$Html$Attributes$style, 'color', 'white'),
+												A2($elm$html$Html$Attributes$style, 'border', 'none'),
+												A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+												A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('🟢 Move C')
+											])),
+										A2(
+										$elm$html$Html$button,
+										_List_fromArray(
+											[
+												$elm$html$Html$Events$onClick($author$project$SmoothMoveSub$Multiple$StartAll),
+												A2($elm$html$Html$Attributes$style, 'padding', '12px 20px'),
+												A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(45deg, #667eea, #764ba2)'),
+												A2($elm$html$Html$Attributes$style, 'color', 'white'),
+												A2($elm$html$Html$Attributes$style, 'border', 'none'),
+												A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+												A2($elm$html$Html$Attributes$style, 'cursor', 'pointer'),
+												A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('🎉 Move ALL Simultaneously!')
+											]))
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+								A2($elm$html$Html$Attributes$style, 'bottom', '20px'),
+								A2($elm$html$Html$Attributes$style, 'right', '20px'),
+								A2($elm$html$Html$Attributes$style, 'background', 'rgba(255,255,255,0.9)'),
+								A2($elm$html$Html$Attributes$style, 'padding', '15px'),
+								A2($elm$html$Html$Attributes$style, 'border-radius', '10px'),
+								A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 12px rgba(0,0,0,0.15)'),
+								A2($elm$html$Html$Attributes$style, 'font-family', 'monospace')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'color', '#333'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('📊 Animation Status:')
+									])),
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'margin-top', '5px'),
+										A2(
+										$elm$html$Html$Attributes$style,
+										'color',
+										$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? '#27ae60' : '#e74c3c')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? '🟢 RUNNING' : '🔴 IDLE')
+									]))
+							]))
+					]))
+			]),
 		title: 'SmoothMoveSub Multiple Example'
 	};
 };

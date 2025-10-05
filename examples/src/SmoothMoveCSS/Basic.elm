@@ -20,7 +20,13 @@ type Msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { animations = SmoothMoveCSS.init
+    let
+        -- Initialize with starting position to prevent jump to (0,0)
+        initialAnimations =
+            SmoothMoveCSS.init
+                |> SmoothMoveCSS.setInitialPosition "box" 50 50
+    in
+    ( { animations = initialAnimations
       }
     , Cmd.none
     )

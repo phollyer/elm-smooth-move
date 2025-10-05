@@ -28,7 +28,7 @@ import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveSub exposing (defaultConfig, transform, isAnimating, getPosition, animateTo)
+import SmoothMoveSub exposing (defaultConfig, transform, isAnimating, getPosition, animateTo, setInitialPosition)
 
 
 main =
@@ -53,7 +53,13 @@ type Msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { smoothMove = SmoothMoveSub.init }
+    let
+        -- Initialize with starting position to prevent jump to (0,0)
+        initialSmoothMove =
+            SmoothMoveSub.init
+                |> setInitialPosition "moving-element" 200 150
+    in
+    ( { smoothMove = initialSmoothMove }
     , Cmd.none
     )
 

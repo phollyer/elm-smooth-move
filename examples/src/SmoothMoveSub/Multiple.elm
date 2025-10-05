@@ -21,7 +21,7 @@ import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveSub exposing (transform, animateTo, isAnimating, getPosition)
+import SmoothMoveSub exposing (transform, animateTo, isAnimating, getPosition, setInitialPosition)
 
 
 main =
@@ -49,7 +49,15 @@ type Msg
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { smoothMove = SmoothMoveSub.init }
+    let        
+        -- Initialize with starting positions to prevent jump to (0,0)
+        initialSmoothMove =
+            SmoothMoveSub.init
+                |> setInitialPosition "element-a" 300 120
+                |> setInitialPosition "element-b" 400 180
+                |> setInitialPosition "element-c" 500 120
+    in
+    ( { smoothMove = initialSmoothMove }
     , Cmd.none
     )
 
@@ -60,21 +68,21 @@ update msg model =
         StartElementA ->
             let
                 newSmoothMove =
-                    animateTo "element-a" 350 80 model.smoothMove
+                    animateTo "element-a" 600 180 model.smoothMove
             in
             ( { model | smoothMove = newSmoothMove }, Cmd.none )
 
         StartElementB ->
             let
                 newSmoothMove =
-                    animateTo "element-b" 200 250 model.smoothMove
+                    animateTo "element-b" 300 350 model.smoothMove
             in
             ( { model | smoothMove = newSmoothMove }, Cmd.none )
 
         StartElementC ->
             let
                 newSmoothMove =
-                    animateTo "element-c" 80 120 model.smoothMove
+                    animateTo "element-c" 200 280 model.smoothMove
             in
             ( { model | smoothMove = newSmoothMove }, Cmd.none )
 
@@ -83,9 +91,9 @@ update msg model =
                 -- Chain multiple animations - all start simultaneously!
                 newSmoothMove =
                     model.smoothMove
-                        |> animateTo "element-a" 400 50
-                        |> animateTo "element-b" 50 400
-                        |> animateTo "element-c" 250 250
+                        |> animateTo "element-a" 500 300
+                        |> animateTo "element-b" 300 150
+                        |> animateTo "element-c" 700 250
             in
             ( { model | smoothMove = newSmoothMove }, Cmd.none )
 
@@ -115,10 +123,13 @@ view model =
     in
     { title = "SmoothMoveSub Multiple Example"
     , body =
-        [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
-        ] ++
-        [ div [ style "position" "relative", style "width" "100vw", style "height" "100vh", style "background" "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", style "padding-top" "60px", style "box-sizing" "border-box" ]
-            [ -- Element A (Red)
+        -- Full-screen background
+        [ div [ style "position" "fixed", style "top" "0", style "left" "0", style "width" "100vw", style "height" "100vh", style "background" "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", style "z-index" "-1" ] []
+        -- Back button on top
+        , a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
+        -- Main content area
+        , div [ style "position" "relative", style "width" "100vw", style "height" "100vh", style "padding-top" "60px", style "box-sizing" "border-box" ]
+            [ -- Element A (Red) - moved away from top-left corner
               div
                 [ id "element-a"
                 , style "position" "absolute"
@@ -126,7 +137,7 @@ view model =
                 , style "height" "60px"
                 , style "background-color" "#ff6b6b"
                 , style "border-radius" "50%"
-                , style "transform" (getTransform "element-a" 200 100)
+                , style "transform" (getTransform "element-a" 300 120)
                 , style "box-shadow" "0 4px 8px rgba(0,0,0,0.2)"
                 , style "display" "flex"
                 , style "align-items" "center"
@@ -144,7 +155,7 @@ view model =
                 , style "height" "60px"
                 , style "background-color" "#4ecdc4"
                 , style "border-radius" "50%"
-                , style "transform" (getTransform "element-b" 150 150)
+                , style "transform" (getTransform "element-b" 400 180)
                 , style "box-shadow" "0 4px 8px rgba(0,0,0,0.2)"
                 , style "display" "flex"
                 , style "align-items" "center"
@@ -162,7 +173,7 @@ view model =
                 , style "height" "60px"
                 , style "background-color" "#95e1d3"
                 , style "border-radius" "50%"
-                , style "transform" (getTransform "element-c" 100 200)
+                , style "transform" (getTransform "element-c" 500 120)
                 , style "box-shadow" "0 4px 8px rgba(0,0,0,0.2)"
                 , style "display" "flex"
                 , style "align-items" "center" 
@@ -172,11 +183,11 @@ view model =
                     [ text "C" ]
                 ]
             
-            -- Control Panel
+            -- Control Panel - moved to right side to avoid back button
             , div 
                 [ style "position" "fixed"
-                , style "top" "20px"
-                , style "left" "20px"
+                , style "top" "60px"
+                , style "right" "20px"
                 , style "background" "rgba(255,255,255,0.9)"
                 , style "padding" "20px"
                 , style "border-radius" "10px"
@@ -228,11 +239,11 @@ view model =
                     ]
                 ]
                 
-            -- Status Panel
+            -- Status Panel - moved to right side
             , div 
                 [ style "position" "fixed"
                 , style "bottom" "20px"
-                , style "left" "20px"
+                , style "right" "20px"
                 , style "background" "rgba(255,255,255,0.9)"
                 , style "padding" "15px"
                 , style "border-radius" "10px"

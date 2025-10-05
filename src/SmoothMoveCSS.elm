@@ -7,6 +7,7 @@ module SmoothMoveCSS exposing
     , step
     , animateTo
     , animateToWithConfig
+    , setInitialPosition
     , stopAnimation
     , isAnimating
     , getPosition
@@ -45,6 +46,7 @@ This module uses CSS transitions instead of JavaScript animation frames, providi
 
 @docs animateTo
 @docs animateToWithConfig
+@docs setInitialPosition
 @docs stopAnimation
 
 
@@ -148,6 +150,35 @@ animateToWithConfig config elementId targetX targetY (Model elements) =
             , targetY = targetY
             , isAnimating = True
             , config = config
+            }
+
+        updatedElements =
+            Dict.insert elementId elementData elements
+    in
+    Model updatedElements
+
+
+{-| Set the initial position of an element without animation
+
+This is useful for preventing the "jump to (0,0)" behavior on first animation.
+Call this during initialization to establish element positions.
+
+    initialModel =
+        SmoothMoveCSS.init
+            |> SmoothMoveCSS.setInitialPosition "element-a" 100 150
+            |> SmoothMoveCSS.setInitialPosition "element-b" 200 250
+
+-}
+setInitialPosition : String -> Float -> Float -> Model -> Model
+setInitialPosition elementId x y (Model elements) =
+    let
+        elementData =
+            { currentX = x
+            , currentY = y
+            , targetX = x
+            , targetY = y
+            , isAnimating = False
+            , config = defaultConfig
             }
 
         updatedElements =
