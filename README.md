@@ -6,21 +6,25 @@ A comprehensive Elm package providing **5 different animation approaches** for s
 
 ## 🎯 Five Animation Approaches
 
-### 1. **SmoothMoveTask** - Task-Based Scrolling
-Perfect for **document/container scrolling** with composable error handling.
+### 1. **SmoothMoveTask** - Scrolling (Simple & Advanced)
+Perfect for **document/container scrolling** with both simple and advanced APIs.
 ```elm
 import SmoothMoveTask exposing (animateTo, animateToWithConfig)
-import Task
 
--- Basic usage
-animateTo "target-element-id"
-    |> Task.attempt (always NoOp)
+-- Simple usage (recommended for most users)
+animateTo "target-element-id"  -- Returns Cmd ()
 
--- With configuration
+-- Simple with configuration
 animateToWithConfig 
     { defaultConfig | offset = 60, speed = 15 } 
     "target-element-id"
-    |> Task.attempt (always NoOp)
+
+-- Advanced: Task-based for composition/error handling
+import SmoothMoveTask exposing (animateToTask)
+import Task
+
+animateToTask "target-element-id"
+    |> Task.attempt HandleScrollError
 ```
 
 ### 2. **SmoothMoveSub** - Subscription-Based Positioning  
@@ -92,9 +96,9 @@ elm install phollyer/elm-smooth-move
 ```elm
 import SmoothMoveTask exposing (animateTo)
 
--- In your update function
+-- In your update function (simple!)
 SmoothScroll elementId ->
-    ( model, Task.attempt (always NoOp) (animateTo elementId) )
+    ( model, animateTo elementId )
 ```
 
 **For moving UI elements:**
@@ -198,26 +202,26 @@ All approaches use similar configuration patterns, making it easy to switch:
 ```
 
 ### Migration Between Approaches
-Most approaches share similar APIs, but there are some differences to consider:
+Most approaches now share very similar APIs!
 
-**✅ Easy transitions (similar patterns):**
+**✅ Easy transitions (consistent Cmd-based patterns):**
 ```elm
--- SmoothMoveState to SmoothMoveCSS (both need subscriptions)
-import SmoothMoveState exposing (animateTo, subscriptions)  
--- vs
-import SmoothMoveCSS exposing (animateTo, subscriptions)
+-- Scrolling (simple Cmd-based)
+ScrollTo elementId -> ( model, SmoothMoveTask.animateTo elementId )
 
--- Both: newState = animateTo "my-element" 200 300 state
+-- Element positioning (state-based)
+MoveElement -> { model | animations = SmoothMoveState.animateTo "elem" 100 200 model.animations }
+MoveElement -> { model | animations = SmoothMoveCSS.animateTo "elem" 100 200 model.animations }
 ```
 
 **⚠️ Requires additional changes:**
-- **SmoothMoveTask**: Returns `Task` - needs `Task.attempt`
 - **SmoothMovePorts**: Returns `( Model, Cmd )` - needs tuple destructuring + JavaScript setup
 - **Subscriptions**: SmoothMoveSub/State/CSS need subscriptions, Task/Ports don't
+- **Advanced Task API**: Use `SmoothMoveTask.animateToTask` for composition/error handling
 
 ## 📖 API Documentation
 
-- **SmoothMoveTask**: `animateTo`, `animateToWithConfig`, `containerElement`, `containerElementWithConfig`
+- **SmoothMoveTask**: `animateTo`, `animateToWithConfig`, `containerElement`, `containerElementWithConfig` (simple Cmd-based) + `animateToTask`, `animateToTaskWithConfig`, `containerElementTask`, `containerElementTaskWithConfig` (advanced Task-based)
 - **SmoothMoveSub**: `animateTo`, `animateToWithConfig`, `subscriptions`, `transform`, `setInitialPosition`
 - **SmoothMoveState**: `animateTo`, `animateToWithConfig`, `subscriptions`, `transform`, `transformElement`, `setInitialPosition`
 - **SmoothMoveCSS**: `animateTo`, `animateToWithConfig`, `cssTransitionStyle`, `setInitialPosition`

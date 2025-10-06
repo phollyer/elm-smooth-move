@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>SmoothMovePorts.Multiple</title>
+  <title>SmoothMoveTask.Container</title>
   <style>body { padding: 0; margin: 0; }</style>
 </head>
 
@@ -5172,507 +5172,167 @@ var $elm$core$Task$perform = F2(
 			$elm$core$Task$Perform(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
-var $elm$browser$Browser$element = _Browser_element;
-var $author$project$SmoothMovePorts$Model = function (a) {
-	return {$: 'Model', a: a};
-};
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $author$project$SmoothMovePorts$init = $author$project$SmoothMovePorts$Model($elm$core$Dict$empty);
+var $elm$browser$Browser$document = _Browser_document;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$SmoothMovePorts$Both = {$: 'Both'};
-var $author$project$SmoothMovePorts$defaultConfig = {axis: $author$project$SmoothMovePorts$Both, duration: 400, easing: 'ease-out'};
-var $elm$core$Dict$Black = {$: 'Black'};
-var $elm$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
-	});
-var $elm$core$Dict$Red = {$: 'Red'};
-var $elm$core$Dict$balance = F5(
-	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
-			var _v1 = right.a;
-			var rK = right.b;
-			var rV = right.c;
-			var rLeft = right.d;
-			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
-				var _v3 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var lLeft = left.d;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
-					key,
-					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					color,
-					rK,
-					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
-					rRight);
-			}
-		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
-				var _v5 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var _v6 = left.d;
-				var _v7 = _v6.a;
-				var llK = _v6.b;
-				var llV = _v6.c;
-				var llLeft = _v6.d;
-				var llRight = _v6.e;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
-					lK,
-					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
-			} else {
-				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
-			}
-		}
-	});
-var $elm$core$Basics$compare = _Utils_compare;
-var $elm$core$Dict$insertHelp = F3(
-	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
-		} else {
-			var nColor = dict.a;
-			var nKey = dict.b;
-			var nValue = dict.c;
-			var nLeft = dict.d;
-			var nRight = dict.e;
-			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1.$) {
-				case 'LT':
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						A3($elm$core$Dict$insertHelp, key, value, nLeft),
-						nRight);
-				case 'EQ':
-					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
-				default:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						nLeft,
-						A3($elm$core$Dict$insertHelp, key, value, nRight));
-			}
-		}
-	});
-var $elm$core$Dict$insert = F3(
-	function (key, value, dict) {
-		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
-			var _v1 = _v0.a;
-			var k = _v0.b;
-			var v = _v0.c;
-			var l = _v0.d;
-			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
-		} else {
-			var x = _v0;
-			return x;
-		}
-	});
-var $author$project$SmoothMovePorts$setInitialPosition = F4(
-	function (elementId, x, y, _v0) {
-		var elements = _v0.a;
-		var elementData = {config: $author$project$SmoothMovePorts$defaultConfig, currentX: x, currentY: y, isAnimating: false, targetX: x, targetY: y};
-		var updatedElements = A3($elm$core$Dict$insert, elementId, elementData, elements);
-		return $author$project$SmoothMovePorts$Model(updatedElements);
-	});
-var $author$project$SmoothMovePorts$Multiple$init = function (_v0) {
-	var initialAnimations = A4(
-		$author$project$SmoothMovePorts$setInitialPosition,
-		'element-c',
-		150,
-		200,
-		A4(
-			$author$project$SmoothMovePorts$setInitialPosition,
-			'element-b',
-			200,
-			150,
-			A4($author$project$SmoothMovePorts$setInitialPosition, 'element-a', 100, 100, $author$project$SmoothMovePorts$init)));
+var $author$project$SmoothMoveTask$Container$init = function (_v0) {
 	return _Utils_Tuple2(
-		{animations: initialAnimations},
+		{foo: 'bar'},
 		$elm$core$Platform$Cmd$none);
 };
-var $author$project$SmoothMovePorts$Multiple$PositionUpdateMsg = function (a) {
-	return {$: 'PositionUpdateMsg', a: a};
-};
-var $elm$json$Json$Decode$value = _Json_decodeValue;
-var $author$project$SmoothMovePorts$Multiple$positionUpdates = _Platform_incomingPort('positionUpdates', $elm$json$Json$Decode$value);
-var $author$project$SmoothMovePorts$Multiple$subscriptions = function (_v0) {
-	return $author$project$SmoothMovePorts$Multiple$positionUpdates($author$project$SmoothMovePorts$Multiple$PositionUpdateMsg);
-};
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $author$project$SmoothMovePorts$getPosition = F2(
-	function (elementId, _v0) {
-		var elements = _v0.a;
-		return A2(
-			$elm$core$Maybe$map,
-			function (elementData) {
-				return {x: elementData.currentX, y: elementData.currentY};
-			},
-			A2($elm$core$Dict$get, elementId, elements));
-	});
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
-var $author$project$SmoothMovePorts$animateToWithConfig = F5(
-	function (config, elementId, targetX, targetY, _v0) {
-		var elements = _v0.a;
-		var currentPos = A2(
-			$elm$core$Maybe$withDefault,
-			{x: 0, y: 0},
-			A2(
-				$author$project$SmoothMovePorts$getPosition,
-				elementId,
-				$author$project$SmoothMovePorts$Model(elements)));
-		var elementData = {config: config, currentX: currentPos.x, currentY: currentPos.y, isAnimating: true, targetX: targetX, targetY: targetY};
-		var updatedElements = A3($elm$core$Dict$insert, elementId, elementData, elements);
-		var axisString = function () {
-			var _v1 = config.axis;
-			switch (_v1.$) {
-				case 'X':
-					return 'x';
-				case 'Y':
-					return 'y';
-				default:
-					return 'both';
-			}
-		}();
-		var command = {axis: axisString, duration: config.duration, easing: config.easing, elementId: elementId, targetX: targetX, targetY: targetY};
-		return _Utils_Tuple2(
-			$author$project$SmoothMovePorts$Model(updatedElements),
-			command);
-	});
-var $elm$core$Tuple$mapSecond = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			x,
-			func(y));
-	});
-var $author$project$SmoothMovePorts$animateBatch = F2(
-	function (specs, model) {
-		return A2(
-			$elm$core$Tuple$mapSecond,
-			$elm$core$List$reverse,
-			A3(
-				$elm$core$List$foldl,
-				F2(
-					function (spec, _v0) {
-						var currentModel = _v0.a;
-						var commands = _v0.b;
-						var _v1 = A5($author$project$SmoothMovePorts$animateToWithConfig, spec.config, spec.elementId, spec.targetX, spec.targetY, currentModel);
-						var newModel = _v1.a;
-						var command = _v1.b;
-						return _Utils_Tuple2(
-							newModel,
-							A2($elm$core$List$cons, command, commands));
-					}),
-				_Utils_Tuple2(model, _List_Nil),
-				specs));
+var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$SmoothMoveTask$Container$NoOp = {$: 'NoOp'};
+var $elm$core$Basics$always = F2(
+	function (a, _v0) {
+		return a;
 	});
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
 			f(x));
 	});
-var $elm$core$String$fromFloat = _String_fromNumber;
-var $author$project$SmoothMovePorts$encodeAnimationCommand = function (cmd) {
-	return A2(
-		$elm$core$String$join,
-		':',
-		_List_fromArray(
-			[
-				cmd.elementId,
-				$elm$core$String$fromFloat(cmd.targetX),
-				$elm$core$String$fromFloat(cmd.targetY),
-				$elm$core$String$fromFloat(cmd.duration),
-				cmd.easing,
-				cmd.axis
-			]));
-};
-var $author$project$SmoothMovePorts$animateBatchWithPort = F3(
-	function (portFunction, specs, model) {
-		var _v0 = A2($author$project$SmoothMovePorts$animateBatch, specs, model);
-		var newModel = _v0.a;
-		var commands = _v0.b;
-		return _Utils_Tuple2(
-			newModel,
-			$elm$core$Platform$Cmd$batch(
+var $elm$core$Task$onError = _Scheduler_onError;
+var $elm$core$Task$attempt = F2(
+	function (resultToMessage, task) {
+		return $elm$core$Task$command(
+			$elm$core$Task$Perform(
 				A2(
-					$elm$core$List$map,
-					A2($elm$core$Basics$composeL, portFunction, $author$project$SmoothMovePorts$encodeAnimationCommand),
-					commands)));
+					$elm$core$Task$onError,
+					A2(
+						$elm$core$Basics$composeL,
+						A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+						$elm$core$Result$Err),
+					A2(
+						$elm$core$Task$andThen,
+						A2(
+							$elm$core$Basics$composeL,
+							A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+							$elm$core$Result$Ok),
+						task))));
 	});
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$SmoothMovePorts$Multiple$animateElement = _Platform_outgoingPort('animateElement', $elm$json$Json$Encode$string);
-var $author$project$SmoothMovePorts$encodeStopCommand = function (elementId) {
-	return elementId;
+var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
+var $elm$core$Process$sleep = _Process_sleep;
+var $author$project$SmoothMoveTask$animateContainerSteps = F2(
+	function (containerId, steps) {
+		return $elm$core$Task$sequence(
+			A2(
+				$elm$core$List$map,
+				function (y) {
+					return A2(
+						$elm$core$Task$andThen,
+						function (_v0) {
+							return A3($elm$browser$Browser$Dom$setViewportOf, containerId, 0, y);
+						},
+						$elm$core$Process$sleep(16));
+				},
+				steps));
+	});
+var $elm$core$Basics$clamp = F3(
+	function (low, high, number) {
+		return (_Utils_cmp(number, low) < 0) ? low : ((_Utils_cmp(number, high) > 0) ? high : number);
+	});
+var $elm$browser$Browser$Dom$getElement = _Browser_getElement;
+var $elm$core$Basics$negate = function (n) {
+	return -n;
 };
-var $author$project$SmoothMovePorts$stopAnimation = F2(
-	function (elementId, _v0) {
-		var elements = _v0.a;
-		var _v1 = A2($elm$core$Dict$get, elementId, elements);
-		if (_v1.$ === 'Just') {
-			var elementData = _v1.a;
-			var updatedElementData = _Utils_update(
-				elementData,
-				{isAnimating: false});
-			var updatedElements = A3($elm$core$Dict$insert, elementId, updatedElementData, elements);
-			return _Utils_Tuple2(
-				$author$project$SmoothMovePorts$Model(updatedElements),
-				$elm$core$Maybe$Just(elementId));
-		} else {
-			return _Utils_Tuple2(
-				$author$project$SmoothMovePorts$Model(elements),
-				$elm$core$Maybe$Nothing);
-		}
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $elm$core$Basics$round = _Basics_round;
+var $author$project$Internal$AnimationSteps$interpolate = F4(
+	function (speed, easing, start, stop) {
+		var operator = (_Utils_cmp(start, stop) > 0) ? $elm$core$Basics$sub : $elm$core$Basics$add;
+		var diff = $elm$core$Basics$abs(start - stop);
+		var frames = A2(
+			$elm$core$Basics$max,
+			1,
+			($elm$core$Basics$round(diff) / speed) | 0);
+		var framesFloat = frames;
+		var weights = A2(
+			$elm$core$List$map,
+			function (i) {
+				return easing(i / framesFloat);
+			},
+			A2($elm$core$List$range, 0, frames));
+		return ((speed <= 0) || _Utils_eq(start, stop)) ? _List_Nil : A2(
+			$elm$core$List$map,
+			function (weight) {
+				return A2(operator, start, weight * diff);
+			},
+			weights);
 	});
-var $author$project$SmoothMovePorts$stopBatch = F2(
-	function (elementIds, model) {
+var $elm$core$Tuple$pair = F2(
+	function (a, b) {
+		return _Utils_Tuple2(a, b);
+	});
+var $author$project$SmoothMoveTask$containerElementTaskWithConfig = F3(
+	function (config, containerId, elementId) {
 		return A2(
-			$elm$core$Tuple$mapSecond,
-			$elm$core$List$reverse,
+			$elm$core$Task$andThen,
+			function (_v0) {
+				var container = _v0.a;
+				var element = _v0.b;
+				var elementTop = element.element.y;
+				var containerTop = container.element.y;
+				var relativePosition = elementTop - containerTop;
+				var targetY = relativePosition - (container.element.height / 2);
+				var clampedY = A3($elm$core$Basics$clamp, 0, container.element.height - container.viewport.height, targetY);
+				var steps = A4(
+					$author$project$Internal$AnimationSteps$interpolate,
+					$elm$core$Basics$round(config.speed),
+					config.easing,
+					container.viewport.y,
+					clampedY);
+				return A2($author$project$SmoothMoveTask$animateContainerSteps, containerId, steps);
+			},
 			A3(
-				$elm$core$List$foldl,
-				F2(
-					function (elementId, _v0) {
-						var currentModel = _v0.a;
-						var stoppedElements = _v0.b;
-						var _v1 = A2($author$project$SmoothMovePorts$stopAnimation, elementId, currentModel);
-						var newModel = _v1.a;
-						var maybeStoppedId = _v1.b;
-						if (maybeStoppedId.$ === 'Just') {
-							var stoppedId = maybeStoppedId.a;
-							return _Utils_Tuple2(
-								newModel,
-								A2($elm$core$List$cons, stoppedId, stoppedElements));
-						} else {
-							return _Utils_Tuple2(newModel, stoppedElements);
-						}
-					}),
-				_Utils_Tuple2(model, _List_Nil),
-				elementIds));
+				$elm$core$Task$map2,
+				$elm$core$Tuple$pair,
+				$elm$browser$Browser$Dom$getElement(containerId),
+				$elm$browser$Browser$Dom$getElement(elementId)));
 	});
-var $author$project$SmoothMovePorts$stopBatchWithPort = F3(
-	function (portFunction, elementIds, model) {
-		var _v0 = A2($author$project$SmoothMovePorts$stopBatch, elementIds, model);
-		var newModel = _v0.a;
-		var stoppedElements = _v0.b;
-		return _Utils_Tuple2(
-			newModel,
-			$elm$core$Platform$Cmd$batch(
-				A2(
-					$elm$core$List$map,
-					A2($elm$core$Basics$composeL, portFunction, $author$project$SmoothMovePorts$encodeStopCommand),
-					stoppedElements)));
+var $author$project$SmoothMoveTask$Y = {$: 'Y'};
+var $elm_community$easing_functions$Ease$flip = F2(
+	function (easing, time) {
+		return 1 - easing(1 - time);
 	});
-var $author$project$SmoothMovePorts$Multiple$stopElementAnimation = _Platform_outgoingPort('stopElementAnimation', $elm$json$Json$Encode$string);
-var $author$project$SmoothMovePorts$Multiple$update = F2(
+var $elm$core$Basics$pow = _Basics_pow;
+var $elm_community$easing_functions$Ease$inCubic = function (time) {
+	return A2($elm$core$Basics$pow, time, 3);
+};
+var $elm_community$easing_functions$Ease$outCubic = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inCubic);
+var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, easing: $elm_community$easing_functions$Ease$outCubic, offset: 0, speed: 400.0};
+var $author$project$SmoothMoveTask$containerElement = F2(
+	function (containerId, elementId) {
+		return A2(
+			$elm$core$Task$attempt,
+			$elm$core$Basics$always(_Utils_Tuple0),
+			A3($author$project$SmoothMoveTask$containerElementTaskWithConfig, $author$project$SmoothMoveTask$defaultConfig, containerId, elementId));
+	});
+var $elm$core$Platform$Cmd$map = _Platform_map;
+var $author$project$SmoothMoveTask$Container$update = F2(
 	function (msg, model) {
-		switch (msg.$) {
-			case 'AnimateToCorners':
-				var animationSpecs = _List_fromArray(
-					[
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 800, easing: 'ease-in-out'},
-						elementId: 'box1',
-						targetX: 50,
-						targetY: 50
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)'},
-						elementId: 'box2',
-						targetX: 450,
-						targetY: 50
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 1000, easing: 'ease-out'},
-						elementId: 'box3',
-						targetX: 450,
-						targetY: 350
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 700, easing: 'ease-in-out'},
-						elementId: 'box4',
-						targetX: 50,
-						targetY: 350
-					}
-					]);
-				var _v1 = A3($author$project$SmoothMovePorts$animateBatchWithPort, $author$project$SmoothMovePorts$Multiple$animateElement, animationSpecs, model.animations);
-				var newAnimations = _v1.a;
-				var cmd = _v1.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{animations: newAnimations}),
-					cmd);
-			case 'AnimateToCenter':
-				var animationSpecs = _List_fromArray(
-					[
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 500, easing: 'ease-out'},
-						elementId: 'box1',
-						targetX: 237,
-						targetY: 137
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 750, easing: 'ease-out'},
-						elementId: 'box2',
-						targetX: 317,
-						targetY: 137
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'ease-out'},
-						elementId: 'box3',
-						targetX: 237,
-						targetY: 217
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 900, easing: 'ease-out'},
-						elementId: 'box4',
-						targetX: 317,
-						targetY: 217
-					}
-					]);
-				var _v2 = A3($author$project$SmoothMovePorts$animateBatchWithPort, $author$project$SmoothMovePorts$Multiple$animateElement, animationSpecs, model.animations);
-				var newAnimations = _v2.a;
-				var cmd = _v2.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{animations: newAnimations}),
-					cmd);
-			case 'AnimateInSequence':
-				var animationSpecs = _List_fromArray(
-					[
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 400, easing: 'ease-in-out'},
-						elementId: 'box1',
-						targetX: 100,
-						targetY: 100
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 600, easing: 'ease-in-out'},
-						elementId: 'box2',
-						targetX: 200,
-						targetY: 150
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 800, easing: 'ease-in-out'},
-						elementId: 'box3',
-						targetX: 300,
-						targetY: 200
-					},
-						{
-						config: {axis: $author$project$SmoothMovePorts$Both, duration: 1000, easing: 'ease-in-out'},
-						elementId: 'box4',
-						targetX: 400,
-						targetY: 250
-					}
-					]);
-				var _v3 = A3($author$project$SmoothMovePorts$animateBatchWithPort, $author$project$SmoothMovePorts$Multiple$animateElement, animationSpecs, model.animations);
-				var newAnimations = _v3.a;
-				var cmd = _v3.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{animations: newAnimations}),
-					cmd);
-			case 'StopAll':
-				var _v4 = A3(
-					$author$project$SmoothMovePorts$stopBatchWithPort,
-					$author$project$SmoothMovePorts$Multiple$stopElementAnimation,
-					_List_fromArray(
-						['box1', 'box2', 'box3', 'box4']),
-					model.animations);
-				var newAnimations = _v4.a;
-				var cmd = _v4.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{animations: newAnimations}),
-					cmd);
-			case 'PositionUpdateMsg':
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			default:
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+		if (msg.$ === 'NoOp') {
+			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+		} else {
+			var containerId = msg.a;
+			var targetId = msg.b;
+			return _Utils_Tuple2(
+				model,
+				A2(
+					$elm$core$Platform$Cmd$map,
+					$elm$core$Basics$always($author$project$SmoothMoveTask$Container$NoOp),
+					A2($author$project$SmoothMoveTask$containerElement, containerId, targetId)));
 		}
 	});
-var $author$project$SmoothMovePorts$Multiple$AnimateInSequence = {$: 'AnimateInSequence'};
-var $author$project$SmoothMovePorts$Multiple$AnimateToCenter = {$: 'AnimateToCenter'};
-var $author$project$SmoothMovePorts$Multiple$AnimateToCorners = {$: 'AnimateToCorners'};
-var $author$project$SmoothMovePorts$Multiple$StopAll = {$: 'StopAll'};
-var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$SmoothMoveTask$Container$SmoothScroll = F2(
+	function (a, b) {
+		return {$: 'SmoothScroll', a: a, b: b};
+	});
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$core$String$append = _String_append;
+var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -5681,112 +5341,43 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $elm$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			if (!list.b) {
-				return false;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				if (isOkay(x)) {
-					return true;
-				} else {
-					var $temp$isOkay = isOkay,
-						$temp$list = xs;
-					isOkay = $temp$isOkay;
-					list = $temp$list;
-					continue any;
-				}
-			}
-		}
-	});
-var $elm$core$Dict$values = function (dict) {
-	return A3(
-		$elm$core$Dict$foldr,
-		F3(
-			function (key, value, valueList) {
-				return A2($elm$core$List$cons, value, valueList);
-			}),
-		_List_Nil,
-		dict);
-};
-var $author$project$SmoothMovePorts$isAnimating = function (_v0) {
-	var elements = _v0.a;
-	return A2(
-		$elm$core$List$any,
-		function ($) {
-			return $.isAnimating;
-		},
-		$elm$core$Dict$values(elements));
-};
-var $elm$core$Basics$negate = function (n) {
-	return -n;
-};
-var $elm$core$String$right = F2(
-	function (n, string) {
-		return (n < 1) ? '' : A3(
-			$elm$core$String$slice,
-			-n,
-			$elm$core$String$length(string),
-			string);
-	});
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$SmoothMovePorts$transform = F2(
-	function (x, y) {
-		return 'translate(' + ($elm$core$String$fromFloat(x) + ('px, ' + ($elm$core$String$fromFloat(y) + 'px)')));
-	});
-var $author$project$SmoothMovePorts$transformElement = F2(
-	function (elementId, model) {
-		var _v0 = A2($author$project$SmoothMovePorts$getPosition, elementId, model);
-		if (_v0.$ === 'Just') {
-			var pos = _v0.a;
-			return A2($author$project$SmoothMovePorts$transform, pos.x, pos.y);
-		} else {
-			return A2($author$project$SmoothMovePorts$transform, 0, 0);
-		}
-	});
-var $author$project$SmoothMovePorts$Multiple$animatedBox = F3(
-	function (elementId, color, animations) {
-		var position = A2($author$project$SmoothMovePorts$getPosition, elementId, animations);
-		var isAnimating = $author$project$SmoothMovePorts$isAnimating(animations);
-		var borderStyle = isAnimating ? '3px solid #FFD700' : ('2px solid ' + color);
+var $author$project$SmoothMoveTask$Container$anchorView = F2(
+	function (side, num) {
 		return A2(
-			$elm$html$Html$div,
+			$elm$html$Html$li,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$id(elementId),
-					A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-					A2($elm$html$Html$Attributes$style, 'width', '40px'),
-					A2($elm$html$Html$Attributes$style, 'height', '40px'),
-					A2($elm$html$Html$Attributes$style, 'background-color', color),
-					A2($elm$html$Html$Attributes$style, 'border', borderStyle),
-					A2($elm$html$Html$Attributes$style, 'border-radius', '8px'),
-					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-					A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
-					A2($elm$html$Html$Attributes$style, 'justify-content', 'center'),
-					A2($elm$html$Html$Attributes$style, 'color', 'white'),
-					A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
-					A2($elm$html$Html$Attributes$style, 'font-size', '12px'),
-					A2($elm$html$Html$Attributes$style, 'box-shadow', '0 2px 4px rgba(0,0,0,0.2)'),
+					$elm$html$Html$Attributes$id(
 					A2(
-					$elm$html$Html$Attributes$style,
-					'transform',
-					A2($author$project$SmoothMovePorts$transformElement, elementId, animations))
+						$elm$core$String$append,
+						'anchor-' + (side + '-'),
+						$elm$core$String$fromInt(num)))
 				]),
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A2($elm$core$String$right, 1, elementId))
+					$elm$core$String$fromInt(num))
 				]));
 	});
 var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $author$project$SmoothMoveTask$Container$columnStyles = _List_fromArray(
+	[
+		A2($elm$html$Html$Attributes$style, 'flex-grow', '1'),
+		A2($elm$html$Html$Attributes$style, 'overflow-y', 'scroll'),
+		A2($elm$html$Html$Attributes$style, 'border', '1px solid #ccc')
+	]);
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5804,261 +5395,194 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $author$project$SmoothMovePorts$Multiple$view = function (model) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
+var $author$project$SmoothMoveTask$Container$rowStyles = _List_fromArray(
+	[
+		A2($elm$html$Html$Attributes$style, 'font-size', '18px'),
+		A2($elm$html$Html$Attributes$style, 'font-family', 'sans-serif'),
+		A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+		A2($elm$html$Html$Attributes$style, 'top', '40px'),
+		A2($elm$html$Html$Attributes$style, 'bottom', '0'),
+		A2($elm$html$Html$Attributes$style, 'left', '0'),
+		A2($elm$html$Html$Attributes$style, 'right', '0'),
+		A2($elm$html$Html$Attributes$style, 'display', 'flex')
+	]);
+var $author$project$SmoothMoveTask$Container$topBarStyles = _List_fromArray(
+	[
+		A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+		A2($elm$html$Html$Attributes$style, 'top', '0'),
+		A2($elm$html$Html$Attributes$style, 'height', '40px'),
+		A2($elm$html$Html$Attributes$style, 'left', '0'),
+		A2($elm$html$Html$Attributes$style, 'right', '0'),
+		A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+		A2($elm$html$Html$Attributes$style, 'justify-content', 'space-around')
+	]);
+var $elm$html$Html$ul = _VirtualDom_node('ul');
+var $author$project$SmoothMoveTask$Container$view = function (model) {
+	return {
+		body: _List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'padding', '20px'),
-				A2($elm$html$Html$Attributes$style, 'font-family', 'Arial, sans-serif')
-			]),
-		_List_fromArray(
-			[
 				A2(
-				$elm$html$Html$h1,
-				_List_Nil,
+				$elm$html$Html$a,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('SmoothMovePorts - Multiple Animations')
-					])),
-				A2(
-				$elm$html$Html$h2,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('JavaScript Web Animations API Integration')
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'margin', '20px 0')
+						$elm$html$Html$Attributes$href('index.html'),
+						A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
+						A2($elm$html$Html$Attributes$style, 'top', '10px'),
+						A2($elm$html$Html$Attributes$style, 'left', '10px'),
+						A2($elm$html$Html$Attributes$style, 'background', '#666'),
+						A2($elm$html$Html$Attributes$style, 'color', 'white'),
+						A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
+						A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
+						A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
+						A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+						A2($elm$html$Html$Attributes$style, 'z-index', '1000')
 					]),
 				_List_fromArray(
 					[
+						$elm$html$Html$text('← Back')
+					])),
+				A2(
+				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
+					$author$project$SmoothMoveTask$Container$topBarStyles),
+				_List_fromArray(
+					[
 						A2(
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$SmoothMovePorts$Multiple$AnimateToCorners),
-								A2($elm$html$Html$Attributes$style, 'margin-right', '10px'),
-								A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-								A2($elm$html$Html$Attributes$style, 'background-color', '#4CAF50'),
-								A2($elm$html$Html$Attributes$style, 'color', 'white'),
-								A2($elm$html$Html$Attributes$style, 'border', 'none'),
-								A2($elm$html$Html$Attributes$style, 'border-radius', '4px'),
-								A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-100'))
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Animate to Corners')
+								$elm$html$Html$text('100')
 							])),
 						A2(
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$SmoothMovePorts$Multiple$AnimateToCenter),
-								A2($elm$html$Html$Attributes$style, 'margin-right', '10px'),
-								A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-								A2($elm$html$Html$Attributes$style, 'background-color', '#2196F3'),
-								A2($elm$html$Html$Attributes$style, 'color', 'white'),
-								A2($elm$html$Html$Attributes$style, 'border', 'none'),
-								A2($elm$html$Html$Attributes$style, 'border-radius', '4px'),
-								A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-25'))
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Animate to Center')
+								$elm$html$Html$text('25')
 							])),
 						A2(
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$SmoothMovePorts$Multiple$AnimateInSequence),
-								A2($elm$html$Html$Attributes$style, 'margin-right', '10px'),
-								A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-								A2($elm$html$Html$Attributes$style, 'background-color', '#FF9800'),
-								A2($elm$html$Html$Attributes$style, 'color', 'white'),
-								A2($elm$html$Html$Attributes$style, 'border', 'none'),
-								A2($elm$html$Html$Attributes$style, 'border-radius', '4px'),
-								A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-1'))
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Sequential Animation')
-							])),
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								$elm$html$Html$Events$onClick($author$project$SmoothMovePorts$Multiple$StopAll),
-								A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-								A2($elm$html$Html$Attributes$style, 'background-color', '#f44336'),
-								A2($elm$html$Html$Attributes$style, 'color', 'white'),
-								A2($elm$html$Html$Attributes$style, 'border', 'none'),
-								A2($elm$html$Html$Attributes$style, 'border-radius', '4px'),
-								A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Stop All')
+								$elm$html$Html$text('1')
 							]))
 					])),
 				A2(
 				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'position', 'relative'),
-						A2($elm$html$Html$Attributes$style, 'width', '600px'),
-						A2($elm$html$Html$Attributes$style, 'height', '400px'),
-						A2($elm$html$Html$Attributes$style, 'border', '2px solid #ddd'),
-						A2($elm$html$Html$Attributes$style, 'margin', '20px 0'),
-						A2($elm$html$Html$Attributes$style, 'background-color', '#f9f9f9')
-					]),
+				_List_Nil,
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$div,
+						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '299px'),
-								A2($elm$html$Html$Attributes$style, 'top', '0'),
-								A2($elm$html$Html$Attributes$style, 'width', '2px'),
-								A2($elm$html$Html$Attributes$style, 'height', '100%'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(255, 0, 0, 0.3)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-100'))
 							]),
-						_List_Nil),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('100')
+							])),
 						A2(
-						$elm$html$Html$div,
+						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '0'),
-								A2($elm$html$Html$Attributes$style, 'top', '199px'),
-								A2($elm$html$Html$Attributes$style, 'width', '100%'),
-								A2($elm$html$Html$Attributes$style, 'height', '2px'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(255, 0, 0, 0.3)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-25'))
 							]),
-						_List_Nil),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('25')
+							])),
 						A2(
-						$elm$html$Html$div,
+						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '220px'),
-								A2($elm$html$Html$Attributes$style, 'top', '120px'),
-								A2($elm$html$Html$Attributes$style, 'width', '160px'),
-								A2($elm$html$Html$Attributes$style, 'height', '160px'),
-								A2($elm$html$Html$Attributes$style, 'border', '2px dashed rgba(0, 0, 255, 0.5)'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(0, 0, 255, 0.1)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
+								$elm$html$Html$Events$onClick(
+								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-1'))
 							]),
-						_List_Nil),
-						A2(
-						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '235px'),
-								A2($elm$html$Html$Attributes$style, 'top', '135px'),
-								A2($elm$html$Html$Attributes$style, 'width', '50px'),
-								A2($elm$html$Html$Attributes$style, 'height', '50px'),
-								A2($elm$html$Html$Attributes$style, 'border', '1px solid rgba(255, 0, 0, 0.7)'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(255, 0, 0, 0.1)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
-							]),
-						_List_Nil),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '315px'),
-								A2($elm$html$Html$Attributes$style, 'top', '135px'),
-								A2($elm$html$Html$Attributes$style, 'width', '50px'),
-								A2($elm$html$Html$Attributes$style, 'height', '50px'),
-								A2($elm$html$Html$Attributes$style, 'border', '1px solid rgba(0, 255, 0, 0.7)'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(0, 255, 0, 0.1)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
-							]),
-						_List_Nil),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '235px'),
-								A2($elm$html$Html$Attributes$style, 'top', '215px'),
-								A2($elm$html$Html$Attributes$style, 'width', '50px'),
-								A2($elm$html$Html$Attributes$style, 'height', '50px'),
-								A2($elm$html$Html$Attributes$style, 'border', '1px solid rgba(0, 0, 255, 0.7)'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(0, 0, 255, 0.1)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
-							]),
-						_List_Nil),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'left', '315px'),
-								A2($elm$html$Html$Attributes$style, 'top', '215px'),
-								A2($elm$html$Html$Attributes$style, 'width', '50px'),
-								A2($elm$html$Html$Attributes$style, 'height', '50px'),
-								A2($elm$html$Html$Attributes$style, 'border', '1px solid rgba(255, 165, 0, 0.7)'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'rgba(255, 165, 0, 0.1)'),
-								A2($elm$html$Html$Attributes$style, 'pointer-events', 'none')
-							]),
-						_List_Nil),
-						A3($author$project$SmoothMovePorts$Multiple$animatedBox, 'box1', '#FF6B6B', model.animations),
-						A3($author$project$SmoothMovePorts$Multiple$animatedBox, 'box2', '#4ECDC4', model.animations),
-						A3($author$project$SmoothMovePorts$Multiple$animatedBox, 'box3', '#45B7D1', model.animations),
-						A3($author$project$SmoothMovePorts$Multiple$animatedBox, 'box4', '#96CEB4', model.animations)
+								$elm$html$Html$text('1')
+							]))
 					])),
 				A2(
 				$elm$html$Html$div,
+				$author$project$SmoothMoveTask$Container$rowStyles,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'margin-top', '20px'),
-						A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
-						A2($elm$html$Html$Attributes$style, 'color', '#666')
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('This example demonstrates multiple simultaneous animations using the Web Animations API.'),
 						A2(
 						$elm$html$Html$div,
-						_List_Nil,
+						_Utils_ap(
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$id('left-half'),
+									A2($elm$html$Html$Attributes$style, 'background', 'cornflowerblue')
+								]),
+							$author$project$SmoothMoveTask$Container$columnStyles),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('• Different easing functions and durations for each element')
+								A2(
+								$elm$html$Html$ul,
+								_List_Nil,
+								A2(
+									$elm$core$List$map,
+									$author$project$SmoothMoveTask$Container$anchorView('left'),
+									A2($elm$core$List$range, 1, 100)))
 							])),
 						A2(
 						$elm$html$Html$div,
-						_List_Nil,
+						_Utils_ap(
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$id('right-half'),
+									A2($elm$html$Html$Attributes$style, 'background', 'wheat')
+								]),
+							$author$project$SmoothMoveTask$Container$columnStyles),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('• Hardware-accelerated performance via JavaScript')
-							])),
-						A2(
-						$elm$html$Html$div,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$html$Html$text('• Requires smooth-move-ports.js to be included in your HTML')
+								A2(
+								$elm$html$Html$ul,
+								_List_Nil,
+								A2(
+									$elm$core$List$map,
+									$author$project$SmoothMoveTask$Container$anchorView('right'),
+									A2($elm$core$List$range, 1, 100)))
 							]))
 					]))
-			]));
+			]),
+		title: 'SmoothMoveTask Container Example'
+	};
 };
-var $author$project$SmoothMovePorts$Multiple$main = $elm$browser$Browser$element(
-	{init: $author$project$SmoothMovePorts$Multiple$init, subscriptions: $author$project$SmoothMovePorts$Multiple$subscriptions, update: $author$project$SmoothMovePorts$Multiple$update, view: $author$project$SmoothMovePorts$Multiple$view});
-_Platform_export({'SmoothMovePorts':{'Multiple':{'init':$author$project$SmoothMovePorts$Multiple$main(
+var $author$project$SmoothMoveTask$Container$main = $elm$browser$Browser$document(
+	{
+		init: $author$project$SmoothMoveTask$Container$init,
+		subscriptions: function (_v0) {
+			return $elm$core$Platform$Sub$none;
+		},
+		update: $author$project$SmoothMoveTask$Container$update,
+		view: $author$project$SmoothMoveTask$Container$view
+	});
+_Platform_export({'SmoothMoveTask':{'Container':{'init':$author$project$SmoothMoveTask$Container$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));
 
-  var app = Elm.SmoothMovePorts.Multiple.init({ node: document.getElementById("elm") });
+  var app = Elm.SmoothMoveTask.Container.init({ node: document.getElementById("elm") });
 }
 catch (e)
 {

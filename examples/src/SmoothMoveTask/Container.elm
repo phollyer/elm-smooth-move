@@ -42,7 +42,7 @@ update msg model =
         SmoothScroll containerId targetId ->
             ( model
             , containerElement containerId targetId
-                |> Task.attempt (always NoOp)
+                |> Cmd.map (always NoOp)
             )
 
 

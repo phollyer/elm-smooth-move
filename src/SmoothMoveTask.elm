@@ -2,8 +2,16 @@ module SmoothMoveTask exposing
     ( Axis(..)
     , Config
     , animateTo
+    , animateToCmd
+    , animateToCmdWithConfig
+    , animateToTask
+    , animateToTaskWithConfig
     , animateToWithConfig
     , containerElement
+    , containerElementCmd
+    , containerElementCmdWithConfig
+    , containerElementTask
+    , containerElementTaskWithConfig
     , containerElementWithConfig
     , defaultConfig
     )
@@ -15,7 +23,10 @@ import Process
 import Task exposing (Task)
 
 
-{-| Configuration for task-based animations
+{-| Configuration for scrolling animations
+
+This module provides both simple Cmd-based functions (recommended for most users)
+and advanced Task-based functions (for composition and custom error handling).
 
   - speed: Animation frames to generate (higher = smoother but more steps)
   - offset: Vertical offset in pixels from the target position
@@ -46,13 +57,72 @@ defaultConfig =
     }
 
 
-animateTo : String -> Task Dom.Error (List ())
+{-| Simple scrolling to an element. Returns a Cmd that produces no meaningful messages.
+
+    ScrollTo elementId ->
+        ( model, animateTo elementId )
+
+-}
+animateTo : String -> Cmd ()
 animateTo elementId =
-    animateToWithConfig defaultConfig elementId
+    animateToTaskWithConfig defaultConfig elementId
+        |> Task.attempt (always ())
 
 
-animateToWithConfig : Config -> String -> Task Dom.Error (List ())
+{-| Simple scrolling with configuration. Returns a Cmd that produces no meaningful messages.
+
+    ScrollTo elementId ->
+        ( model, animateToWithConfig { defaultConfig | offset = 100 } elementId )
+
+-}
+animateToWithConfig : Config -> String -> Cmd ()
 animateToWithConfig config elementId =
+    animateToTaskWithConfig config elementId
+        |> Task.attempt (always ())
+
+
+{-| Cmd-based scrolling with custom completion message.
+
+    ScrollTo elementId ->
+        ( model, animateToCmd ScrollComplete elementId )
+
+-}
+animateToCmd : msg -> String -> Cmd msg
+animateToCmd msg elementId =
+    animateToCmdWithConfig msg defaultConfig elementId
+
+
+{-| Cmd-based scrolling with configuration and custom completion message.
+
+    ScrollTo elementId ->
+        ( model, animateToCmdWithConfig ScrollComplete { defaultConfig | offset = 100 } elementId )
+
+-}
+animateToCmdWithConfig : msg -> Config -> String -> Cmd msg
+animateToCmdWithConfig msg config elementId =
+    animateToTaskWithConfig config elementId
+        |> Task.attempt (always msg)
+
+
+{-| Task-based scrolling for advanced users who need error handling or composition.
+
+    ScrollTo elementId ->
+        ( model, Task.attempt HandleScrollError (animateToTask elementId) )
+
+-}
+animateToTask : String -> Task Dom.Error (List ())
+animateToTask elementId =
+    animateToTaskWithConfig defaultConfig elementId
+
+
+{-| Task-based scrolling with configuration for advanced users.
+
+    ScrollTo elementId ->
+        ( model, Task.attempt HandleScrollError (animateToTaskWithConfig config elementId) )
+
+-}
+animateToTaskWithConfig : Config -> String -> Task Dom.Error (List ())
+animateToTaskWithConfig config elementId =
     Task.map2 Tuple.pair Dom.getViewport (Dom.getElement elementId)
         |> Task.andThen
             (\( viewport, element ) ->
@@ -107,13 +177,72 @@ animateToWithConfig config elementId =
             )
 
 
-containerElement : String -> String -> Task Dom.Error (List ())
+{-| Simple container scrolling. Returns a Cmd that produces no meaningful messages.
+
+    ScrollInContainer containerId elementId ->
+        ( model, containerElement containerId elementId )
+
+-}
+containerElement : String -> String -> Cmd ()
 containerElement containerId elementId =
-    containerElementWithConfig defaultConfig containerId elementId
+    containerElementTaskWithConfig defaultConfig containerId elementId
+        |> Task.attempt (always ())
 
 
-containerElementWithConfig : Config -> String -> String -> Task Dom.Error (List ())
+{-| Simple container scrolling with configuration. Returns a Cmd that produces no meaningful messages.
+
+    ScrollInContainer containerId elementId ->
+        ( model, containerElementWithConfig config containerId elementId )
+
+-}
+containerElementWithConfig : Config -> String -> String -> Cmd ()
 containerElementWithConfig config containerId elementId =
+    containerElementTaskWithConfig config containerId elementId
+        |> Task.attempt (always ())
+
+
+{-| Cmd-based container scrolling with custom completion message.
+
+    ScrollInContainer containerId elementId ->
+        ( model, containerElementCmd ScrollComplete containerId elementId )
+
+-}
+containerElementCmd : msg -> String -> String -> Cmd msg
+containerElementCmd msg containerId elementId =
+    containerElementCmdWithConfig msg defaultConfig containerId elementId
+
+
+{-| Cmd-based container scrolling with configuration and custom completion message.
+
+    ScrollInContainer containerId elementId ->
+        ( model, containerElementCmdWithConfig ScrollComplete config containerId elementId )
+
+-}
+containerElementCmdWithConfig : msg -> Config -> String -> String -> Cmd msg
+containerElementCmdWithConfig msg config containerId elementId =
+    containerElementTaskWithConfig config containerId elementId
+        |> Task.attempt (always msg)
+
+
+{-| Task-based container scrolling for advanced users.
+
+    ScrollInContainer containerId elementId ->
+        ( model, Task.attempt HandleScrollError (containerElementTask containerId elementId) )
+
+-}
+containerElementTask : String -> String -> Task Dom.Error (List ())
+containerElementTask containerId elementId =
+    containerElementTaskWithConfig defaultConfig containerId elementId
+
+
+{-| Task-based container scrolling with configuration for advanced users.
+
+    ScrollInContainer containerId elementId ->
+        ( model, Task.attempt HandleScrollError (containerElementTaskWithConfig config containerId elementId) )
+
+-}
+containerElementTaskWithConfig : Config -> String -> String -> Task Dom.Error (List ())
+containerElementTaskWithConfig config containerId elementId =
     Task.map2 Tuple.pair (Dom.getElement containerId) (Dom.getElement elementId)
         |> Task.andThen
             (\( container, element ) ->

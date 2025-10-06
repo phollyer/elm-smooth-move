@@ -41,7 +41,7 @@ update msg model =
             ( model, Cmd.none )
 
         SmoothScroll id ->
-            ( model, Task.attempt (always NoOp) (animateTo id) )
+            ( model, animateTo id |> Cmd.map (always NoOp) )
 
 
 view : Model -> Document Msg
