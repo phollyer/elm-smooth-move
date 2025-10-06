@@ -160,13 +160,13 @@ Interactive examples are ready to run! Each approach has its own folder with com
 
 ### Detailed Comparison
 
-| Approach | Best For | Performance | Battery | Complexity | Axis Support |
-|----------|----------|-------------|---------|------------|-------------|
-| **SmoothMoveTask** | Document/container scrolling | Good | Medium | Simple | X, Y, Both |
-| **SmoothMoveSub** | Multiple simultaneous elements | Good | Medium | Medium | X, Y, Both |
-| **SmoothMoveState** | Clean state management | Good | Medium | Simple | X, Y, Both |
-| **SmoothMoveCSS** | Battery efficiency, simple UI | Excellent* | Best* | Simple | X, Y, Both |
-| **SmoothMovePorts** | Maximum control & performance | Excellent* | Best* | Complex | X, Y, Both |
+| Approach | Best For | Performance | Battery | Complexity |
+|----------|----------|-------------|---------|------------|
+| **SmoothMoveTask** | Document/container scrolling | Good | Medium | Simple |
+| **SmoothMoveSub** | Multiple simultaneous elements | Good | Medium | Medium |
+| **SmoothMoveState** | Clean state management | Good | Medium | Simple |
+| **SmoothMoveCSS** | Battery efficiency, simple UI | Excellent* | Best* | Simple |
+| **SmoothMovePorts** | Maximum control & performance | Excellent* | Best* | Complex |
 
 _*Hardware accelerated when available_
 
