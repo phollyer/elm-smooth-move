@@ -197,20 +197,23 @@ All approaches use similar configuration patterns, making it easy to switch:
 { defaultConfig | duration = 400, easing = "ease-out", axis = Both }
 ```
 
-### Easy Migration Between Approaches
-Switching approaches is as simple as changing imports:
+### Migration Between Approaches
+Most approaches share similar APIs, but there are some differences to consider:
 
+**✅ Easy transitions (similar patterns):**
 ```elm
--- Try SmoothMoveState first (simple)
-import SmoothMoveState exposing (animateTo, defaultConfig)
-newState = animateTo "my-element" 200 300 state
+-- SmoothMoveState to SmoothMoveCSS (both need subscriptions)
+import SmoothMoveState exposing (animateTo, subscriptions)  
+-- vs
+import SmoothMoveCSS exposing (animateTo, subscriptions)
 
--- Switch to SmoothMoveCSS for better performance  
-import SmoothMoveCSS exposing (animateTo, defaultConfig)
-newState = animateTo "my-element" 200 300 state
-
--- Same API, different implementation!
+-- Both: newState = animateTo "my-element" 200 300 state
 ```
+
+**⚠️ Requires additional changes:**
+- **SmoothMoveTask**: Returns `Task` - needs `Task.attempt`
+- **SmoothMovePorts**: Returns `( Model, Cmd )` - needs tuple destructuring + JavaScript setup
+- **Subscriptions**: SmoothMoveSub/State/CSS need subscriptions, Task/Ports don't
 
 ## 📖 API Documentation
 
