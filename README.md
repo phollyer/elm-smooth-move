@@ -9,7 +9,8 @@ A comprehensive Elm package providing **5 different animation approaches** for s
 ### 1. **SmoothMoveTask** - Task-Based Scrolling
 Perfect for **document/container scrolling** with composable error handling.
 ```elm
-import SmoothMoveTask exposing (animateTo)
+import SmoothMoveTask exposing (animateTo, animateToWithConfig)
+import Task
 
 -- Basic usage
 animateTo "target-element-id"
@@ -25,30 +26,41 @@ animateToWithConfig
 ### 2. **SmoothMoveSub** - Subscription-Based Positioning  
 Ideal for **multiple simultaneous element animations** with frame-rate independence.
 ```elm
-import SmoothMoveSub exposing (Model, animateTo, subscriptions)
+import SmoothMoveSub exposing (animateTo, transform)
+import Html.Attributes exposing (style)
 
 -- Animate an element to position (100, 200)
-newAnimations = animateTo "my-element" 100 200 model.animations
+{ model | animations = animateTo "my-element" 100 200 model.animations }
 
 -- Apply in view with CSS transform
-style "transform" (SmoothMoveSub.transform "my-element" model.animations)
+style "transform" (transform "my-element" model.animations)
 ```
 
 ### 3. **SmoothMoveState** - State-Based Convenience
 Simplified wrapper around subscription-based approach for **easier state management**.
 ```elm
-import SmoothMoveState
+import SmoothMoveState exposing (animateTo, transform)
+import Html.Attributes exposing (style)
 
--- Similar API to SmoothMoveSub but with additional convenience functions
+-- Animate an element to position (150, 250)
+{ model | animations = animateTo "my-element" 150 250 model.animations }
+
+-- Apply in view with CSS transform
+style "transform" (transform "my-element" model.animations)
 ```
 
 ### 4. **SmoothMoveCSS** - CSS Transition-Based
 Uses **native browser CSS transitions** for optimal performance and battery efficiency.
 ```elm
-import SmoothMoveCSS exposing (cssTransitionStyle)
+import SmoothMoveCSS exposing (animateTo, transform)
+import Html exposing (div, text)
+import Html.Attributes exposing (style)
 
--- Browser handles the animation with hardware acceleration
-div [ cssTransitionStyle 100 200 ] [ text "Smooth!" ]
+-- Animate an element to position (100, 200)
+{ model | animations = animateTo "my-element" 100 200 model.animations }
+
+-- Apply CSS transition in view
+div [ style "transform" (transform "my-element" model.animations) ] [ text "Smooth!" ]
 ```
 
 ### 5. **SmoothMovePorts** - Web Animations API
