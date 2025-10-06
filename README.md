@@ -28,7 +28,7 @@ Ideal for **multiple simultaneous element animations** with frame-rate independe
 import SmoothMoveSub exposing (Model, animateTo, subscriptions)
 
 -- Animate an element to position (100, 200)
-( newAnimations, _ ) = animateTo "my-element" 100 200 model.animations
+newAnimations = animateTo "my-element" 100 200 model.animations
 
 -- Apply in view with CSS transform
 style "transform" (SmoothMoveSub.transform "my-element" model.animations)
@@ -191,11 +191,11 @@ Switching approaches is as simple as changing imports:
 ```elm
 -- Try SmoothMoveState first (simple)
 import SmoothMoveState exposing (animateTo, defaultConfig)
-( newState, _ ) = animateTo "my-element" 200 300 state
+newState = animateTo "my-element" 200 300 state
 
 -- Switch to SmoothMoveCSS for better performance  
 import SmoothMoveCSS exposing (animateTo, defaultConfig)
-( newState, _ ) = animateTo "my-element" 200 300 state
+newState = animateTo "my-element" 200 300 state
 
 -- Same API, different implementation!
 ```
