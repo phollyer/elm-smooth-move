@@ -9,14 +9,14 @@ A comprehensive Elm package providing **5 different animation approaches** for s
 ### 1. **SmoothMoveTask** - Task-Based Scrolling
 Perfect for **document/container scrolling** with composable error handling.
 ```elm
-import SmoothMoveTask exposing (scrollTo)
+import SmoothMoveTask exposing (animateTo)
 
 -- Basic usage
-scrollTo "target-element-id"
+animateTo "target-element-id"
     |> Task.attempt (always NoOp)
 
 -- With configuration
-scrollToWithOptions 
+animateToWithConfig 
     { defaultConfig | offset = 60, speed = 15 } 
     "target-element-id"
     |> Task.attempt (always NoOp)
@@ -25,13 +25,13 @@ scrollToWithOptions
 ### 2. **SmoothMoveSub** - Subscription-Based Positioning  
 Ideal for **multiple simultaneous element animations** with frame-rate independence.
 ```elm
-import SmoothMoveSub exposing (AnimationState, moveTo, subscriptions)
+import SmoothMoveSub exposing (Model, animateTo, subscriptions)
 
 -- Animate an element to position (100, 200)
-( newAnimations, _ ) = moveTo "my-element" 100 200 model.animations
+( newAnimations, _ ) = animateTo "my-element" 100 200 model.animations
 
 -- Apply in view with CSS transform
-style "transform" (SmoothMoveSub.transformElement "my-element" model.animations)
+style "transform" (SmoothMoveSub.transform "my-element" model.animations)
 ```
 
 ### 3. **SmoothMoveState** - State-Based Convenience
@@ -54,8 +54,17 @@ div [ cssTransitionStyle 100 200 ] [ text "Smooth!" ]
 ### 5. **SmoothMovePorts** - Web Animations API
 **JavaScript integration** for maximum performance and complex animations.
 ```elm
--- Requires companion JavaScript file and port definitions
--- See examples/src/SmoothMovePorts/ for complete integration guide
+import SmoothMovePorts exposing (animateTo, animateBatchWithPort)
+
+-- Single element animation
+( newAnimations, cmd ) = animateTo "my-element" 100 200 model.animations
+
+-- Batch multiple animations (new!)
+( newAnimations, cmd ) = animateBatchWithPort myPort 
+    [ ("box1", 100, 150), ("box2", 200, 250), ("box3", 300, 350) ] 
+    model.animations
+
+-- Requires companion JavaScript file - see examples/src/SmoothMovePorts/
 ```
 
 ## 🚀 Quick Start
@@ -82,6 +91,11 @@ import SmoothMoveState exposing (animateTo, init, subscriptions)
 
 -- In your model
 type alias Model = { animations : SmoothMoveState.State, ... }
+
+-- In your init (prevent jump to 0,0)
+initialAnimations = 
+    SmoothMoveState.init
+        |> SmoothMoveState.setInitialPosition "my-element" 100 100
 
 -- In your update  
 AnimateElement ->
@@ -177,22 +191,22 @@ Switching approaches is as simple as changing imports:
 ```elm
 -- Try SmoothMoveState first (simple)
 import SmoothMoveState exposing (animateTo, defaultConfig)
-animatedState = animateTo "my-element" 200 300 state
+( newState, _ ) = animateTo "my-element" 200 300 state
 
 -- Switch to SmoothMoveCSS for better performance  
 import SmoothMoveCSS exposing (animateTo, defaultConfig)
-animatedState = animateTo "my-element" 200 300 state
+( newState, _ ) = animateTo "my-element" 200 300 state
 
 -- Same API, different implementation!
 ```
 
 ## 📖 API Documentation
 
-- **SmoothMoveTask**: `scrollTo`, `scrollToWithOptions`, `containerElement`
-- **SmoothMoveSub**: `moveTo`, `moveToWithOptions`, `subscriptions`, `transformElement`
-- **SmoothMoveState**: Similar to SmoothMoveSub with convenience functions
-- **SmoothMoveCSS**: `cssTransitionStyle`, `moveWithTransition`
-- **SmoothMovePorts**: Port helpers and JavaScript integration utilities
+- **SmoothMoveTask**: `animateTo`, `animateToWithConfig`, `containerElement`, `containerElementWithConfig`
+- **SmoothMoveSub**: `animateTo`, `animateToWithConfig`, `subscriptions`, `transform`, `setInitialPosition`
+- **SmoothMoveState**: `animateTo`, `animateToWithConfig`, `subscriptions`, `transform`, `transformElement`, `setInitialPosition`
+- **SmoothMoveCSS**: `animateTo`, `animateToWithConfig`, `cssTransitionStyle`, `setInitialPosition`
+- **SmoothMovePorts**: `animateTo`, `animateToWithConfig`, `animateBatch`, `animateBatchWithPort`, `setInitialPosition`, `stopBatch`, `stopBatchWithPort`
 
 ## � Troubleshooting
 
