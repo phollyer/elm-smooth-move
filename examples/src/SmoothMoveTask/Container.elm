@@ -28,6 +28,7 @@ init _ =
 type Msg
     = NoOp
     | ScrollToTop
+    | ScrollToMiddle
     | ScrollToBottom
 
 
@@ -40,6 +41,11 @@ update msg model =
         ScrollToTop ->
             ( { model | message = "Scrolling to top of container..." }
             , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "top-element"
+            )
+
+        ScrollToMiddle ->
+            ( { model | message = "Scrolling to middle of container..." }
+            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "middle-element"
             )
 
         ScrollToBottom ->
@@ -67,6 +73,7 @@ view model =
             , -- Control buttons
             div [ class "controls" ]
                 [ button [ onClick ScrollToTop, class "control-btn top-btn" ] [ text "Scroll to Top" ]
+                , button [ onClick ScrollToMiddle, class "control-btn middle-btn" ] [ text "Scroll to Middle" ]
                 , button [ onClick ScrollToBottom, class "control-btn bottom-btn" ] [ text "Scroll to Bottom" ]
                 ]
             
@@ -82,7 +89,16 @@ view model =
                     , contentBlock 1 "This is content block 1. Each block has enough content to make scrolling meaningful."
                     , contentBlock 2 "Content block 2 continues the gradient transition from white to dark."
                     , contentBlock 3 "Content block 3 shows the middle section of our scrollable content."
-                    , contentBlock 4 "Content block 4 demonstrates the progression through the gradient."
+                    , div [ id "middle-element", class "content-block" ]
+                        [ h3 [] [ text "🎯 Content Block 4 - Middle Target" ]
+                        , p [] [ text "This is the middle target of our scrollable content - Content block 4 demonstrates the progression through the gradient." ]
+                        , p [] [ text "Click 'Scroll to Middle' to smoothly scroll to this position." ]
+                        , ul []
+                            [ li [] [ text "This block serves as the middle anchor point" ]
+                            , li [] [ text "The gradient background shows scroll position" ]
+                            , li [] [ text "Smooth scrolling animates between positions" ]
+                            ]
+                        ]
                     , contentBlock 5 "Content block 5 continues toward the bottom of the container."
                     , contentBlock 6 "Content block 6 shows we're getting closer to the bottom."
                     , contentBlock 7 "Content block 7 is near the end with darker background colors."
@@ -207,6 +223,16 @@ p {
 .top-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4);
+}
+
+.middle-btn {
+    background: linear-gradient(135deg, #00b894, #00a085);
+    color: white;
+}
+
+.middle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
 }
 
 .bottom-btn {
