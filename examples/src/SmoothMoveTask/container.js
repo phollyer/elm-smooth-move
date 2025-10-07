@@ -5163,7 +5163,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$SmoothMoveTask$Container$init = function (_v0) {
 	return _Utils_Tuple2(
-		{foo: 'bar'},
+		{message: 'Ready to scroll within the container'},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -5172,6 +5172,144 @@ var $author$project$SmoothMoveTask$Container$NoOp = {$: 'NoOp'};
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
+	});
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $elm$core$Basics$round = _Basics_round;
+var $author$project$SmoothMoveTask$animationSteps = F4(
+	function (speed, easing, start, stop) {
+		var operator = (_Utils_cmp(start, stop) > 0) ? $elm$core$Basics$sub : $elm$core$Basics$add;
+		var diff = $elm$core$Basics$abs(start - stop);
+		var frames = A2(
+			$elm$core$Basics$max,
+			1,
+			($elm$core$Basics$round(diff) / speed) | 0);
+		var framesFloat = frames;
+		var weights = A2(
+			$elm$core$List$map,
+			function (i) {
+				return easing(i / framesFloat);
+			},
+			A2($elm$core$List$range, 0, frames));
+		return ((speed <= 0) || _Utils_eq(start, stop)) ? _List_Nil : A2(
+			$elm$core$List$map,
+			function (weight) {
+				return A2(operator, start, weight * diff);
+			},
+			weights);
+	});
+var $elm$browser$Browser$Dom$getElement = _Browser_getElement;
+var $elm$browser$Browser$Dom$getViewport = _Browser_withWindow(_Browser_getViewport);
+var $elm$browser$Browser$Dom$getViewportOf = _Browser_getViewportOf;
+var $elm$core$Task$map3 = F4(
+	function (func, taskA, taskB, taskC) {
+		return A2(
+			$elm$core$Task$andThen,
+			function (a) {
+				return A2(
+					$elm$core$Task$andThen,
+					function (b) {
+						return A2(
+							$elm$core$Task$andThen,
+							function (c) {
+								return $elm$core$Task$succeed(
+									A3(func, a, b, c));
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var $elm$core$Basics$min = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) < 0) ? x : y;
+	});
+var $elm$browser$Browser$Dom$setViewport = _Browser_setViewport;
+var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
+var $author$project$SmoothMoveTask$animateToTaskWithConfig = F2(
+	function (config, id) {
+		var getContainerInfo = function () {
+			var _v7 = config.container;
+			if (_v7.$ === 'DocumentBody') {
+				return $elm$core$Task$succeed($elm$core$Maybe$Nothing);
+			} else {
+				var containerNodeId = _v7.a;
+				return A2(
+					$elm$core$Task$map,
+					$elm$core$Maybe$Just,
+					$elm$browser$Browser$Dom$getElement(containerNodeId));
+			}
+		}();
+		var _v0 = function () {
+			var _v1 = config.container;
+			if (_v1.$ === 'DocumentBody') {
+				return _Utils_Tuple2(
+					$elm$browser$Browser$Dom$getViewport,
+					function () {
+						var _v2 = config.axis;
+						if (_v2.$ === 'Y') {
+							return $elm$browser$Browser$Dom$setViewport(0);
+						} else {
+							return function (i) {
+								return A2($elm$browser$Browser$Dom$setViewport, i, 0);
+							};
+						}
+					}());
+			} else {
+				var containerNodeId = _v1.a;
+				return _Utils_Tuple2(
+					$elm$browser$Browser$Dom$getViewportOf(containerNodeId),
+					function () {
+						var _v3 = config.axis;
+						if (_v3.$ === 'Y') {
+							return A2($elm$browser$Browser$Dom$setViewportOf, containerNodeId, 0);
+						} else {
+							return function (i) {
+								return A3($elm$browser$Browser$Dom$setViewportOf, containerNodeId, i, 0);
+							};
+						}
+					}());
+			}
+		}();
+		var getViewport = _v0.a;
+		var setViewport = _v0.b;
+		var scrollTask = F3(
+			function (_v5, _v6, container) {
+				var scene = _v5.scene;
+				var viewport = _v5.viewport;
+				var element = _v6.element;
+				var destination = function () {
+					if (container.$ === 'Nothing') {
+						return element.y - config.offset;
+					} else {
+						var containerInfo = container.a;
+						return ((viewport.y + element.y) - config.offset) - containerInfo.element.y;
+					}
+				}();
+				var clamped = A2(
+					$elm$core$Basics$max,
+					0,
+					A2($elm$core$Basics$min, scene.height - viewport.height, destination));
+				return $elm$core$Task$sequence(
+					A2(
+						$elm$core$List$map,
+						setViewport,
+						A4($author$project$SmoothMoveTask$animationSteps, config.speed, config.easing, viewport.y, clamped)));
+			});
+		return A2(
+			$elm$core$Task$andThen,
+			$elm$core$Basics$identity,
+			A4(
+				$elm$core$Task$map3,
+				scrollTask,
+				getViewport,
+				$elm$browser$Browser$Dom$getElement(id),
+				getContainerInfo));
 	});
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
@@ -5197,123 +5335,70 @@ var $elm$core$Task$attempt = F2(
 							$elm$core$Result$Ok),
 						task))));
 	});
-var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
-var $elm$core$Process$sleep = _Process_sleep;
-var $author$project$SmoothMoveTask$animateContainerSteps = F2(
-	function (containerId, steps) {
-		return $elm$core$Task$sequence(
-			A2(
-				$elm$core$List$map,
-				function (y) {
-					return A2(
-						$elm$core$Task$andThen,
-						function (_v0) {
-							return A3($elm$browser$Browser$Dom$setViewportOf, containerId, 0, y);
-						},
-						$elm$core$Process$sleep(16));
-				},
-				steps));
-	});
-var $elm$core$Basics$clamp = F3(
-	function (low, high, number) {
-		return (_Utils_cmp(number, low) < 0) ? low : ((_Utils_cmp(number, high) > 0) ? high : number);
-	});
-var $elm$browser$Browser$Dom$getElement = _Browser_getElement;
-var $elm$core$Basics$negate = function (n) {
-	return -n;
-};
-var $elm$core$Basics$abs = function (n) {
-	return (n < 0) ? (-n) : n;
-};
-var $elm$core$Basics$round = _Basics_round;
-var $author$project$Internal$AnimationSteps$interpolate = F4(
-	function (speed, easing, start, stop) {
-		var operator = (_Utils_cmp(start, stop) > 0) ? $elm$core$Basics$sub : $elm$core$Basics$add;
-		var diff = $elm$core$Basics$abs(start - stop);
-		var frames = A2(
-			$elm$core$Basics$max,
-			1,
-			($elm$core$Basics$round(diff) / speed) | 0);
-		var framesFloat = frames;
-		var weights = A2(
-			$elm$core$List$map,
-			function (i) {
-				return easing(i / framesFloat);
-			},
-			A2($elm$core$List$range, 0, frames));
-		return ((speed <= 0) || _Utils_eq(start, stop)) ? _List_Nil : A2(
-			$elm$core$List$map,
-			function (weight) {
-				return A2(operator, start, weight * diff);
-			},
-			weights);
-	});
-var $elm$core$Tuple$pair = F2(
-	function (a, b) {
-		return _Utils_Tuple2(a, b);
-	});
-var $author$project$SmoothMoveTask$containerElementWithConfig = F3(
-	function (config, containerId, elementId) {
+var $author$project$SmoothMoveTask$animateToCmdWithConfig = F3(
+	function (msg, config, elementId) {
 		return A2(
-			$elm$core$Task$andThen,
-			function (_v0) {
-				var container = _v0.a;
-				var element = _v0.b;
-				var elementTop = element.element.y;
-				var containerTop = container.element.y;
-				var relativePosition = elementTop - containerTop;
-				var targetY = relativePosition - (container.element.height / 2);
-				var clampedY = A3($elm$core$Basics$clamp, 0, container.element.height - container.viewport.height, targetY);
-				var steps = A4(
-					$author$project$Internal$AnimationSteps$interpolate,
-					$elm$core$Basics$round(config.speed),
-					config.easing,
-					container.viewport.y,
-					clampedY);
-				return A2($author$project$SmoothMoveTask$animateContainerSteps, containerId, steps);
-			},
-			A3(
-				$elm$core$Task$map2,
-				$elm$core$Tuple$pair,
-				$elm$browser$Browser$Dom$getElement(containerId),
-				$elm$browser$Browser$Dom$getElement(elementId)));
+			$elm$core$Task$attempt,
+			$elm$core$Basics$always(msg),
+			A2($author$project$SmoothMoveTask$animateToTaskWithConfig, config, elementId));
 	});
+var $author$project$SmoothMoveTask$InnerNode = function (a) {
+	return {$: 'InnerNode', a: a};
+};
+var $author$project$SmoothMoveTask$containerElement = function (elementId) {
+	return $author$project$SmoothMoveTask$InnerNode(elementId);
+};
+var $author$project$SmoothMoveTask$DocumentBody = {$: 'DocumentBody'};
 var $author$project$SmoothMoveTask$Y = {$: 'Y'};
 var $elm_community$easing_functions$Ease$flip = F2(
 	function (easing, time) {
 		return 1 - easing(1 - time);
 	});
 var $elm$core$Basics$pow = _Basics_pow;
-var $elm_community$easing_functions$Ease$inCubic = function (time) {
-	return A2($elm$core$Basics$pow, time, 3);
+var $elm_community$easing_functions$Ease$inQuint = function (time) {
+	return A2($elm$core$Basics$pow, time, 5);
 };
-var $elm_community$easing_functions$Ease$outCubic = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inCubic);
-var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, easing: $elm_community$easing_functions$Ease$outCubic, offset: 0, speed: 400.0};
-var $author$project$SmoothMoveTask$containerElement = F2(
-	function (containerId, elementId) {
-		return A3($author$project$SmoothMoveTask$containerElementWithConfig, $author$project$SmoothMoveTask$defaultConfig, containerId, elementId);
-	});
+var $elm_community$easing_functions$Ease$outQuint = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inQuint);
+var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, container: $author$project$SmoothMoveTask$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
 var $author$project$SmoothMoveTask$Container$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'NoOp') {
-			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-		} else {
-			var containerId = msg.a;
-			var targetId = msg.b;
-			return _Utils_Tuple2(
-				model,
-				A2(
-					$elm$core$Task$attempt,
-					$elm$core$Basics$always($author$project$SmoothMoveTask$Container$NoOp),
-					A2($author$project$SmoothMoveTask$containerElement, containerId, targetId)));
+		switch (msg.$) {
+			case 'NoOp':
+				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			case 'ScrollToTop':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{message: 'Scrolling to top of container...'}),
+					A3(
+						$author$project$SmoothMoveTask$animateToCmdWithConfig,
+						$author$project$SmoothMoveTask$Container$NoOp,
+						_Utils_update(
+							$author$project$SmoothMoveTask$defaultConfig,
+							{
+								container: $author$project$SmoothMoveTask$containerElement('scroll-container')
+							}),
+						'top-element'));
+			default:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{message: 'Scrolling to bottom of container...'}),
+					A3(
+						$author$project$SmoothMoveTask$animateToCmdWithConfig,
+						$author$project$SmoothMoveTask$Container$NoOp,
+						_Utils_update(
+							$author$project$SmoothMoveTask$defaultConfig,
+							{
+								container: $author$project$SmoothMoveTask$containerElement('scroll-container')
+							}),
+						'bottom-element'));
 		}
 	});
-var $author$project$SmoothMoveTask$Container$SmoothScroll = F2(
-	function (a, b) {
-		return {$: 'SmoothScroll', a: a, b: b};
-	});
+var $author$project$SmoothMoveTask$Container$ScrollToBottom = {$: 'ScrollToBottom'};
+var $author$project$SmoothMoveTask$Container$ScrollToTop = {$: 'ScrollToTop'};
 var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$core$String$append = _String_append;
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5322,44 +5407,83 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
-var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$li = _VirtualDom_node('li');
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$SmoothMoveTask$Container$anchorView = F2(
-	function (side, num) {
+var $elm$html$Html$ul = _VirtualDom_node('ul');
+var $author$project$SmoothMoveTask$Container$contentBlock = F2(
+	function (num, description) {
 		return A2(
-			$elm$html$Html$li,
+			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$id(
-					A2(
-						$elm$core$String$append,
-						'anchor-' + (side + '-'),
-						$elm$core$String$fromInt(num)))
+					$elm$html$Html$Attributes$class('content-block')
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text(
-					$elm$core$String$fromInt(num))
+					A2(
+					$elm$html$Html$h3,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(
+							'Content Block ' + $elm$core$String$fromInt(num))
+						])),
+					A2(
+					$elm$html$Html$p,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(description)
+						])),
+					A2(
+					$elm$html$Html$ul,
+					_List_Nil,
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$li,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Each block adds to the scrollable height')
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text('The gradient background shows scroll position')
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Smooth scrolling animates between positions')
+								]))
+						]))
 				]));
 	});
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $author$project$SmoothMoveTask$Container$columnStyles = _List_fromArray(
-	[
-		A2($elm$html$Html$Attributes$style, 'flex-grow', '1'),
-		A2($elm$html$Html$Attributes$style, 'overflow-y', 'scroll'),
-		A2($elm$html$Html$Attributes$style, 'border', '1px solid #ccc')
-	]);
-var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$SmoothMoveTask$Container$css = '\nbody {\n    margin: 0;\n    padding: 0;\n    font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', system-ui, sans-serif;\n    background: #f5f7fa;\n    color: #333;\n}\n\n.back-button {\n    position: fixed;\n    top: 20px;\n    left: 20px;\n    background: #6c757d;\n    color: white;\n    padding: 12px 20px;\n    text-decoration: none;\n    border-radius: 8px;\n    font-size: 14px;\n    font-weight: 500;\n    z-index: 1000;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.15);\n    transition: background-color 0.2s ease;\n}\n\n.back-button:hover {\n    background: #5a6268;\n}\n\n.main-content {\n    max-width: 1000px;\n    margin: 0 auto;\n    padding: 80px 20px 40px;\n    text-align: center;\n}\n\nh1 {\n    color: #2c3e50;\n    margin-bottom: 20px;\n    font-size: 2.5em;\n    font-weight: 300;\n}\n\np {\n    font-size: 1.1em;\n    line-height: 1.6;\n    margin-bottom: 20px;\n    color: #666;\n}\n\n.status {\n    background: #e8f4fd;\n    color: #0066cc;\n    padding: 15px 25px;\n    border-radius: 25px;\n    font-weight: 500;\n    margin: 30px 0;\n    display: inline-block;\n    border-left: 4px solid #0066cc;\n}\n\n.controls {\n    margin: 40px 0;\n}\n\n.control-btn {\n    padding: 15px 30px;\n    font-size: 16px;\n    font-weight: 600;\n    border: none;\n    border-radius: 8px;\n    cursor: pointer;\n    margin: 0 10px 10px;\n    transition: all 0.3s ease;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n}\n\n.top-btn {\n    background: linear-gradient(135deg, #74b9ff, #0984e3);\n    color: white;\n}\n\n.top-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4);\n}\n\n.bottom-btn {\n    background: linear-gradient(135deg, #fd79a8, #e84393);\n    color: white;\n}\n\n.bottom-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(253, 121, 168, 0.4);\n}\n\n.scroll-container {\n    width: 100%;\n    height: 600px;\n    border: 2px solid #dee2e6;\n    border-radius: 12px;\n    overflow-y: auto;\n    overflow-x: hidden;\n    background: white;\n    box-shadow: 0 4px 20px rgba(0,0,0,0.1);\n    margin-top: 30px;\n    text-align: left;\n}\n\n.scroll-content {\n    background: linear-gradient(to bottom, \n        #ffffff 0%,\n        #f8f9fa 15%,\n        #e9ecef 30%,\n        #dee2e6 45%,\n        #ced4da 60%,\n        #adb5bd 75%,\n        #6c757d 90%,\n        #495057 100%\n    );\n    min-height: 2000px;\n    padding: 0;\n}\n\n.content-block {\n    padding: 40px;\n    margin: 0;\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.content-block h2, .content-block h3 {\n    margin-top: 0;\n    color: #2c3e50;\n}\n\n.content-block h2 {\n    font-size: 2em;\n    margin-bottom: 20px;\n}\n\n.content-block h3 {\n    font-size: 1.5em;\n    margin-bottom: 15px;\n    color: #34495e;\n}\n\n.content-block p {\n    color: #555;\n    line-height: 1.6;\n    margin-bottom: 15px;\n}\n\n.content-block ul {\n    margin: 20px 0;\n    padding-left: 30px;\n}\n\n.content-block li {\n    margin: 8px 0;\n    color: #666;\n}\n\n.top-block {\n    background: rgba(255,255,255,0.8);\n    border-bottom: 3px solid #74b9ff;\n}\n\n.bottom-block {\n    background: rgba(0,0,0,0.1);\n    border-top: 3px solid #fd79a8;\n    color: #2c3e50;\n}\n\n.bottom-block h2 {\n    color: #2c3e50;\n}\n\n/* Smooth scrolling disabled - we handle it programmatically */\n.scroll-container {\n    scroll-behavior: auto;\n}\n\n/* Responsive design */\n@media (max-width: 768px) {\n    .main-content {\n        padding: 60px 15px 20px;\n    }\n    \n    h1 {\n        font-size: 2em;\n    }\n    \n    .scroll-container {\n        height: 500px;\n    }\n    \n    .control-btn {\n        display: block;\n        width: 200px;\n        margin: 10px auto;\n    }\n    \n    .content-block {\n        padding: 30px 20px;\n    }\n}\n';
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
+var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
+var $elm$virtual_dom$VirtualDom$node = function (tag) {
+	return _VirtualDom_node(
+		_VirtualDom_noScript(tag));
+};
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5377,28 +5501,6 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $author$project$SmoothMoveTask$Container$rowStyles = _List_fromArray(
-	[
-		A2($elm$html$Html$Attributes$style, 'font-size', '18px'),
-		A2($elm$html$Html$Attributes$style, 'font-family', 'sans-serif'),
-		A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
-		A2($elm$html$Html$Attributes$style, 'top', '40px'),
-		A2($elm$html$Html$Attributes$style, 'bottom', '0'),
-		A2($elm$html$Html$Attributes$style, 'left', '0'),
-		A2($elm$html$Html$Attributes$style, 'right', '0'),
-		A2($elm$html$Html$Attributes$style, 'display', 'flex')
-	]);
-var $author$project$SmoothMoveTask$Container$topBarStyles = _List_fromArray(
-	[
-		A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
-		A2($elm$html$Html$Attributes$style, 'top', '0'),
-		A2($elm$html$Html$Attributes$style, 'height', '40px'),
-		A2($elm$html$Html$Attributes$style, 'left', '0'),
-		A2($elm$html$Html$Attributes$style, 'right', '0'),
-		A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-		A2($elm$html$Html$Attributes$style, 'justify-content', 'space-around')
-	]);
-var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$SmoothMoveTask$Container$view = function (model) {
 	return {
 		body: _List_fromArray(
@@ -5407,149 +5509,182 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 				$elm$html$Html$a,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$href('index.html'),
-						A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
-						A2($elm$html$Html$Attributes$style, 'top', '10px'),
-						A2($elm$html$Html$Attributes$style, 'left', '10px'),
-						A2($elm$html$Html$Attributes$style, 'background', '#666'),
-						A2($elm$html$Html$Attributes$style, 'color', 'white'),
-						A2($elm$html$Html$Attributes$style, 'padding', '10px 15px'),
-						A2($elm$html$Html$Attributes$style, 'text-decoration', 'none'),
-						A2($elm$html$Html$Attributes$style, 'border-radius', '5px'),
-						A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
-						A2($elm$html$Html$Attributes$style, 'z-index', '1000')
+						$elm$html$Html$Attributes$href('../../index.html'),
+						$elm$html$Html$Attributes$class('back-button')
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('← Back')
+						$elm$html$Html$text('← Back to Dashboard')
 					])),
 				A2(
 				$elm$html$Html$div,
-				A2(
-					$elm$core$List$cons,
-					A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
-					$author$project$SmoothMoveTask$Container$topBarStyles),
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('main-content')
+					]),
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$button,
+						$elm$html$Html$h1,
+						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick(
-								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-100'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('100')
+								$elm$html$Html$text('Container Scrolling Example')
 							])),
 						A2(
-						$elm$html$Html$button,
+						$elm$html$Html$p,
+						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick(
-								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-25'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('25')
+								$elm$html$Html$text('This demonstrates smooth scrolling within a scrollable container (not the document itself).')
 							])),
 						A2(
-						$elm$html$Html$button,
+						$elm$html$Html$p,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick(
-								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'left-half', 'anchor-left-1'))
+								$elm$html$Html$Attributes$class('status')
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('1')
+								$elm$html$Html$text(model.message)
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('controls')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Events$onClick($author$project$SmoothMoveTask$Container$ScrollToTop),
+										$elm$html$Html$Attributes$class('control-btn top-btn')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Scroll to Top')
+									])),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Events$onClick($author$project$SmoothMoveTask$Container$ScrollToBottom),
+										$elm$html$Html$Attributes$class('control-btn bottom-btn')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Scroll to Bottom')
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id('scroll-container'),
+								$elm$html$Html$Attributes$class('scroll-container')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('scroll-content')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$div,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('content-block top-block')
+											]),
+										_List_fromArray(
+											[
+												A2(
+												$elm$html$Html$h2,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('� Top of Container')
+													])),
+												A2(
+												$elm$html$Html$p,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('This is the top of the scrollable container content. The background gradient helps visualize scroll position.')
+													])),
+												A2(
+												$elm$html$Html$p,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Click \'Scroll to Top\' to smoothly scroll to this position.')
+													]))
+											])),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 1, 'This is content block 1. Each block has enough content to make scrolling meaningful.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 2, 'Content block 2 continues the gradient transition from white to dark.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 3, 'Content block 3 shows the middle section of our scrollable content.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 4, 'Content block 4 demonstrates the progression through the gradient.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 5, 'Content block 5 continues toward the bottom of the container.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 6, 'Content block 6 shows we\'re getting closer to the bottom.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 7, 'Content block 7 is near the end with darker background colors.'),
+										A2($author$project$SmoothMoveTask$Container$contentBlock, 8, 'Content block 8 is almost at the bottom of the scrollable content.'),
+										A2(
+										$elm$html$Html$div,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$id('bottom-element'),
+												$elm$html$Html$Attributes$class('content-block bottom-block')
+											]),
+										_List_fromArray(
+											[
+												A2(
+												$elm$html$Html$h2,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('🔻 Bottom of Container')
+													])),
+												A2(
+												$elm$html$Html$p,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('This is the bottom of the scrollable container content. Notice the dark background.')
+													])),
+												A2(
+												$elm$html$Html$p,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Click \'Scroll to Bottom\' to smoothly scroll to this position.')
+													])),
+												A2(
+												$elm$html$Html$p,
+												_List_Nil,
+												_List_fromArray(
+													[
+														$elm$html$Html$text('The smooth animation should work reliably using the new SmoothMoveTask API.')
+													]))
+											]))
+									]))
 							]))
 					])),
-				A2(
-				$elm$html$Html$div,
+				A3(
+				$elm$html$Html$node,
+				'style',
 				_List_Nil,
 				_List_fromArray(
 					[
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								$elm$html$Html$Events$onClick(
-								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-100'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('100')
-							])),
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								$elm$html$Html$Events$onClick(
-								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-25'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('25')
-							])),
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								$elm$html$Html$Events$onClick(
-								A2($author$project$SmoothMoveTask$Container$SmoothScroll, 'right-half', 'anchor-right-1'))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('1')
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				$author$project$SmoothMoveTask$Container$rowStyles,
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$div,
-						_Utils_ap(
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('left-half'),
-									A2($elm$html$Html$Attributes$style, 'background', 'cornflowerblue')
-								]),
-							$author$project$SmoothMoveTask$Container$columnStyles),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$ul,
-								_List_Nil,
-								A2(
-									$elm$core$List$map,
-									$author$project$SmoothMoveTask$Container$anchorView('left'),
-									A2($elm$core$List$range, 1, 100)))
-							])),
-						A2(
-						$elm$html$Html$div,
-						_Utils_ap(
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('right-half'),
-									A2($elm$html$Html$Attributes$style, 'background', 'wheat')
-								]),
-							$author$project$SmoothMoveTask$Container$columnStyles),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$ul,
-								_List_Nil,
-								A2(
-									$elm$core$List$map,
-									$author$project$SmoothMoveTask$Container$anchorView('right'),
-									A2($elm$core$List$range, 1, 100)))
-							]))
+						$elm$html$Html$text($author$project$SmoothMoveTask$Container$css)
 					]))
 			]),
-		title: 'SmoothMoveTask Container Example'
+		title: 'SmoothMoveTask - Container Scrolling'
 	};
 };
 var $author$project$SmoothMoveTask$Container$main = $elm$browser$Browser$document(

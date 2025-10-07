@@ -1,13 +1,10 @@
 module SmoothMoveTask.Container exposing (main)
 
 import Browser exposing (Document)
-import Browser.Dom as Dom
-import Dict exposing (Dict)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveTask exposing (containerElement, defaultConfig, animateToWithConfig)
-import Task exposing (Task)
+import SmoothMoveTask exposing (containerElement, animateToCmdWithConfig, defaultConfig)
 
 
 main =
@@ -19,18 +16,19 @@ main =
         }
 
 
+type alias Model =
+    { message : String }
+
+
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { foo = "bar" }, Cmd.none )
-
-
-type alias Model =
-    { foo : String }
+    ( { message = "Ready to scroll within the container" }, Cmd.none )
 
 
 type Msg
     = NoOp
-    | SmoothScroll String String
+    | ScrollToTop
+    | ScrollToBottom
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -39,54 +37,296 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
-        SmoothScroll containerId targetId ->
-            ( model
-            , containerElement containerId targetId
-                |> Cmd.map (always NoOp)
+        ScrollToTop ->
+            ( { model | message = "Scrolling to top of container..." }
+            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "top-element"
             )
+
+        ScrollToBottom ->
+            ( { model | message = "Scrolling to bottom of container..." }
+            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "bottom-element"
+            )
+
+
+
 
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveTask Container Example"
+    { title = "SmoothMoveTask - Container Scrolling"
     , body =
-        [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
-        , div (style "padding-top" "60px" :: topBarStyles)
-            [ button [ onClick (SmoothScroll "left-half" "anchor-left-100") ] [ text "100" ]
-            , button [ onClick (SmoothScroll "left-half" "anchor-left-25") ] [ text "25" ]
-            , button [ onClick (SmoothScroll "left-half" "anchor-left-1") ] [ text "1" ]
-            ]
-        , div []
-            [ button [ onClick (SmoothScroll "right-half" "anchor-right-100") ] [ text "100" ]
-            , button [ onClick (SmoothScroll "right-half" "anchor-right-25") ] [ text "25" ]
-            , button [ onClick (SmoothScroll "right-half" "anchor-right-1") ] [ text "1" ]
-            ]
-        , div rowStyles
-            [ div ([ id "left-half", style "background" "cornflowerblue" ] ++ columnStyles)
-                [ ul []
-                    (List.range 1 100 |> List.map (anchorView "left"))
+        [ -- Navigation
+          a [ href "../../index.html", class "back-button" ] [ text "← Back to Dashboard" ]
+        
+        , -- Main content
+          div [ class "main-content" ]
+            [ h1 [] [ text "Container Scrolling Example" ]
+            , p [] [ text "This demonstrates smooth scrolling within a scrollable container (not the document itself)." ]
+            , p [ class "status" ] [ text model.message ]
+            
+            , -- Control buttons
+            div [ class "controls" ]
+                [ button [ onClick ScrollToTop, class "control-btn top-btn" ] [ text "Scroll to Top" ]
+                , button [ onClick ScrollToBottom, class "control-btn bottom-btn" ] [ text "Scroll to Bottom" ]
                 ]
-            , div ([ id "right-half", style "background" "wheat" ] ++ columnStyles)
-                [ ul []
-                    (List.range 1 100 |> List.map (anchorView "right"))
+            
+            , -- The scrollable container
+            div [ id "scroll-container", class "scroll-container" ]
+                [ div [ class "scroll-content" ]
+                    [ div [ class "content-block top-block" ]
+                        [ h2 [] [ text "� Top of Container" ]
+                        , p [] [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
+                        , p [] [ text "Click 'Scroll to Top' to smoothly scroll to this position." ]
+                        ]
+                    
+                    , contentBlock 1 "This is content block 1. Each block has enough content to make scrolling meaningful."
+                    , contentBlock 2 "Content block 2 continues the gradient transition from white to dark."
+                    , contentBlock 3 "Content block 3 shows the middle section of our scrollable content."
+                    , contentBlock 4 "Content block 4 demonstrates the progression through the gradient."
+                    , contentBlock 5 "Content block 5 continues toward the bottom of the container."
+                    , contentBlock 6 "Content block 6 shows we're getting closer to the bottom."
+                    , contentBlock 7 "Content block 7 is near the end with darker background colors."
+                    , contentBlock 8 "Content block 8 is almost at the bottom of the scrollable content."
+                    
+                    , div [ id "bottom-element", class "content-block bottom-block" ]
+                        [ h2 [] [ text "🔻 Bottom of Container" ]
+                        , p [] [ text "This is the bottom of the scrollable container content. Notice the dark background." ]
+                        , p [] [ text "Click 'Scroll to Bottom' to smoothly scroll to this position." ]
+                        , p [] [ text "The smooth animation should work reliably using the new SmoothMoveTask API." ]
+                        ]
+                    ]
                 ]
             ]
+        
+        , -- Styles
+        node "style" [] [ text css ]
         ]
     }
 
 
-anchorView side num =
-    li [ String.fromInt num |> String.append ("anchor-" ++ side ++ "-") |> id ]
-        [ text <| String.fromInt num ]
+contentBlock : Int -> String -> Html Msg
+contentBlock num description =
+    div [ class "content-block" ]
+        [ h3 [] [ text ("Content Block " ++ String.fromInt num) ]
+        , p [] [ text description ]
+        , ul []
+            [ li [] [ text "Each block adds to the scrollable height" ]
+            , li [] [ text "The gradient background shows scroll position" ]
+            , li [] [ text "Smooth scrolling animates between positions" ]
+            ]
+        ]
 
 
-topBarStyles =
-    [ style "position" "fixed", style "top" "0", style "height" "40px", style "left" "0", style "right" "0", style "display" "flex", style "justify-content" "space-around" ]
 
 
-rowStyles =
-    [ style "font-size" "18px", style "font-family" "sans-serif", style "position" "fixed", style "top" "40px", style "bottom" "0", style "left" "0", style "right" "0", style "display" "flex" ]
 
 
-columnStyles =
-    [ style "flex-grow" "1", style "overflow-y" "scroll", style "border" "1px solid #ccc" ]
+css : String
+css = """
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #6c757d;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+    background: #5a6268;
+}
+
+.main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 20px 40px;
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: 300;
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.status {
+    background: #e8f4fd;
+    color: #0066cc;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-weight: 500;
+    margin: 30px 0;
+    display: inline-block;
+    border-left: 4px solid #0066cc;
+}
+
+.controls {
+    margin: 40px 0;
+}
+
+.control-btn {
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0 10px 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.top-btn {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+}
+
+.top-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4);
+}
+
+.bottom-btn {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+    color: white;
+}
+
+.bottom-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(253, 121, 168, 0.4);
+}
+
+.scroll-container {
+    width: 100%;
+    height: 600px;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-top: 30px;
+    text-align: left;
+}
+
+.scroll-content {
+    background: linear-gradient(to bottom, 
+        #ffffff 0%,
+        #f8f9fa 15%,
+        #e9ecef 30%,
+        #dee2e6 45%,
+        #ced4da 60%,
+        #adb5bd 75%,
+        #6c757d 90%,
+        #495057 100%
+    );
+    min-height: 2000px;
+    padding: 0;
+}
+
+.content-block {
+    padding: 40px;
+    margin: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.content-block h2, .content-block h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.content-block h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.content-block h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+.content-block p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.content-block ul {
+    margin: 20px 0;
+    padding-left: 30px;
+}
+
+.content-block li {
+    margin: 8px 0;
+    color: #666;
+}
+
+.top-block {
+    background: rgba(255,255,255,0.8);
+    border-bottom: 3px solid #74b9ff;
+}
+
+.bottom-block {
+    background: rgba(0,0,0,0.1);
+    border-top: 3px solid #fd79a8;
+    color: #2c3e50;
+}
+
+.bottom-block h2 {
+    color: #2c3e50;
+}
+
+/* Smooth scrolling disabled - we handle it programmatically */
+.scroll-container {
+    scroll-behavior: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 60px 15px 20px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .scroll-container {
+        height: 500px;
+    }
+    
+    .control-btn {
+        display: block;
+        width: 200px;
+        margin: 10px auto;
+    }
+    
+    .content-block {
+        padding: 30px 20px;
+    }
+}
+"""
