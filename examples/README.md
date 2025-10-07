@@ -2,6 +2,8 @@
 
 Interactive examples showcasing all 5 animation approaches. Each example is compiled and ready to run directly in your browser!
 
+> **Note**: If `index.html` gets accidentally overwritten, run `./restore-index.sh` to restore the dashboard.
+
 ## 🚀 Quick Start
 
 **Just open `index.html`** in your browser to see the examples dashboard, or open any specific example directly:
