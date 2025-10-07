@@ -5600,6 +5600,7 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 										$elm$html$Html$div,
 										_List_fromArray(
 											[
+												$elm$html$Html$Attributes$id('top-element'),
 												$elm$html$Html$Attributes$class('content-block top-block')
 											]),
 										_List_fromArray(

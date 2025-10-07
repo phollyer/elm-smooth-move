@@ -73,7 +73,7 @@ view model =
             , -- The scrollable container
             div [ id "scroll-container", class "scroll-container" ]
                 [ div [ class "scroll-content" ]
-                    [ div [ class "content-block top-block" ]
+                    [ div [ id "top-element", class "content-block top-block" ]
                         [ h2 [] [ text "� Top of Container" ]
                         , p [] [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
                         , p [] [ text "Click 'Scroll to Top' to smoothly scroll to this position." ]
