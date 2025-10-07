@@ -5283,13 +5283,10 @@ var $author$project$SmoothMovePorts$setInitialPosition = F4(
 		var elements = _v0.a;
 		var elementData = {config: $author$project$SmoothMovePorts$defaultConfig, currentX: x, currentY: y, isAnimating: false, targetX: x, targetY: y};
 		var updatedElements = A3($elm$core$Dict$insert, elementId, elementData, elements);
-		return _Utils_Tuple2(
-			$author$project$SmoothMovePorts$Model(updatedElements),
-			$elm$core$Maybe$Nothing);
+		return $author$project$SmoothMovePorts$Model(updatedElements);
 	});
 var $author$project$SmoothMovePorts$Basic$init = function (_v0) {
-	var _v1 = A4($author$project$SmoothMovePorts$setInitialPosition, 'box', 50, 50, $author$project$SmoothMovePorts$init);
-	var initialAnimations = _v1.a;
+	var initialAnimations = A4($author$project$SmoothMovePorts$setInitialPosition, 'box', 50, 50, $author$project$SmoothMovePorts$init);
 	return _Utils_Tuple2(
 		{animations: initialAnimations},
 		$elm$core$Platform$Cmd$none);

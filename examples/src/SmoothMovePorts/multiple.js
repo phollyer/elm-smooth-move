@@ -5283,9 +5283,7 @@ var $author$project$SmoothMovePorts$setInitialPosition = F4(
 		var elements = _v0.a;
 		var elementData = {config: $author$project$SmoothMovePorts$defaultConfig, currentX: x, currentY: y, isAnimating: false, targetX: x, targetY: y};
 		var updatedElements = A3($elm$core$Dict$insert, elementId, elementData, elements);
-		return _Utils_Tuple2(
-			$author$project$SmoothMovePorts$Model(updatedElements),
-			$elm$core$Maybe$Nothing);
+		return $author$project$SmoothMovePorts$Model(updatedElements);
 	});
 var $author$project$SmoothMovePorts$Multiple$init = function (_v0) {
 	var initialAnimations = A4(
@@ -5298,7 +5296,7 @@ var $author$project$SmoothMovePorts$Multiple$init = function (_v0) {
 			'element-b',
 			200,
 			150,
-			A4($author$project$SmoothMovePorts$setInitialPosition, 'element-a', 100, 100, $author$project$SmoothMovePorts$init).a).a).a;
+			A4($author$project$SmoothMovePorts$setInitialPosition, 'element-a', 100, 100, $author$project$SmoothMovePorts$init)));
 	return _Utils_Tuple2(
 		{animations: initialAnimations},
 		$elm$core$Platform$Cmd$none);
@@ -5485,6 +5483,45 @@ var $author$project$SmoothMovePorts$stopAnimation = F2(
 				$elm$core$Maybe$Nothing);
 		}
 	});
+var $author$project$SmoothMovePorts$stopBatch = F2(
+	function (elementIds, model) {
+		return A2(
+			$elm$core$Tuple$mapSecond,
+			$elm$core$List$reverse,
+			A3(
+				$elm$core$List$foldl,
+				F2(
+					function (elementId, _v0) {
+						var currentModel = _v0.a;
+						var stoppedElements = _v0.b;
+						var _v1 = A2($author$project$SmoothMovePorts$stopAnimation, elementId, currentModel);
+						var newModel = _v1.a;
+						var maybeStoppedId = _v1.b;
+						if (maybeStoppedId.$ === 'Just') {
+							var stoppedId = maybeStoppedId.a;
+							return _Utils_Tuple2(
+								newModel,
+								A2($elm$core$List$cons, stoppedId, stoppedElements));
+						} else {
+							return _Utils_Tuple2(newModel, stoppedElements);
+						}
+					}),
+				_Utils_Tuple2(model, _List_Nil),
+				elementIds));
+	});
+var $author$project$SmoothMovePorts$stopBatchWithPort = F3(
+	function (portFunction, elementIds, model) {
+		var _v0 = A2($author$project$SmoothMovePorts$stopBatch, elementIds, model);
+		var newModel = _v0.a;
+		var stoppedElements = _v0.b;
+		return _Utils_Tuple2(
+			newModel,
+			$elm$core$Platform$Cmd$batch(
+				A2(
+					$elm$core$List$map,
+					A2($elm$core$Basics$composeL, portFunction, $author$project$SmoothMovePorts$encodeStopCommand),
+					stoppedElements)));
+	});
 var $author$project$SmoothMovePorts$Multiple$stopElementAnimation = _Platform_outgoingPort('stopElementAnimation', $elm$json$Json$Encode$string);
 var $author$project$SmoothMovePorts$Multiple$update = F2(
 	function (msg, model) {
@@ -5598,29 +5635,19 @@ var $author$project$SmoothMovePorts$Multiple$update = F2(
 						{animations: newAnimations}),
 					cmd);
 			case 'StopAll':
-				var cmd4 = $author$project$SmoothMovePorts$Multiple$stopElementAnimation(
-					$author$project$SmoothMovePorts$encodeStopCommand('box4'));
-				var cmd3 = $author$project$SmoothMovePorts$Multiple$stopElementAnimation(
-					$author$project$SmoothMovePorts$encodeStopCommand('box3'));
-				var cmd2 = $author$project$SmoothMovePorts$Multiple$stopElementAnimation(
-					$author$project$SmoothMovePorts$encodeStopCommand('box2'));
-				var cmd1 = $author$project$SmoothMovePorts$Multiple$stopElementAnimation(
-					$author$project$SmoothMovePorts$encodeStopCommand('box1'));
-				var _v4 = A2($author$project$SmoothMovePorts$stopAnimation, 'box1', model.animations);
-				var animations1 = _v4.a;
-				var _v5 = A2($author$project$SmoothMovePorts$stopAnimation, 'box2', animations1);
-				var animations2 = _v5.a;
-				var _v6 = A2($author$project$SmoothMovePorts$stopAnimation, 'box3', animations2);
-				var animations3 = _v6.a;
-				var _v7 = A2($author$project$SmoothMovePorts$stopAnimation, 'box4', animations3);
-				var finalAnimations = _v7.a;
+				var _v4 = A3(
+					$author$project$SmoothMovePorts$stopBatchWithPort,
+					$author$project$SmoothMovePorts$Multiple$stopElementAnimation,
+					_List_fromArray(
+						['box1', 'box2', 'box3', 'box4']),
+					model.animations);
+				var newAnimations = _v4.a;
+				var cmd = _v4.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{animations: finalAnimations}),
-					$elm$core$Platform$Cmd$batch(
-						_List_fromArray(
-							[cmd1, cmd2, cmd3, cmd4])));
+						{animations: newAnimations}),
+					cmd);
 			case 'PositionUpdateMsg':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			default:

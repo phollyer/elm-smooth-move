@@ -5180,7 +5180,7 @@ var $elm$core$Basics$abs = function (n) {
 	return (n < 0) ? (-n) : n;
 };
 var $elm$core$Basics$round = _Basics_round;
-var $author$project$SmoothMoveTask$animationSteps = F4(
+var $author$project$Internal$SmoothScroll$animationSteps = F4(
 	function (speed, easing, start, stop) {
 		var operator = (_Utils_cmp(start, stop) > 0) ? $elm$core$Basics$sub : $elm$core$Basics$add;
 		var diff = $elm$core$Basics$abs(start - stop);
@@ -5299,7 +5299,7 @@ var $author$project$SmoothMoveTask$animateToTaskWithConfig = F2(
 					A2(
 						$elm$core$List$map,
 						setViewport,
-						A4($author$project$SmoothMoveTask$animationSteps, config.speed, config.easing, viewport.y, clamped)));
+						A4($author$project$Internal$SmoothScroll$animationSteps, config.speed, config.easing, viewport.y, clamped)));
 			});
 		return A2(
 			$elm$core$Task$andThen,
