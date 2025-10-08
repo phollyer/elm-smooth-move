@@ -11923,7 +11923,7 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 						$elm$html$Html$Attributes$id('top'))
 					]),
 				{
-					label: $mdgriffith$elm_ui$Element$text('← Back to Examples.'),
+					label: $mdgriffith$elm_ui$Element$text('← Back to Examples'),
 					url: '../../elmui-examples.html'
 				}),
 				A2(
