@@ -11953,18 +11953,7 @@ var $author$project$SmoothMoveSubUI$Basic$viewContent = function (model) {
 						A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
 						$mdgriffith$elm_ui$Element$centerX
 					]),
-				$mdgriffith$elm_ui$Element$text('ElmUI Version - Use buttons to move the blue box')),
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Font$size(16),
-						$mdgriffith$elm_ui$Element$Font$color(
-						isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-						$mdgriffith$elm_ui$Element$centerX
-					]),
-				$mdgriffith$elm_ui$Element$text(
-					isMoving ? 'Animating...' : 'Ready')),
+				$mdgriffith$elm_ui$Element$text('ElmUI Version - Frame-rate independent subscriptions')),
 				A2(
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
@@ -12110,7 +12099,37 @@ var $author$project$SmoothMoveSubUI$Basic$viewContent = function (model) {
 							$mdgriffith$elm_ui$Element$htmlAttribute(
 							A2($elm$html$Html$Attributes$style, 'transition', 'none'))
 						]),
-					$mdgriffith$elm_ui$Element$text('')))
+					$mdgriffith$elm_ui$Element$text(''))),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(8),
+						$mdgriffith$elm_ui$Element$centerX
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(14),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128)),
+								$mdgriffith$elm_ui$Element$centerX
+							]),
+						$mdgriffith$elm_ui$Element$text('🔄 Subscription-based positioning with automatic state management')),
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(12),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128)),
+								$mdgriffith$elm_ui$Element$centerX
+							]),
+						$mdgriffith$elm_ui$Element$text('Real-time animation updates via onAnimationFrameDelta'))
+					]))
 			]));
 };
 var $author$project$SmoothMoveSubUI$Basic$view = function (model) {

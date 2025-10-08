@@ -212,15 +212,9 @@ viewContent model =
             , Font.color (rgb255 71 85 105)
             , centerX
             ]
-            (text "ElmUI Version - Hardware accelerated multiple element animations")
+            (text "ElmUI Version - Multiple elements via CSS transitions")
 
-        , -- Performance info
-          el
-            [ Font.size 16
-            , Font.color (rgb255 16 185 129)
-            , centerX
-            ]
-            (text "🚀 All animations hardware accelerated by browser")
+
 
         , -- Element status and positions (6 elements in 2 rows)
           column
@@ -234,8 +228,6 @@ viewContent model =
                 [ column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 59 130 246) ] (text "A")
-                    , el [ Font.size 11, Font.color (rgb255 16 185 129) ] 
-                        (text "CSS Transition")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
                     ]
@@ -243,8 +235,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
-                    , el [ Font.size 11, Font.color (rgb255 16 185 129) ] 
-                        (text "CSS Transition")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
                     ]
@@ -252,8 +242,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
-                    , el [ Font.size 11, Font.color (rgb255 16 185 129) ] 
-                        (text "CSS Transition")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
                     ]
@@ -266,8 +254,6 @@ viewContent model =
                 [ column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
-                    , el [ Font.size 11, Font.color (rgb255 16 185 129) ] 
-                        (text "CSS Transition")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
                     ]
@@ -275,8 +261,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
-                    , el [ Font.size 11, Font.color (rgb255 16 185 129) ] 
-                        (text "CSS Transition")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
                     ]
@@ -284,8 +268,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
-                    , el [ Font.size 11, Font.color (rgb255 16 185 129) ] 
-                        (text "CSS Transition")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
                     ]
@@ -488,23 +470,45 @@ viewContent model =
                 )
             )
 
-        , -- Performance information
+        , -- Footer with technical information
           column
-            [ spacing 8
-            , centerX
+            [ spacing 16
+            , width fill
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
             [ el
-                [ Font.size 14
-                , Font.color (rgb255 107 114 128)
+                [ Font.size 20
+                , Font.semiBold
+                , Font.color (rgb255 30 41 59)
                 , centerX
                 ]
-                (text "Native CSS transitions - no animation frame subscriptions needed")
+                (text "🚀 SmoothMoveCSS - Advanced Hardware Acceleration")
 
-            , el
-                [ Font.size 12
-                , Font.color (rgb255 107 114 128)
-                , centerX
+            , paragraph
+                [ Font.size 14
+                , Font.color (rgb255 71 85 105)
+                , width fill
                 ]
-                (text "Browser automatically optimizes for device performance & battery")
+                [ text "This example demonstrates the SmoothMoveCSS module coordinating "
+                , el [ Font.semiBold ] (text "multiple CSS transitions")
+                , text " simultaneously. Each element uses native browser optimization with "
+                , el [ Font.semiBold ] (text "hardware acceleration")
+                , text ", eliminating animation frame subscriptions while maintaining smooth formation control."
+                ]
+
+            , paragraph
+                [ Font.size 14
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for complex multi-element choreography where "
+                , el [ Font.semiBold ] (text "battery efficiency")
+                , text " and native performance are critical requirements."
+                ]
             ]
         ]

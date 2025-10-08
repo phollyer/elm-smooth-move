@@ -289,13 +289,7 @@ viewContent model =
             ]
             (text "ElmUI Version - Multiple elements via Web Animations API")
 
-        , -- Technology info
-          el
-            [ Font.size 16
-            , Font.color (rgb255 16 185 129)
-            , centerX
-            ]
-            (text "🔌 Advanced multi-element port-based animations")
+
 
         , -- Element status and positions (6 elements in 2 rows)
           column
@@ -309,8 +303,6 @@ viewContent model =
                 [ column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 59 130 246) ] (text "A")
-                    , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
                     ]
@@ -318,8 +310,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
-                    , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
                     ]
@@ -327,8 +317,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
-                    , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
                     ]
@@ -341,8 +329,6 @@ viewContent model =
                 [ column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
-                    , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
                     ]
@@ -350,8 +336,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
-                    , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
                     ]
@@ -359,8 +343,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
-                    , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
                     ]

@@ -132,7 +132,7 @@ viewContent model =
             , Font.color (rgb255 71 85 105)
             , centerX
             ]
-            (text "ElmUI Version - Click buttons to see smooth scrolling animation")
+            (text "ElmUI Version - Task-based scrolling with composable error handling")
 
         , -- Buttons
           column

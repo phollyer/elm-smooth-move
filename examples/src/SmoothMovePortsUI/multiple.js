@@ -11948,16 +11948,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 					]),
 				$mdgriffith$elm_ui$Element$text('ElmUI Version - Multiple elements via Web Animations API')),
 				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Font$size(16),
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129)),
-						$mdgriffith$elm_ui$Element$centerX
-					]),
-				$mdgriffith$elm_ui$Element$text('🔌 Advanced multi-element port-based animations')),
-				A2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
@@ -11997,16 +11987,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isAnimating ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isAnimating ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12038,16 +12018,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isAnimating ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isAnimating ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12075,16 +12045,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 												A3($mdgriffith$elm_ui$Element$rgb255, 168, 85, 247))
 											]),
 										$mdgriffith$elm_ui$Element$text('C')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isAnimating ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isAnimating ? 'Animating' : 'Static')),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
@@ -12130,16 +12090,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isAnimating ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isAnimating ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12171,16 +12121,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isAnimating ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isAnimating ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12208,16 +12148,6 @@ var $author$project$SmoothMovePortsUI$Multiple$viewContent = function (model) {
 												A3($mdgriffith$elm_ui$Element$rgb255, 34, 197, 94))
 											]),
 										$mdgriffith$elm_ui$Element$text('F')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isAnimating ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isAnimating ? 'Animating' : 'Static')),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(

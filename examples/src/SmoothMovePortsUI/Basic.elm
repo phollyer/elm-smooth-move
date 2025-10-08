@@ -231,15 +231,9 @@ viewContent model =
             , Font.color (rgb255 71 85 105)
             , centerX
             ]
-            (text "ElmUI Version - Use buttons to move the blue box")
+            (text "ElmUI Version - Web Animations API integration")
 
-        , -- Status
-          el
-            [ Font.size 16
-            , Font.color (if isAnimating then rgb255 16 185 129 else rgb255 71 85 105)
-            , centerX
-            ]
-            (text (if isAnimating then "Animating..." else "Ready"))
+
 
         , -- Position display
           el
@@ -338,5 +332,45 @@ viewContent model =
                 (text "")
             )
 
+        , -- Footer with technical information
+          column
+            [ spacing 16
+            , width fill
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
+            ]
+            [ el
+                [ Font.size 20
+                , Font.semiBold
+                , Font.color (rgb255 30 41 59)
+                , centerX
+                ]
+                (text "🔌 SmoothMovePorts - Web Animations API")
 
+            , paragraph
+                [ Font.size 14
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMovePorts module, which integrates with the "
+                , el [ Font.semiBold ] (text "Web Animations API")
+                , text " through JavaScript ports. This approach provides access to "
+                , el [ Font.semiBold ] (text "platform-specific optimizations")
+                , text " and advanced animation features not available through pure Elm."
+                ]
+
+            , paragraph
+                [ Font.size 14
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for complex animations requiring "
+                , el [ Font.semiBold ] (text "native performance")
+                , text " and advanced timing controls beyond what CSS transitions can provide."
+                ]
+            ]
         ]

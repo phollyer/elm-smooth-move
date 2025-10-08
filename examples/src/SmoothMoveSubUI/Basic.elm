@@ -160,15 +160,7 @@ viewContent model =
             , Font.color (rgb255 71 85 105)
             , centerX
             ]
-            (text "ElmUI Version - Use buttons to move the blue box")
-
-        , -- Status
-          el
-            [ Font.size 16
-            , Font.color (if isMoving then rgb255 16 185 129 else rgb255 71 85 105)
-            , centerX
-            ]
-            (text (if isMoving then "Animating..." else "Ready"))
+            (text "ElmUI Version - Frame-rate independent subscriptions")
 
         , -- Position display
           el
@@ -266,4 +258,24 @@ viewContent model =
                 ]
                 (text "")
             )
+
+        , -- Technology information
+          column
+            [ spacing 8
+            , centerX
+            ]
+            [ el
+                [ Font.size 14
+                , Font.color (rgb255 107 114 128)
+                , centerX
+                ]
+                (text "🔄 Subscription-based positioning with automatic state management")
+
+            , el
+                [ Font.size 12
+                , Font.color (rgb255 107 114 128)
+                , centerX
+                ]
+                (text "Real-time animation updates via onAnimationFrameDelta")
+            ]
         ]

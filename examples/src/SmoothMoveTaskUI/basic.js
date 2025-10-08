@@ -11839,7 +11839,7 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 						A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
 						$mdgriffith$elm_ui$Element$centerX
 					]),
-				$mdgriffith$elm_ui$Element$text('ElmUI Version - Click buttons to see smooth scrolling animation')),
+				$mdgriffith$elm_ui$Element$text('ElmUI Version - Task-based scrolling with composable error handling')),
 				A2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(

@@ -213,15 +213,9 @@ viewContent model =
             , Font.color (rgb255 71 85 105)
             , centerX
             ]
-            (text "ElmUI Version - Multiple elements with formation patterns")
+            (text "ElmUI Version - State wrapper for multiple element formation control")
 
-        , -- Status
-          el
-            [ Font.size 16
-            , Font.color (if isMoving then rgb255 16 185 129 else rgb255 71 85 105)
-            , centerX
-            ]
-            (text (if isMoving then "Animations: Running" else "Animations: Stopped"))
+
 
         , -- Element status and positions (6 elements in 2 rows)
           column
@@ -235,8 +229,6 @@ viewContent model =
                 [ column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 59 130 246) ] (text "A")
-                    , el [ Font.size 11, Font.color (if isMoving then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isMoving then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
                     ]
@@ -244,8 +236,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
-                    , el [ Font.size 11, Font.color (if isMoving then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isMoving then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
                     ]
@@ -253,8 +243,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
-                    , el [ Font.size 11, Font.color (if isMoving then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isMoving then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
                     ]
@@ -267,8 +255,6 @@ viewContent model =
                 [ column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
-                    , el [ Font.size 11, Font.color (if isMoving then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isMoving then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
                     ]
@@ -276,8 +262,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
-                    , el [ Font.size 11, Font.color (if isMoving then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isMoving then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
                     ]
@@ -285,8 +269,6 @@ viewContent model =
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
-                    , el [ Font.size 11, Font.color (if isMoving then rgb255 16 185 129 else rgb255 107 114 128) ] 
-                        (text (if isMoving then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
                     ]
@@ -489,11 +471,45 @@ viewContent model =
                 )
             )
 
-        , -- Instructions
-          el
-            [ Font.size 14
-            , Font.color (rgb255 107 114 128)
-            , centerX
+        , -- Footer with technical information
+          column
+            [ spacing 16
+            , width fill
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "State-based animation management with predefined formation patterns")
+            [ el
+                [ Font.size 20
+                , Font.semiBold
+                , Font.color (rgb255 30 41 59)
+                , centerX
+                ]
+                (text "🧩 SmoothMoveState - Advanced Formation Control")
+
+            , paragraph
+                [ Font.size 14
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveState module managing "
+                , el [ Font.semiBold ] (text "multiple elements simultaneously")
+                , text " with predefined formation patterns. The state wrapper provides "
+                , el [ Font.semiBold ] (text "simplified coordination")
+                , text " of complex multi-element animations while preserving individual element positioning data."
+                ]
+
+            , paragraph
+                [ Font.size 14
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for choreographed animations, UI transitions, and formation-based layouts with "
+                , el [ Font.semiBold ] (text "reduced complexity")
+                , text " compared to managing individual subscription states."
+                ]
+            ]
         ]
