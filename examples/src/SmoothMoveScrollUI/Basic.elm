@@ -83,7 +83,8 @@ view : Model -> Document Msg
 view model =
     { title = "SmoothMoveScroll Basic ElmUI Example"
     , body = 
-        [ layout
+        [ Html.node "style" [] [ Html.text responsiveCSS ]
+        , layout
             [ Background.gradient
                 { angle = 0
                 , steps = 
@@ -92,6 +93,7 @@ view model =
                     ]
                 }
             , paddingXY 40 20
+            , htmlAttribute (Html.Attributes.class "responsive-layout")
             ]
             (viewContent model)
         ]
@@ -104,6 +106,7 @@ viewContent model =
         [ width fill
         , spacing 40
         , centerX
+        , htmlAttribute (Html.Attributes.class "responsive-container")
         ]
         [ -- Back Button
           link
@@ -128,6 +131,7 @@ viewContent model =
             , Font.semiBold
             , Font.color (rgb255 30 41 59)
             , centerX
+            , htmlAttribute (Html.Attributes.class "responsive-header")
             ]
             (text "SmoothMoveScroll Document Example")
 
@@ -142,6 +146,7 @@ viewContent model =
             , Border.solid
             , Border.width 1
             , Border.color (rgb255 226 232 240)
+            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
             ]
             [ paragraph
                 [ Font.size 16
@@ -182,6 +187,7 @@ viewContent model =
           column
             [ spacing 20
             , centerX
+            , htmlAttribute (Html.Attributes.class "responsive-buttons")
             ]
             [ Input.button
                 [ Background.gradient
@@ -245,6 +251,7 @@ viewContent model =
           column
             [ spacing 20
             , htmlAttribute (Html.Attributes.id "paragraph-one")
+            , htmlAttribute (Html.Attributes.class "responsive-paragraph")
             , Background.color (rgb255 255 255 255)
             , centerX
             , paddingXY 32 24
@@ -297,6 +304,7 @@ viewContent model =
           column
             [ spacing 20
             , htmlAttribute (Html.Attributes.id "paragraph-two")
+            , htmlAttribute (Html.Attributes.class "responsive-paragraph")
             , Background.color (rgb255 255 255 255)
             , paddingXY 32 24
             , Border.rounded 12
@@ -349,6 +357,7 @@ viewContent model =
           column
             [ spacing 20
             , htmlAttribute (Html.Attributes.id "paragraph-three")
+            , htmlAttribute (Html.Attributes.class "responsive-paragraph")
             , Background.color (rgb255 255 255 255)
             , paddingXY 32 24
             , Border.rounded 12
@@ -398,3 +407,79 @@ viewContent model =
           , centerX ] 
           (text "...")
         ]
+
+
+-- RESPONSIVE CSS
+
+
+responsiveCSS : String
+responsiveCSS =
+    """
+    /* Mobile-first responsive design */
+    @media (max-width: 768px) {
+        .responsive-layout {
+            padding: 20px 16px !important;
+        }
+        
+        .responsive-container {
+            gap: 20px !important;
+        }
+        
+        .responsive-header {
+            font-size: 24px !important;
+            text-align: center;
+            padding: 0 16px;
+        }
+        
+        .responsive-tech-info {
+            padding: 16px 20px !important;
+            margin: 0 16px;
+        }
+        
+        .responsive-buttons {
+            gap: 16px !important;
+            padding: 0 16px;
+        }
+        
+        .responsive-buttons button {
+            width: 100%;
+            min-height: 44px;
+            padding: 12px 20px !important;
+        }
+        
+        .responsive-paragraph {
+            padding: 20px 16px !important;
+            margin: 0 16px;
+        }
+        
+        .responsive-paragraph h1,
+        .responsive-paragraph h2,
+        .responsive-paragraph h3 {
+            font-size: 20px !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .responsive-layout {
+            padding: 16px 12px !important;
+        }
+        
+        .responsive-header {
+            font-size: 20px !important;
+        }
+        
+        .responsive-tech-info {
+            padding: 12px 16px !important;
+            margin: 0 12px;
+        }
+        
+        .responsive-paragraph {
+            padding: 16px 12px !important;
+            margin: 0 12px;
+        }
+        
+        .responsive-buttons {
+            padding: 0 12px;
+        }
+    }
+    """

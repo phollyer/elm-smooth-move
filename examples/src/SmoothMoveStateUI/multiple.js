@@ -5862,6 +5862,15 @@ var $author$project$SmoothMoveStateUI$Multiple$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $mdgriffith$elm_ui$Internal$Model$Colored = F3(
 	function (a, b, c) {
 		return {$: 'Colored', a: a, b: b, c: c};
@@ -5950,19 +5959,11 @@ var $mdgriffith$elm_ui$Element$Background$gradient = function (_v0) {
 		}
 	}
 };
-var $mdgriffith$elm_ui$Internal$Style$classes = {above: 'a', active: 'atv', alignBottom: 'ab', alignCenterX: 'cx', alignCenterY: 'cy', alignContainerBottom: 'acb', alignContainerCenterX: 'accx', alignContainerCenterY: 'accy', alignContainerRight: 'acr', alignLeft: 'al', alignRight: 'ar', alignTop: 'at', alignedHorizontally: 'ah', alignedVertically: 'av', any: 's', behind: 'bh', below: 'b', bold: 'w7', borderDashed: 'bd', borderDotted: 'bdt', borderNone: 'bn', borderSolid: 'bs', capturePointerEvents: 'cpe', clip: 'cp', clipX: 'cpx', clipY: 'cpy', column: 'c', container: 'ctr', contentBottom: 'cb', contentCenterX: 'ccx', contentCenterY: 'ccy', contentLeft: 'cl', contentRight: 'cr', contentTop: 'ct', cursorPointer: 'cptr', cursorText: 'ctxt', focus: 'fcs', focusedWithin: 'focus-within', fullSize: 'fs', grid: 'g', hasBehind: 'hbh', heightContent: 'hc', heightExact: 'he', heightFill: 'hf', heightFillPortion: 'hfp', hover: 'hv', imageContainer: 'ic', inFront: 'fr', inputLabel: 'lbl', inputMultiline: 'iml', inputMultilineFiller: 'imlf', inputMultilineParent: 'imlp', inputMultilineWrapper: 'implw', inputText: 'it', italic: 'i', link: 'lnk', nearby: 'nb', noTextSelection: 'notxt', onLeft: 'ol', onRight: 'or', opaque: 'oq', overflowHidden: 'oh', page: 'pg', paragraph: 'p', passPointerEvents: 'ppe', root: 'ui', row: 'r', scrollbars: 'sb', scrollbarsX: 'sbx', scrollbarsY: 'sby', seButton: 'sbt', single: 'e', sizeByCapital: 'cap', spaceEvenly: 'sev', strike: 'sk', text: 't', textCenter: 'tc', textExtraBold: 'w8', textExtraLight: 'w2', textHeavy: 'w9', textJustify: 'tj', textJustifyAll: 'tja', textLeft: 'tl', textLight: 'w3', textMedium: 'w5', textNormalWeight: 'w4', textRight: 'tr', textSemiBold: 'w6', textThin: 'w1', textUnitalicized: 'tun', transition: 'ts', transparent: 'clr', underline: 'u', widthContent: 'wc', widthExact: 'we', widthFill: 'wf', widthFillPortion: 'wfp', wrapped: 'wrp'};
 var $mdgriffith$elm_ui$Internal$Model$Attr = function (a) {
 	return {$: 'Attr', a: a};
 };
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
+var $mdgriffith$elm_ui$Internal$Style$classes = {above: 'a', active: 'atv', alignBottom: 'ab', alignCenterX: 'cx', alignCenterY: 'cy', alignContainerBottom: 'acb', alignContainerCenterX: 'accx', alignContainerCenterY: 'accy', alignContainerRight: 'acr', alignLeft: 'al', alignRight: 'ar', alignTop: 'at', alignedHorizontally: 'ah', alignedVertically: 'av', any: 's', behind: 'bh', below: 'b', bold: 'w7', borderDashed: 'bd', borderDotted: 'bdt', borderNone: 'bn', borderSolid: 'bs', capturePointerEvents: 'cpe', clip: 'cp', clipX: 'cpx', clipY: 'cpy', column: 'c', container: 'ctr', contentBottom: 'cb', contentCenterX: 'ccx', contentCenterY: 'ccy', contentLeft: 'cl', contentRight: 'cr', contentTop: 'ct', cursorPointer: 'cptr', cursorText: 'ctxt', focus: 'fcs', focusedWithin: 'focus-within', fullSize: 'fs', grid: 'g', hasBehind: 'hbh', heightContent: 'hc', heightExact: 'he', heightFill: 'hf', heightFillPortion: 'hfp', hover: 'hv', imageContainer: 'ic', inFront: 'fr', inputLabel: 'lbl', inputMultiline: 'iml', inputMultilineFiller: 'imlf', inputMultilineParent: 'imlp', inputMultilineWrapper: 'implw', inputText: 'it', italic: 'i', link: 'lnk', nearby: 'nb', noTextSelection: 'notxt', onLeft: 'ol', onRight: 'or', opaque: 'oq', overflowHidden: 'oh', page: 'pg', paragraph: 'p', passPointerEvents: 'ppe', root: 'ui', row: 'r', scrollbars: 'sb', scrollbarsX: 'sbx', scrollbarsY: 'sby', seButton: 'sbt', single: 'e', sizeByCapital: 'cap', spaceEvenly: 'sev', strike: 'sk', text: 't', textCenter: 'tc', textExtraBold: 'w8', textExtraLight: 'w2', textHeavy: 'w9', textJustify: 'tj', textJustifyAll: 'tja', textLeft: 'tl', textLight: 'w3', textMedium: 'w5', textNormalWeight: 'w4', textRight: 'tr', textSemiBold: 'w6', textThin: 'w1', textUnitalicized: 'tun', transition: 'ts', transparent: 'clr', underline: 'u', widthContent: 'wc', widthExact: 'we', widthFill: 'wf', widthFillPortion: 'wfp', wrapped: 'wrp'};
 var $mdgriffith$elm_ui$Internal$Model$htmlClass = function (cls) {
 	return $mdgriffith$elm_ui$Internal$Model$Attr(
 		$elm$html$Html$Attributes$class(cls));
@@ -11608,6 +11609,7 @@ var $mdgriffith$elm_ui$Element$layoutWith = F3(
 	});
 var $mdgriffith$elm_ui$Element$layout = $mdgriffith$elm_ui$Element$layoutWith(
 	{options: _List_Nil});
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
 var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
 	function (a, b, c, d, e) {
 		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
@@ -11642,6 +11644,7 @@ var $mdgriffith$elm_ui$Element$paddingXY = F2(
 					xFloat));
 		}
 	});
+var $author$project$SmoothMoveStateUI$Multiple$responsiveCSS = '\n    <style>\n    .responsive-layout {\n        min-height: 100vh;\n        padding: 20px;\n        box-sizing: border-box;\n    }\n    \n    .responsive-container {\n        max-width: 1200px;\n        width: 100%;\n        margin: 0 auto;\n    }\n    \n    .responsive-header {\n        font-size: 32px;\n        line-height: 1.2;\n        margin-bottom: 30px;\n    }\n    \n    .responsive-tech-info {\n        background-color: #f8f9fa;\n        border: 1px solid #dee2e6;\n        border-radius: 8px;\n        padding: 16px;\n        margin-bottom: 30px;\n    }\n    \n    .responsive-buttons {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 12px;\n        margin-bottom: 30px;\n    }\n    \n    .responsive-buttons > * {\n        min-height: 44px;\n        min-width: 44px;\n    }\n    \n    .responsive-paragraph {\n        line-height: 1.6;\n        margin-bottom: 20px;\n    }\n    \n    /* Tablet breakpoint */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 16px;\n        }\n        \n        .responsive-header {\n            font-size: 24px;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 24px;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 16px;\n        }\n    }\n    \n    /* Mobile breakpoint */\n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 12px;\n        }\n        \n        .responsive-header {\n            font-size: 20px;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-tech-info {\n            padding: 10px;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 20px;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 14px;\n        }\n    }\n    </style>\n    ';
 var $mdgriffith$elm_ui$Element$rgb255 = F3(
 	function (red, green, blue) {
 		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
@@ -11895,7 +11898,6 @@ var $elm$core$Basics$always = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
 var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
-var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
@@ -12124,7 +12126,9 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 			[
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 				$mdgriffith$elm_ui$Element$spacing(40),
-				$mdgriffith$elm_ui$Element$centerX
+				$mdgriffith$elm_ui$Element$centerX,
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				$elm$html$Html$Attributes$class('responsive-container'))
 			]),
 		_List_fromArray(
 			[
@@ -12160,7 +12164,9 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 						$mdgriffith$elm_ui$Element$Font$semiBold,
 						$mdgriffith$elm_ui$Element$Font$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59)),
-						$mdgriffith$elm_ui$Element$centerX
+						$mdgriffith$elm_ui$Element$centerX,
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$class('responsive-header'))
 					]),
 				$mdgriffith$elm_ui$Element$text('SmoothMoveState Multiple Example')),
 				A2(
@@ -12174,6 +12180,8 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 						A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
 						$mdgriffith$elm_ui$Element$Background$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 248, 250, 252)),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$class('responsive-tech-info')),
 						$mdgriffith$elm_ui$Element$Border$rounded(8),
 						$mdgriffith$elm_ui$Element$Border$solid,
 						$mdgriffith$elm_ui$Element$Border$width(1),
@@ -12720,6 +12728,14 @@ var $author$project$SmoothMoveStateUI$Multiple$view = function (model) {
 	return {
 		body: _List_fromArray(
 			[
+				A3(
+				$elm$html$Html$node,
+				'style',
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text($author$project$SmoothMoveStateUI$Multiple$responsiveCSS)
+					])),
 				A2(
 				$mdgriffith$elm_ui$Element$layout,
 				_List_fromArray(
@@ -12733,7 +12749,9 @@ var $author$project$SmoothMoveStateUI$Multiple$view = function (model) {
 									A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240)
 								])
 						}),
-						A2($mdgriffith$elm_ui$Element$paddingXY, 40, 20)
+						A2($mdgriffith$elm_ui$Element$paddingXY, 40, 20),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$class('responsive-layout'))
 					]),
 				$author$project$SmoothMoveStateUI$Multiple$viewContent(model))
 			]),

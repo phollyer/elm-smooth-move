@@ -12060,6 +12060,7 @@ var $mdgriffith$elm_ui$Element$moveUp = function (y) {
 		$mdgriffith$elm_ui$Internal$Flag$moveY,
 		$mdgriffith$elm_ui$Internal$Model$MoveY(-y));
 };
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
 var $mdgriffith$elm_ui$Element$paddingXY = F2(
 	function (x, y) {
 		if (_Utils_eq(x, y)) {
@@ -12093,6 +12094,7 @@ var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
 var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
+var $author$project$SmoothMoveScrollUI$Container$responsiveCSS = '\n    <style>\n    .responsive-layout {\n        min-height: 100vh;\n        padding: 20px;\n        box-sizing: border-box;\n    }\n    \n    .responsive-container {\n        max-width: 1200px;\n        width: 100%;\n        margin: 0 auto;\n    }\n    \n    .responsive-header {\n        font-size: 32px !important;\n        line-height: 1.2;\n        margin-bottom: 30px;\n        text-align: center;\n    }\n    \n    .responsive-tech-info {\n        padding: 24px !important;\n        margin-bottom: 30px;\n        border-radius: 8px;\n    }\n    \n    .responsive-buttons {\n        margin-bottom: 30px;\n    }\n    \n    .responsive-buttons > * {\n        min-height: 44px;\n        min-width: 44px;\n    }\n    \n    .responsive-paragraph {\n        line-height: 1.6 !important;\n        margin-bottom: 16px;\n        word-wrap: break-word;\n        overflow-wrap: break-word;\n        hyphens: auto;\n    }\n    \n    /* Main content centering */\n    .main-content {\n        margin: 0 auto;\n        max-width: 1200px;\n    }\n    \n    /* Ensure scroll container maintains proper scroll behavior */\n    #scroll-container {\n        overflow-y: auto !important;\n        max-height: 600px !important;\n    }\n    \n    /* Ensure scroll container wrapper is properly centered */\n    .scroll-container-wrapper {\n        width: 100%;\n        max-width: 1200px;\n        margin: 0 auto;\n    }\n    \n    /* Tablet breakpoint */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 16px !important;\n        }\n        \n        .responsive-header {\n            font-size: 24px !important;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-tech-info {\n            padding: 16px !important;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 24px;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 14px;\n            font-size: 15px !important;\n        }\n        \n        .main-content {\n            padding-left: 16px !important;\n            padding-right: 16px !important;\n        }\n    }\n    \n    /* Mobile breakpoint */\n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 12px !important;\n        }\n        \n        .responsive-header {\n            font-size: 20px !important;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px !important;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 20px;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 12px;\n            font-size: 14px !important;\n            line-height: 1.5 !important;\n        }\n        \n        .main-content {\n            padding-left: 12px !important;\n            padding-right: 12px !important;\n        }\n    }\n    </style>\n    ';
 var $mdgriffith$elm_ui$Element$rgba255 = F4(
 	function (red, green, blue, a) {
 		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, a);
@@ -12129,6 +12131,14 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 	return {
 		body: _List_fromArray(
 			[
+				A3(
+				$elm$html$Html$node,
+				'style',
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text($author$project$SmoothMoveScrollUI$Container$responsiveCSS)
+					])),
 				A2(
 				$mdgriffith$elm_ui$Element$layout,
 				_List_fromArray(
@@ -12143,7 +12153,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 						$mdgriffith$elm_ui$Element$Background$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 248, 250, 252)),
 						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
+						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$class('responsive-layout'))
 					]),
 				A2(
 					$mdgriffith$elm_ui$Element$column,
@@ -12159,42 +12171,50 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 							$mdgriffith$elm_ui$Element$el,
 							_List_fromArray(
 								[
-									A2($mdgriffith$elm_ui$Element$paddingXY, 40, 20),
-									$mdgriffith$elm_ui$Element$alignLeft
+									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									A2($mdgriffith$elm_ui$Element$paddingXY, 40, 20)
 								]),
 							A2(
-								$mdgriffith$elm_ui$Element$link,
+								$mdgriffith$elm_ui$Element$el,
 								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$padding(12),
-										$mdgriffith$elm_ui$Element$Background$gradient(
-										{
-											angle: 0,
-											steps: _List_fromArray(
-												[
-													A3($mdgriffith$elm_ui$Element$rgb255, 59, 130, 246),
-													A3($mdgriffith$elm_ui$Element$rgb255, 147, 197, 253)
-												])
-										}),
-										$mdgriffith$elm_ui$Element$Font$color(
-										A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255)),
-										$mdgriffith$elm_ui$Element$Font$semiBold,
-										$mdgriffith$elm_ui$Element$Border$rounded(8),
-										$mdgriffith$elm_ui$Element$htmlAttribute(
-										$elm$html$Html$Attributes$id('top'))
-									]),
-								{
-									label: $mdgriffith$elm_ui$Element$text('← Back to Examples'),
-									url: '../../elmui-examples.html'
-								})),
+									[$mdgriffith$elm_ui$Element$alignLeft]),
+								A2(
+									$mdgriffith$elm_ui$Element$link,
+									_List_fromArray(
+										[
+											$mdgriffith$elm_ui$Element$padding(12),
+											$mdgriffith$elm_ui$Element$Background$gradient(
+											{
+												angle: 0,
+												steps: _List_fromArray(
+													[
+														A3($mdgriffith$elm_ui$Element$rgb255, 59, 130, 246),
+														A3($mdgriffith$elm_ui$Element$rgb255, 147, 197, 253)
+													])
+											}),
+											$mdgriffith$elm_ui$Element$Font$color(
+											A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255)),
+											$mdgriffith$elm_ui$Element$Font$semiBold,
+											$mdgriffith$elm_ui$Element$Border$rounded(8),
+											$mdgriffith$elm_ui$Element$htmlAttribute(
+											$elm$html$Html$Attributes$id('top'))
+										]),
+									{
+										label: $mdgriffith$elm_ui$Element$text('← Back to Examples'),
+										url: '../../elmui-examples.html'
+									}))),
 							A2(
 							$mdgriffith$elm_ui$Element$column,
 							_List_fromArray(
 								[
-									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+									$mdgriffith$elm_ui$Element$width(
+									A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill)),
 									$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 									A2($mdgriffith$elm_ui$Element$paddingXY, 40, 20),
-									$mdgriffith$elm_ui$Element$spacing(30)
+									$mdgriffith$elm_ui$Element$spacing(30),
+									$mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$htmlAttribute(
+									$elm$html$Html$Attributes$class('main-content responsive-container'))
 								]),
 							_List_fromArray(
 								[
@@ -12206,7 +12226,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 											$mdgriffith$elm_ui$Element$Font$bold,
 											$mdgriffith$elm_ui$Element$Font$color(
 											A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59)),
-											$mdgriffith$elm_ui$Element$centerX
+											$mdgriffith$elm_ui$Element$centerX,
+											$mdgriffith$elm_ui$Element$htmlAttribute(
+											$elm$html$Html$Attributes$class('responsive-header'))
 										]),
 									$mdgriffith$elm_ui$Element$text('SmoothMoveScroll - Container Example')),
 									A2(
@@ -12218,6 +12240,8 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 											A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill)),
 											$mdgriffith$elm_ui$Element$centerX,
 											A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
+											$mdgriffith$elm_ui$Element$htmlAttribute(
+											$elm$html$Html$Attributes$class('responsive-tech-info')),
 											$mdgriffith$elm_ui$Element$Background$color(
 											A3($mdgriffith$elm_ui$Element$rgb255, 248, 250, 252)),
 											$mdgriffith$elm_ui$Element$Border$rounded(8),
@@ -12235,7 +12259,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 													$mdgriffith$elm_ui$Element$Font$size(16),
 													$mdgriffith$elm_ui$Element$Font$color(
 													A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+													$mdgriffith$elm_ui$Element$htmlAttribute(
+													$elm$html$Html$Attributes$class('responsive-paragraph'))
 												]),
 											_List_fromArray(
 												[
@@ -12260,7 +12286,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 													$mdgriffith$elm_ui$Element$Font$size(16),
 													$mdgriffith$elm_ui$Element$Font$color(
 													A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+													$mdgriffith$elm_ui$Element$htmlAttribute(
+													$elm$html$Html$Attributes$class('responsive-paragraph'))
 												]),
 											_List_fromArray(
 												[
@@ -12274,11 +12302,13 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 												]))
 										])),
 									A2(
-									$mdgriffith$elm_ui$Element$row,
+									$mdgriffith$elm_ui$Element$column,
 									_List_fromArray(
 										[
 											$mdgriffith$elm_ui$Element$spacing(15),
-											$mdgriffith$elm_ui$Element$centerX
+											$mdgriffith$elm_ui$Element$centerX,
+											$mdgriffith$elm_ui$Element$htmlAttribute(
+											$elm$html$Html$Attributes$class('responsive-buttons'))
 										]),
 									_List_fromArray(
 										[
@@ -12392,7 +12422,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 									$mdgriffith$elm_ui$Element$el,
 									_List_fromArray(
 										[
-											$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+											$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+											$mdgriffith$elm_ui$Element$htmlAttribute(
+											$elm$html$Html$Attributes$class('scroll-container-wrapper'))
 										]),
 									A2(
 										$mdgriffith$elm_ui$Element$el,

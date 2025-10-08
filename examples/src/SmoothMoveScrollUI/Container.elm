@@ -9,9 +9,14 @@ import Element.Font as Font
 import Element.Input as Input
 import Html
 import Html.Attributes
-import SmoothMoveTask exposing (animateToCmdWithConfig, setContainer, containerElement, defaultConfig)
+import SmoothMoveTask exposing (animateToCmdWithConfig, containerElement, defaultConfig, setContainer)
 
 
+
+-- MAIN
+
+
+main : Program () Model Msg
 main =
     Browser.document
         { init = init
@@ -21,6 +26,10 @@ main =
         }
 
 
+
+-- MODEL
+
+
 type alias Model =
     {}
 
@@ -28,6 +37,10 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( {}, Cmd.none )
+
+
+
+-- UPDATE
 
 
 type Msg
@@ -59,11 +72,16 @@ update msg model =
             )
 
 
+
+-- VIEW
+
+
 view : Model -> Document Msg
 view model =
     { title = "SmoothMoveScroll - Container Scrolling (ElmUI)"
     , body =
-        [ Element.layout
+        [ Html.node "style" [] [ Html.text responsiveCSS ]
+        , Element.layout
             [ Font.family
                 [ Font.external
                     { name = "Inter"
@@ -74,6 +92,7 @@ view model =
             , Background.color (rgb255 248 250 252)
             , width fill
             , height fill
+            , htmlAttribute (Html.Attributes.class "responsive-layout")
             ]
             (Element.column
                 [ width fill
@@ -81,18 +100,18 @@ view model =
                 , spacing 0
                 ]
                 [ -- Back button
-                  el 
-                    [paddingXY 40 20
-                    , alignLeft
+                  el
+                    [ width fill
+                    , paddingXY 40 20
                     ]
-                    <| 
-                        link
+                    (el [ alignLeft ]
+                        (link
                             [ padding 12
                             , Background.gradient
                                 { angle = 0
                                 , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
                                 }
-                            , Font.color (rgb255 255 255 255)  
+                            , Font.color (rgb255 255 255 255)
                             , Font.semiBold
                             , Border.rounded 8
                             , htmlAttribute (Html.Attributes.id "top")
@@ -100,310 +119,323 @@ view model =
                             { url = "../../elmui-examples.html"
                             , label = text "← Back to Examples"
                             }
-                , -- Main content
+                        )
+                    )
+                , -- Main content centered
                   Element.column
-                    [ width fill
+                    [ width (fill |> maximum 1200)
                     , height fill
                     , paddingXY 40 20
                     , spacing 30
+                    , centerX
+                    , htmlAttribute (Html.Attributes.class "main-content responsive-container")
                     ]
-                    [ el
-                        [ Font.size 32
-                        , Font.bold
-                        , Font.color (rgb255 30 41 59)
-                        , centerX
-                        ]
-                        (text "SmoothMoveScroll - Container Example")
-                    -- Technical information
-                    , column
-                        [ spacing 16
-                        , width (maximum 1200 fill)
-                        , centerX
-                        , paddingXY 32 24
-                        , Background.color (rgb255 248 250 252)
-                        , Border.rounded 8
-                        , Border.solid
-                        , Border.width 1
-                        , Border.color (rgb255 226 232 240)
-                        ]
-                        [ paragraph
-                            [ Font.size 16
-                            , Font.color (rgb255 71 85 105)
-                            , width fill
+                        [ el
+                            [ Font.size 32
+                            , Font.bold
+                            , Font.color (rgb255 30 41 59)
+                            , centerX
+                            , htmlAttribute (Html.Attributes.class "responsive-header")
                             ]
-                            [ text "This example demonstrates the SmoothMoveScroll module handling "
-                            , el [ Font.semiBold ] (text "container-specific scrolling")
-                            , text " with boundary detection and viewport calculations. It provides "
-                            , el [ Font.semiBold ] (text "precise element positioning")
-                            , text " within scrollable containers while respecting container bounds and scroll limits."
-                            ]
+                            (text "SmoothMoveScroll - Container Example")
 
-                        , paragraph
-                            [ Font.size 16
-                            , Font.color (rgb255 71 85 105)
-                            , width fill
-                            ]
-                            [ text "Perfect for applications with "
-                            , el [ Font.semiBold ] (text "nested scrollable content")
-                            , text " requiring smooth navigation within constrained viewport areas and complex layout hierarchies."
-                            ]
-                        ]
-
-                    -- Control buttons
-                    , row
-                        [ spacing 15
-                        , centerX
-                        ]
-                        [ Input.button
-                            [ Background.gradient
-                                { angle = 135
-                                , steps =
-                                    [ rgb255 116 185 255
-                                    , rgb255 9 132 227
-                                    ]
-                                }
-                            , Font.color (rgb255 255 255 255)
-                            , Font.semiBold
-                            , paddingXY 30 15
+                        -- Technical information
+                        , column
+                            [ spacing 16
+                            , width (maximum 1200 fill)
+                            , centerX
+                            , paddingXY 32 24
+                            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
+                            , Background.color (rgb255 248 250 252)
                             , Border.rounded 8
-                            , mouseOver
-                                [ moveUp 2
+                            , Border.solid
+                            , Border.width 1
+                            , Border.color (rgb255 226 232 240)
+                            ]
+                            [ paragraph
+                                [ Font.size 16
+                                , Font.color (rgb255 71 85 105)
+                                , width fill
+                                , htmlAttribute (Html.Attributes.class "responsive-paragraph")
+                                ]
+                                [ text "This example demonstrates the SmoothMoveScroll module handling "
+                                , el [ Font.semiBold ] (text "container-specific scrolling")
+                                , text " with boundary detection and viewport calculations. It provides "
+                                , el [ Font.semiBold ] (text "precise element positioning")
+                                , text " within scrollable containers while respecting container bounds and scroll limits."
+                                ]
+                            , paragraph
+                                [ Font.size 16
+                                , Font.color (rgb255 71 85 105)
+                                , width fill
+                                , htmlAttribute (Html.Attributes.class "responsive-paragraph")
+                                ]
+                                [ text "Perfect for applications with "
+                                , el [ Font.semiBold ] (text "nested scrollable content")
+                                , text " requiring smooth navigation within constrained viewport areas and complex layout hierarchies."
+                                ]
+                            ]
+
+                        -- Control buttons
+                        , column
+                            [ spacing 15
+                            , centerX
+                            , htmlAttribute (Html.Attributes.class "responsive-buttons")
+                            ]
+                            [ Input.button
+                                [ Background.gradient
+                                    { angle = 135
+                                    , steps =
+                                        [ rgb255 116 185 255
+                                        , rgb255 9 132 227
+                                        ]
+                                    }
+                                , Font.color (rgb255 255 255 255)
+                                , Font.semiBold
+                                , paddingXY 30 15
+                                , Border.rounded 8
+                                , mouseOver
+                                    [ moveUp 2
+                                    , Border.shadow
+                                        { offset = ( 0, 4 )
+                                        , size = 0
+                                        , blur = 15
+                                        , color = rgba255 116 185 255 0.4
+                                        }
+                                    ]
+                                ]
+                                { onPress = Just ScrollToTop
+                                , label = text "Scroll to Top"
+                                }
+                            , Input.button
+                                [ Background.gradient
+                                    { angle = 135
+                                    , steps =
+                                        [ rgb255 0 184 148
+                                        , rgb255 0 160 133
+                                        ]
+                                    }
+                                , Font.color (rgb255 255 255 255)
+                                , Font.semiBold
+                                , paddingXY 30 15
+                                , Border.rounded 8
+                                , mouseOver
+                                    [ moveUp 2
+                                    , Border.shadow
+                                        { offset = ( 0, 4 )
+                                        , size = 0
+                                        , blur = 15
+                                        , color = rgba255 0 184 148 0.4
+                                        }
+                                    ]
+                                ]
+                                { onPress = Just ScrollToMiddle
+                                , label = text "Scroll to Middle"
+                                }
+                            , Input.button
+                                [ Background.gradient
+                                    { angle = 135
+                                    , steps =
+                                        [ rgb255 253 121 168
+                                        , rgb255 232 67 147
+                                        ]
+                                    }
+                                , Font.color (rgb255 255 255 255)
+                                , Font.semiBold
+                                , paddingXY 30 15
+                                , Border.rounded 8
+                                , mouseOver
+                                    [ moveUp 2
+                                    , Border.shadow
+                                        { offset = ( 0, 4 )
+                                        , size = 0
+                                        , blur = 15
+                                        , color = rgba255 253 121 168 0.4
+                                        }
+                                    ]
+                                ]
+                                { onPress = Just ScrollToBottom
+                                , label = text "Scroll to Bottom"
+                                }
+                            ]
+
+                        -- The scrollable container
+                        , el [ width fill, htmlAttribute (Html.Attributes.class "scroll-container-wrapper") ] <|
+                            el
+                                [ htmlAttribute (Html.Attributes.id "scroll-container")
+                                , width fill
+                                , height (px 600)
+                                , Border.width 2
+                                , Border.color (rgb255 222 226 230)
+                                , Border.rounded 12
+                                , Background.color (rgb255 255 255 255)
                                 , Border.shadow
                                     { offset = ( 0, 4 )
                                     , size = 0
-                                    , blur = 15
-                                    , color = rgba255 116 185 255 0.4
+                                    , blur = 20
+                                    , color = rgba255 0 0 0 0.1
                                     }
+                                , scrollbarY
+                                , clipY
                                 ]
-                            ]
-                            { onPress = Just ScrollToTop
-                            , label = text "Scroll to Top"
-                            }
-                        , Input.button
-                            [ Background.gradient
-                                { angle = 135
-                                , steps =
-                                    [ rgb255 0 184 148
-                                    , rgb255 0 160 133
+                                (Element.column
+                                    [ width fill
+                                    , spacing 0
+                                    , paddingXY 30 30
                                     ]
-                                }
-                            , Font.color (rgb255 255 255 255)
-                            , Font.semiBold
-                            , paddingXY 30 15
-                            , Border.rounded 8
-                            , mouseOver
-                                [ moveUp 2
-                                , Border.shadow
-                                    { offset = ( 0, 4 )
-                                    , size = 0
-                                    , blur = 15
-                                    , color = rgba255 0 184 148 0.4
-                                    }
-                                ]
-                            ]
-                            { onPress = Just ScrollToMiddle
-                            , label = text "Scroll to Middle"
-                            }
-                        , Input.button
-                            [ Background.gradient
-                                { angle = 135
-                                , steps =
-                                    [ rgb255 253 121 168
-                                    , rgb255 232 67 147
+                                    [ -- Top element
+                                      el
+                                        [ htmlAttribute (Html.Attributes.id "top-element")
+                                        , width fill
+                                        , Background.gradient
+                                            { angle = 180
+                                            , steps =
+                                                [ rgb255 255 255 255
+                                                , rgb255 240 249 255
+                                                ]
+                                            }
+                                        , Border.color (rgb255 59 130 246)
+                                        , Border.width 2
+                                        , Border.rounded 12
+                                        , padding 25
+                                        , spacing 15
+                                        ]
+                                        (Element.column
+                                            [ spacing 15 ]
+                                            [ el
+                                                [ Font.size 24
+                                                , Font.bold
+                                                , Font.color (rgb255 30 64 175)
+                                                ]
+                                                (text "🔝 Top of Container")
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 30 58 138)
+                                                , spacing 6
+                                                ]
+                                                [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 30 58 138)
+                                                , spacing 6
+                                                ]
+                                                [ text "Click 'Scroll to Top' to smoothly scroll to this position using ElmUI." ]
+                                            ]
+                                        )
+
+                                    -- Content blocks 1-3
+                                    , contentBlock 1 "This is content block 1. Each block adds to the scrollable height and demonstrates ElmUI styling."
+                                    , contentBlock 2 "Content block 2 continues the gradient transition from white to dark with ElmUI elements."
+                                    , contentBlock 3 "Content block 3 shows the middle section of our scrollable content using ElmUI layout."
+
+                                    -- Middle element
+                                    , el
+                                        [ htmlAttribute (Html.Attributes.id "middle-element")
+                                        , width fill
+                                        , Background.gradient
+                                            { angle = 180
+                                            , steps =
+                                                [ rgb255 240 253 250
+                                                , rgb255 209 250 229
+                                                ]
+                                            }
+                                        , Border.color (rgb255 0 184 148)
+                                        , Border.width 2
+                                        , Border.rounded 12
+                                        , padding 25
+                                        , spacing 15
+                                        ]
+                                        (Element.column
+                                            [ spacing 15 ]
+                                            [ el
+                                                [ Font.size 24
+                                                , Font.bold
+                                                , Font.color (rgb255 6 95 70)
+                                                ]
+                                                (text "🎯 Content Block 4 - Middle Target")
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 6 95 70)
+                                                , spacing 6
+                                                ]
+                                                [ text "This is the middle target of our scrollable content - Content block 4 demonstrates the progression through the gradient with ElmUI styling." ]
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 6 95 70)
+                                                , spacing 6
+                                                ]
+                                                [ text "Click 'Scroll to Middle' to smoothly scroll to this position." ]
+                                            , Element.column
+                                                [ spacing 8 ]
+                                                [ bulletPoint "This block serves as the middle anchor point"
+                                                , bulletPoint "The gradient background shows scroll position"
+                                                , bulletPoint "Smooth scrolling animates between positions"
+                                                ]
+                                            ]
+                                        )
+
+                                    -- Content blocks 5-8
+                                    , contentBlock 5 "Content block 5 continues toward the bottom of the container with ElmUI."
+                                    , contentBlock 6 "Content block 6 shows we're getting closer to the bottom using ElmUI layout."
+                                    , contentBlock 7 "Content block 7 is near the end with darker background colors in ElmUI."
+                                    , contentBlock 8 "Content block 8 is almost at the bottom of the scrollable ElmUI content."
+
+                                    -- Bottom element
+                                    , el
+                                        [ htmlAttribute (Html.Attributes.id "bottom-element")
+                                        , width fill
+                                        , Background.gradient
+                                            { angle = 180
+                                            , steps =
+                                                [ rgb255 254 242 242
+                                                , rgb255 239 68 68
+                                                ]
+                                            }
+                                        , Border.color (rgb255 220 38 38)
+                                        , Border.width 2
+                                        , Border.rounded 12
+                                        , padding 25
+                                        , spacing 15
+                                        ]
+                                        (Element.column
+                                            [ spacing 15 ]
+                                            [ el
+                                                [ Font.size 24
+                                                , Font.bold
+                                                , Font.color (rgb255 153 27 27)
+                                                ]
+                                                (text "🔻 Bottom of Container")
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 153 27 27)
+                                                , spacing 6
+                                                ]
+                                                [ text "This is the bottom of the scrollable container content. Notice the dark background created with ElmUI gradients." ]
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 153 27 27)
+                                                , spacing 6
+                                                ]
+                                                [ text "Click 'Scroll to Bottom' to smoothly scroll to this position." ]
+                                            , paragraph
+                                                [ Font.size 16
+                                                , Font.color (rgb255 153 27 27)
+                                                , spacing 6
+                                                ]
+                                                [ text "The smooth animation works reliably using the new SmoothMoveTask API with ElmUI." ]
+                                            ]
+                                        )
                                     ]
-                                }
-                            , Font.color (rgb255 255 255 255)
-                            , Font.semiBold
-                            , paddingXY 30 15
-                            , Border.rounded 8
-                            , mouseOver
-                                [ moveUp 2
-                                , Border.shadow
-                                    { offset = ( 0, 4 )
-                                    , size = 0
-                                    , blur = 15
-                                    , color = rgba255 253 121 168 0.4
-                                    }
-                                ]
-                            ]
-                            { onPress = Just ScrollToBottom
-                            , label = text "Scroll to Bottom"
-                            }
+                                )
                         ]
-
-                    -- The scrollable container
-                    , el [ width fill ] <|
-                        el
-                            [ htmlAttribute (Html.Attributes.id "scroll-container")
-                            , width fill
-                            , height (px 600)
-                            , Border.width 2
-                            , Border.color (rgb255 222 226 230)
-                            , Border.rounded 12
-                            , Background.color (rgb255 255 255 255)
-                            , Border.shadow
-                                { offset = ( 0, 4 )
-                                , size = 0
-                                , blur = 20
-                                , color = rgba255 0 0 0 0.1
-                                }
-                            , scrollbarY
-                            , clipY
-                            ]
-                            (Element.column
-                                [ width fill
-                                , spacing 0
-                                , paddingXY 30 30
-                                ]
-                                [ -- Top element
-                                  el
-                                    [ htmlAttribute (Html.Attributes.id "top-element")
-                                    , width fill
-                                    , Background.gradient
-                                        { angle = 180
-                                        , steps =
-                                            [ rgb255 255 255 255
-                                            , rgb255 240 249 255
-                                            ]
-                                        }
-                                    , Border.color (rgb255 59 130 246)
-                                    , Border.width 2
-                                    , Border.rounded 12
-                                    , padding 25
-                                    , spacing 15
-                                    ]
-                                    (Element.column
-                                        [ spacing 15 ]
-                                        [ el
-                                            [ Font.size 24
-                                            , Font.bold
-                                            , Font.color (rgb255 30 64 175)
-                                            ]
-                                            (text "🔝 Top of Container")
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 30 58 138)
-                                            , spacing 6
-                                            ]
-                                            [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 30 58 138)
-                                            , spacing 6
-                                            ]
-                                            [ text "Click 'Scroll to Top' to smoothly scroll to this position using ElmUI." ]
-                                        ]
-                                    )
-
-                                -- Content blocks 1-3
-                                , contentBlock 1 "This is content block 1. Each block adds to the scrollable height and demonstrates ElmUI styling."
-                                , contentBlock 2 "Content block 2 continues the gradient transition from white to dark with ElmUI elements."
-                                , contentBlock 3 "Content block 3 shows the middle section of our scrollable content using ElmUI layout."
-
-                                -- Middle element
-                                , el
-                                    [ htmlAttribute (Html.Attributes.id "middle-element")
-                                    , width fill
-                                    , Background.gradient
-                                        { angle = 180
-                                        , steps =
-                                            [ rgb255 240 253 250
-                                            , rgb255 209 250 229
-                                            ]
-                                        }
-                                    , Border.color (rgb255 0 184 148)
-                                    , Border.width 2
-                                    , Border.rounded 12
-                                    , padding 25
-                                    , spacing 15
-                                    ]
-                                    (Element.column
-                                        [ spacing 15 ]
-                                        [ el
-                                            [ Font.size 24
-                                            , Font.bold
-                                            , Font.color (rgb255 6 95 70)
-                                            ]
-                                            (text "🎯 Content Block 4 - Middle Target")
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 6 95 70)
-                                            , spacing 6
-                                            ]
-                                            [ text "This is the middle target of our scrollable content - Content block 4 demonstrates the progression through the gradient with ElmUI styling." ]
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 6 95 70)
-                                            , spacing 6
-                                            ]
-                                            [ text "Click 'Scroll to Middle' to smoothly scroll to this position." ]
-                                        , Element.column
-                                            [ spacing 8 ]
-                                            [ bulletPoint "This block serves as the middle anchor point"
-                                            , bulletPoint "The gradient background shows scroll position"
-                                            , bulletPoint "Smooth scrolling animates between positions"
-                                            ]
-                                        ]
-                                    )
-
-                                -- Content blocks 5-8
-                                , contentBlock 5 "Content block 5 continues toward the bottom of the container with ElmUI."
-                                , contentBlock 6 "Content block 6 shows we're getting closer to the bottom using ElmUI layout."
-                                , contentBlock 7 "Content block 7 is near the end with darker background colors in ElmUI."
-                                , contentBlock 8 "Content block 8 is almost at the bottom of the scrollable ElmUI content."
-
-                                -- Bottom element
-                                , el
-                                    [ htmlAttribute (Html.Attributes.id "bottom-element")
-                                    , width fill
-                                    , Background.gradient
-                                        { angle = 180
-                                        , steps =
-                                            [ rgb255 254 242 242
-                                            , rgb255 239 68 68
-                                            ]
-                                        }
-                                    , Border.color (rgb255 220 38 38)
-                                    , Border.width 2
-                                    , Border.rounded 12
-                                    , padding 25
-                                    , spacing 15
-                                    ]
-                                    (Element.column
-                                        [ spacing 15 ]
-                                        [ el
-                                            [ Font.size 24
-                                            , Font.bold
-                                            , Font.color (rgb255 153 27 27)
-                                            ]
-                                            (text "🔻 Bottom of Container")
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 153 27 27)
-                                            , spacing 6
-                                            ]
-                                            [ text "This is the bottom of the scrollable container content. Notice the dark background created with ElmUI gradients." ]
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 153 27 27)
-                                            , spacing 6
-                                            ]
-                                            [ text "Click 'Scroll to Bottom' to smoothly scroll to this position." ]
-                                        , paragraph
-                                            [ Font.size 16
-                                            , Font.color (rgb255 153 27 27)
-                                            , spacing 6
-                                            ]
-                                            [ text "The smooth animation works reliably using the new SmoothMoveTask API with ElmUI." ]
-                                        ]
-                                    )
-                                ]
-                            )
-                    ]
                 ]
             )
         ]
     }
+
+
+
+-- HELPER FUNCTIONS
 
 
 contentBlock : Int -> String -> Element Msg
@@ -462,3 +494,138 @@ bulletPoint text_ =
             ]
             (text text_)
         ]
+
+
+
+-- RESPONSIVE CSS
+
+
+responsiveCSS : String
+responsiveCSS =
+    """
+    <style>
+    .responsive-layout {
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+    .responsive-container {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .responsive-header {
+        font-size: 32px !important;
+        line-height: 1.2;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .responsive-tech-info {
+        padding: 24px !important;
+        margin-bottom: 30px;
+        border-radius: 8px;
+    }
+    
+    .responsive-buttons {
+        margin-bottom: 30px;
+    }
+    
+    .responsive-buttons > * {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .responsive-paragraph {
+        line-height: 1.6 !important;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Main content centering */
+    .main-content {
+        margin: 0 auto;
+        max-width: 1200px;
+    }
+    
+    /* Ensure scroll container maintains proper scroll behavior */
+    #scroll-container {
+        overflow-y: auto !important;
+        max-height: 600px !important;
+    }
+    
+    /* Ensure scroll container wrapper is properly centered */
+    .scroll-container-wrapper {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    /* Tablet breakpoint */
+    @media (max-width: 768px) {
+        .responsive-layout {
+            padding: 16px !important;
+        }
+        
+        .responsive-header {
+            font-size: 24px !important;
+            margin-bottom: 24px;
+        }
+        
+        .responsive-tech-info {
+            padding: 16px !important;
+            margin-bottom: 24px;
+        }
+        
+        .responsive-buttons {
+            margin-bottom: 24px;
+        }
+        
+        .responsive-paragraph {
+            margin-bottom: 14px;
+            font-size: 15px !important;
+        }
+        
+        .main-content {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+        }
+    }
+    
+    /* Mobile breakpoint */
+    @media (max-width: 480px) {
+        .responsive-layout {
+            padding: 12px !important;
+        }
+        
+        .responsive-header {
+            font-size: 20px !important;
+            margin-bottom: 20px;
+        }
+        
+        .responsive-tech-info {
+            padding: 12px !important;
+            margin-bottom: 20px;
+        }
+        
+        .responsive-buttons {
+            margin-bottom: 20px;
+        }
+        
+        .responsive-paragraph {
+            margin-bottom: 12px;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+        }
+        
+        .main-content {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+    }
+    </style>
+    """
