@@ -177,9 +177,8 @@ view model =
                             ]
 
                         -- Control buttons
-                        , column
-                            [ spacing 15
-                            , centerX
+                        , row
+                            [ centerX
                             , htmlAttribute (Html.Attributes.class "responsive-buttons")
                             ]
                             [ Input.button
@@ -194,6 +193,7 @@ view model =
                                 , Font.semiBold
                                 , paddingXY 30 15
                                 , Border.rounded 8
+                                , htmlAttribute (Html.Attributes.class "button-responsive")
                                 , mouseOver
                                     [ moveUp 2
                                     , Border.shadow
@@ -219,6 +219,7 @@ view model =
                                 , Font.semiBold
                                 , paddingXY 30 15
                                 , Border.rounded 8
+                                , htmlAttribute (Html.Attributes.class "button-responsive")
                                 , mouseOver
                                     [ moveUp 2
                                     , Border.shadow
@@ -244,6 +245,7 @@ view model =
                                 , Font.semiBold
                                 , paddingXY 30 15
                                 , Border.rounded 8
+                                , htmlAttribute (Html.Attributes.class "button-responsive")
                                 , mouseOver
                                     [ moveUp 2
                                     , Border.shadow
@@ -306,18 +308,23 @@ view model =
                                                 [ Font.size 24
                                                 , Font.bold
                                                 , Font.color (rgb255 30 64 175)
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-title")
                                                 ]
                                                 (text "🔝 Top of Container")
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 30 58 138)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 30 58 138)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "Click 'Scroll to Top' to smoothly scroll to this position using ElmUI." ]
                                             ]
@@ -351,18 +358,23 @@ view model =
                                                 [ Font.size 24
                                                 , Font.bold
                                                 , Font.color (rgb255 6 95 70)
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-title")
                                                 ]
                                                 (text "🎯 Content Block 4 - Middle Target")
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 6 95 70)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "This is the middle target of our scrollable content - Content block 4 demonstrates the progression through the gradient with ElmUI styling." ]
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 6 95 70)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "Click 'Scroll to Middle' to smoothly scroll to this position." ]
                                             , Element.column
@@ -403,24 +415,31 @@ view model =
                                                 [ Font.size 24
                                                 , Font.bold
                                                 , Font.color (rgb255 153 27 27)
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-title")
                                                 ]
                                                 (text "🔻 Bottom of Container")
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 153 27 27)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "This is the bottom of the scrollable container content. Notice the dark background created with ElmUI gradients." ]
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 153 27 27)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "Click 'Scroll to Bottom' to smoothly scroll to this position." ]
                                             , paragraph
                                                 [ Font.size 16
                                                 , Font.color (rgb255 153 27 27)
                                                 , spacing 6
+                                                , width fill
+                                                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "The smooth animation works reliably using the new SmoothMoveTask API with ElmUI." ]
                                             ]
@@ -456,21 +475,30 @@ contentBlock num description =
         , spacing 15
         ]
         (Element.column
-            [ spacing 12 ]
+            [ spacing 12
+            , width fill
+            , htmlAttribute (Html.Attributes.class "responsive-content-block")
+            ]
             [ el
                 [ Font.size 20
                 , Font.semiBold
                 , Font.color (rgb255 55 65 81)
+                , htmlAttribute (Html.Attributes.class "responsive-content-title")
                 ]
                 (text ("Content Block " ++ String.fromInt num))
             , paragraph
                 [ Font.size 16
                 , Font.color (rgb255 75 85 99)
                 , spacing 6
+                , width fill
+                , htmlAttribute (Html.Attributes.class "responsive-content-description")
                 ]
                 [ text description ]
             , Element.column
-                [ spacing 6 ]
+                [ spacing 6
+                , width fill
+                , htmlAttribute (Html.Attributes.class "responsive-bullet-list")
+                ]
                 [ bulletPoint "Each block adds to the scrollable height"
                 , bulletPoint "The gradient background shows scroll position"
                 , bulletPoint "Smooth scrolling animates between positions"
@@ -482,17 +510,22 @@ contentBlock num description =
 bulletPoint : String -> Element msg
 bulletPoint text_ =
     row
-        [ spacing 8 ]
+        [ spacing 8
+        , width fill
+        , htmlAttribute (Html.Attributes.class "responsive-bullet-point")
+        ]
         [ el
             [ Font.size 16
             , Font.color (rgb255 139 69 19)
+            , alignTop
             ]
             (text "•")
-        , el
+        , paragraph
             [ Font.size 16
             , Font.color (rgb255 107 114 128)
+            , width fill
             ]
-            (text text_)
+            [ text text_ ]
         ]
 
 
@@ -531,11 +564,60 @@ responsiveCSS =
     
     .responsive-buttons {
         margin-bottom: 30px;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 15px !important;
     }
     
-    .responsive-buttons > * {
-        min-height: 44px;
-        min-width: 44px;
+    .button-responsive {
+        min-height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Content block responsiveness */
+    .responsive-content-block {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .responsive-content-title {
+        font-size: 20px;
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+    
+    .responsive-content-description {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    .responsive-bullet-list {
+        width: 100%;
+    }
+    
+    .responsive-bullet-point {
+        width: 100%;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .responsive-bullet-point p {
+        margin: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        line-height: 1.4;
     }
     
     .responsive-paragraph {
@@ -565,6 +647,19 @@ responsiveCSS =
         margin: 0 auto;
     }
     
+    /* Medium screens - switch buttons to column when they would wrap */
+    @media (max-width: 900px) {
+        .responsive-buttons {
+            flex-direction: column !important;
+            gap: 12px !important;
+        }
+        
+        .button-responsive {
+            width: 100% !important;
+            max-width: 280px !important;
+        }
+    }
+    
     /* Tablet breakpoint */
     @media (max-width: 768px) {
         .responsive-layout {
@@ -585,9 +680,26 @@ responsiveCSS =
             margin-bottom: 24px;
         }
         
+        .button-responsive {
+            min-height: 50px !important;
+            font-size: 16px !important;
+        }
+        
         .responsive-paragraph {
             margin-bottom: 14px;
             font-size: 15px !important;
+        }
+        
+        .responsive-content-title {
+            font-size: 18px !important;
+        }
+        
+        .responsive-content-description {
+            font-size: 15px !important;
+        }
+        
+        .responsive-bullet-point {
+            margin-bottom: 6px;
         }
         
         .main-content {
@@ -614,12 +726,39 @@ responsiveCSS =
         
         .responsive-buttons {
             margin-bottom: 20px;
+            gap: 10px !important;
+        }
+        
+        .button-responsive {
+            min-height: 52px !important;
+            max-width: 100% !important;
+            font-size: 16px !important;
+            padding: 16px 20px !important;
         }
         
         .responsive-paragraph {
             margin-bottom: 12px;
             font-size: 14px !important;
             line-height: 1.5 !important;
+        }
+        
+        .responsive-content-title {
+            font-size: 16px !important;
+            margin-bottom: 6px;
+        }
+        
+        .responsive-content-description {
+            font-size: 14px !important;
+            margin-bottom: 10px;
+        }
+        
+        .responsive-bullet-point {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .responsive-bullet-list {
+            gap: 4px;
         }
         
         .main-content {

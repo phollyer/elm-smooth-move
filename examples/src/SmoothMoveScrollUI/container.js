@@ -5476,6 +5476,20 @@ var $mdgriffith$elm_ui$Internal$Flag$flag = function (i) {
 };
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$bold = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.bold);
+var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
+	return {$: 'AlignY', a: a};
+};
+var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
+var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $mdgriffith$elm_ui$Internal$Model$Colored = F3(
 	function (a, b, c) {
 		return {$: 'Colored', a: a, b: b, c: c};
@@ -5616,15 +5630,6 @@ var $mdgriffith$elm_ui$Internal$Flag$alignBottom = $mdgriffith$elm_ui$Internal$F
 var $mdgriffith$elm_ui$Internal$Flag$alignRight = $mdgriffith$elm_ui$Internal$Flag$flag(40);
 var $mdgriffith$elm_ui$Internal$Flag$centerX = $mdgriffith$elm_ui$Internal$Flag$flag(42);
 var $mdgriffith$elm_ui$Internal$Flag$centerY = $mdgriffith$elm_ui$Internal$Flag$flag(43);
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$core$Set$Set_elm_builtin = function (a) {
 	return {$: 'Set_elm_builtin', a: a};
@@ -11120,6 +11125,55 @@ var $mdgriffith$elm_ui$Element$el = F2(
 				_List_fromArray(
 					[child])));
 	});
+var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
+	return {$: 'Fill', a: a};
+};
+var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
+var $mdgriffith$elm_ui$Internal$Model$Attr = function (a) {
+	return {$: 'Attr', a: a};
+};
+var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
+var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
+	return {$: 'Describe', a: a};
+};
+var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
+var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
+	function (a, b, c) {
+		return {$: 'SpacingStyle', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
+var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
+	function (x, y) {
+		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
+	});
+var $mdgriffith$elm_ui$Element$spacing = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$spacing,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
+			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
+			x,
+			x));
+};
+var $mdgriffith$elm_ui$Element$paragraph = F2(
+	function (attrs, children) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asParagraph,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Paragraph),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$spacing(5),
+						attrs))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+	});
 var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
 	function (a, b, c, d) {
 		return {$: 'Rgba', a: a, b: b, c: c, d: d};
@@ -11130,9 +11184,6 @@ var $mdgriffith$elm_ui$Element$rgb255 = F3(
 	});
 var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
 var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
-var $mdgriffith$elm_ui$Internal$Model$Attr = function (a) {
-	return {$: 'Attr', a: a};
-};
 var $mdgriffith$elm_ui$Internal$Model$htmlClass = function (cls) {
 	return $mdgriffith$elm_ui$Internal$Model$Attr(
 		$elm$html$Html$Attributes$class(cls));
@@ -11165,25 +11216,6 @@ var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 		$mdgriffith$elm_ui$Internal$Flag$fontSize,
 		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
-var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
-	function (a, b, c) {
-		return {$: 'SpacingStyle', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
-var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
-	function (x, y) {
-		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
-	});
-var $mdgriffith$elm_ui$Element$spacing = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$spacing,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
-			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
-			x,
-			x));
-};
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 	return {$: 'Text', a: a};
 };
@@ -11195,7 +11227,10 @@ var $author$project$SmoothMoveScrollUI$Container$bulletPoint = function (text_) 
 		$mdgriffith$elm_ui$Element$row,
 		_List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$spacing(8)
+				$mdgriffith$elm_ui$Element$spacing(8),
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				$elm$html$Html$Attributes$class('responsive-bullet-point'))
 			]),
 		_List_fromArray(
 			[
@@ -11205,24 +11240,26 @@ var $author$project$SmoothMoveScrollUI$Container$bulletPoint = function (text_) 
 					[
 						$mdgriffith$elm_ui$Element$Font$size(16),
 						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 139, 69, 19))
+						A3($mdgriffith$elm_ui$Element$rgb255, 139, 69, 19)),
+						$mdgriffith$elm_ui$Element$alignTop
 					]),
 				$mdgriffith$elm_ui$Element$text('•')),
 				A2(
-				$mdgriffith$elm_ui$Element$el,
+				$mdgriffith$elm_ui$Element$paragraph,
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$Font$size(16),
 						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
+						A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128)),
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 					]),
-				$mdgriffith$elm_ui$Element$text(text_))
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$text(text_)
+					]))
 			]));
 };
 var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
-var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
-	return {$: 'Describe', a: a};
-};
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
@@ -11413,10 +11450,6 @@ var $mdgriffith$elm_ui$Element$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
-var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
-	return {$: 'Fill', a: a};
-};
-var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
 var $mdgriffith$elm_ui$Internal$Flag$bgGradient = $mdgriffith$elm_ui$Internal$Flag$flag(10);
 var $mdgriffith$elm_ui$Element$Background$gradient = function (_v0) {
 	var angle = _v0.angle;
@@ -11476,25 +11509,6 @@ var $mdgriffith$elm_ui$Element$padding = function (x) {
 			f,
 			f));
 };
-var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
-var $mdgriffith$elm_ui$Element$paragraph = F2(
-	function (attrs, children) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asParagraph,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Paragraph),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$spacing(5),
-						attrs))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
-	});
 var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
 var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
 	return A2(
@@ -11550,7 +11564,10 @@ var $author$project$SmoothMoveScrollUI$Container$contentBlock = F2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$spacing(12)
+						$mdgriffith$elm_ui$Element$spacing(12),
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$class('responsive-content-block'))
 					]),
 				_List_fromArray(
 					[
@@ -11561,7 +11578,9 @@ var $author$project$SmoothMoveScrollUI$Container$contentBlock = F2(
 								$mdgriffith$elm_ui$Element$Font$size(20),
 								$mdgriffith$elm_ui$Element$Font$semiBold,
 								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 55, 65, 81))
+								A3($mdgriffith$elm_ui$Element$rgb255, 55, 65, 81)),
+								$mdgriffith$elm_ui$Element$htmlAttribute(
+								$elm$html$Html$Attributes$class('responsive-content-title'))
 							]),
 						$mdgriffith$elm_ui$Element$text(
 							'Content Block ' + $elm$core$String$fromInt(num))),
@@ -11572,7 +11591,10 @@ var $author$project$SmoothMoveScrollUI$Container$contentBlock = F2(
 								$mdgriffith$elm_ui$Element$Font$size(16),
 								$mdgriffith$elm_ui$Element$Font$color(
 								A3($mdgriffith$elm_ui$Element$rgb255, 75, 85, 99)),
-								$mdgriffith$elm_ui$Element$spacing(6)
+								$mdgriffith$elm_ui$Element$spacing(6),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+								$mdgriffith$elm_ui$Element$htmlAttribute(
+								$elm$html$Html$Attributes$class('responsive-content-description'))
 							]),
 						_List_fromArray(
 							[
@@ -11582,7 +11604,10 @@ var $author$project$SmoothMoveScrollUI$Container$contentBlock = F2(
 						$mdgriffith$elm_ui$Element$column,
 						_List_fromArray(
 							[
-								$mdgriffith$elm_ui$Element$spacing(6)
+								$mdgriffith$elm_ui$Element$spacing(6),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+								$mdgriffith$elm_ui$Element$htmlAttribute(
+								$elm$html$Html$Attributes$class('responsive-bullet-list'))
 							]),
 						_List_fromArray(
 							[
@@ -11654,7 +11679,6 @@ var $mdgriffith$elm_ui$Element$Font$family = function (families) {
 			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
 			families));
 };
-var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
@@ -11915,9 +11939,6 @@ var $mdgriffith$elm_ui$Internal$Model$PseudoSelector = F2(
 		return {$: 'PseudoSelector', a: a, b: b};
 	});
 var $mdgriffith$elm_ui$Internal$Flag$hover = $mdgriffith$elm_ui$Internal$Flag$flag(33);
-var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
-	return {$: 'AlignY', a: a};
-};
 var $mdgriffith$elm_ui$Internal$Model$Nearby = F2(
 	function (a, b) {
 		return {$: 'Nearby', a: a, b: b};
@@ -12094,7 +12115,7 @@ var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
 var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
-var $author$project$SmoothMoveScrollUI$Container$responsiveCSS = '\n    <style>\n    .responsive-layout {\n        min-height: 100vh;\n        padding: 20px;\n        box-sizing: border-box;\n    }\n    \n    .responsive-container {\n        max-width: 1200px;\n        width: 100%;\n        margin: 0 auto;\n    }\n    \n    .responsive-header {\n        font-size: 32px !important;\n        line-height: 1.2;\n        margin-bottom: 30px;\n        text-align: center;\n    }\n    \n    .responsive-tech-info {\n        padding: 24px !important;\n        margin-bottom: 30px;\n        border-radius: 8px;\n    }\n    \n    .responsive-buttons {\n        margin-bottom: 30px;\n    }\n    \n    .responsive-buttons > * {\n        min-height: 44px;\n        min-width: 44px;\n    }\n    \n    .responsive-paragraph {\n        line-height: 1.6 !important;\n        margin-bottom: 16px;\n        word-wrap: break-word;\n        overflow-wrap: break-word;\n        hyphens: auto;\n    }\n    \n    /* Main content centering */\n    .main-content {\n        margin: 0 auto;\n        max-width: 1200px;\n    }\n    \n    /* Ensure scroll container maintains proper scroll behavior */\n    #scroll-container {\n        overflow-y: auto !important;\n        max-height: 600px !important;\n    }\n    \n    /* Ensure scroll container wrapper is properly centered */\n    .scroll-container-wrapper {\n        width: 100%;\n        max-width: 1200px;\n        margin: 0 auto;\n    }\n    \n    /* Tablet breakpoint */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 16px !important;\n        }\n        \n        .responsive-header {\n            font-size: 24px !important;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-tech-info {\n            padding: 16px !important;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 24px;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 14px;\n            font-size: 15px !important;\n        }\n        \n        .main-content {\n            padding-left: 16px !important;\n            padding-right: 16px !important;\n        }\n    }\n    \n    /* Mobile breakpoint */\n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 12px !important;\n        }\n        \n        .responsive-header {\n            font-size: 20px !important;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px !important;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 20px;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 12px;\n            font-size: 14px !important;\n            line-height: 1.5 !important;\n        }\n        \n        .main-content {\n            padding-left: 12px !important;\n            padding-right: 12px !important;\n        }\n    }\n    </style>\n    ';
+var $author$project$SmoothMoveScrollUI$Container$responsiveCSS = '\n    <style>\n    .responsive-layout {\n        min-height: 100vh;\n        padding: 20px;\n        box-sizing: border-box;\n    }\n    \n    .responsive-container {\n        max-width: 1200px;\n        width: 100%;\n        margin: 0 auto;\n    }\n    \n    .responsive-header {\n        font-size: 32px !important;\n        line-height: 1.2;\n        margin-bottom: 30px;\n        text-align: center;\n    }\n    \n    .responsive-tech-info {\n        padding: 24px !important;\n        margin-bottom: 30px;\n        border-radius: 8px;\n    }\n    \n    .responsive-buttons {\n        margin-bottom: 30px;\n        display: flex !important;\n        flex-direction: row !important;\n        align-items: center !important;\n        gap: 15px !important;\n    }\n    \n    .button-responsive {\n        min-height: 48px !important;\n        display: flex !important;\n        align-items: center !important;\n        justify-content: center !important;\n        text-align: center !important;\n        box-sizing: border-box !important;\n        white-space: nowrap !important;\n    }\n    \n    /* Content block responsiveness */\n    .responsive-content-block {\n        width: 100%;\n        box-sizing: border-box;\n    }\n    \n    .responsive-content-title {\n        font-size: 20px;\n        line-height: 1.3;\n        margin-bottom: 8px;\n    }\n    \n    .responsive-content-description {\n        font-size: 16px;\n        line-height: 1.5;\n        margin-bottom: 12px;\n        word-wrap: break-word;\n        overflow-wrap: break-word;\n        hyphens: auto;\n    }\n    \n    .responsive-bullet-list {\n        width: 100%;\n    }\n    \n    .responsive-bullet-point {\n        width: 100%;\n        margin-bottom: 4px;\n        display: flex;\n        align-items: flex-start;\n    }\n    \n    .responsive-bullet-point p {\n        margin: 0;\n        word-wrap: break-word;\n        overflow-wrap: break-word;\n        hyphens: auto;\n        line-height: 1.4;\n    }\n    \n    .responsive-paragraph {\n        line-height: 1.6 !important;\n        margin-bottom: 16px;\n        word-wrap: break-word;\n        overflow-wrap: break-word;\n        hyphens: auto;\n    }\n    \n    /* Main content centering */\n    .main-content {\n        margin: 0 auto;\n        max-width: 1200px;\n    }\n    \n    /* Ensure scroll container maintains proper scroll behavior */\n    #scroll-container {\n        overflow-y: auto !important;\n        max-height: 600px !important;\n    }\n    \n    /* Ensure scroll container wrapper is properly centered */\n    .scroll-container-wrapper {\n        width: 100%;\n        max-width: 1200px;\n        margin: 0 auto;\n    }\n    \n    /* Medium screens - switch buttons to column when they would wrap */\n    @media (max-width: 900px) {\n        .responsive-buttons {\n            flex-direction: column !important;\n            gap: 12px !important;\n        }\n        \n        .button-responsive {\n            width: 100% !important;\n            max-width: 280px !important;\n        }\n    }\n    \n    /* Tablet breakpoint */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 16px !important;\n        }\n        \n        .responsive-header {\n            font-size: 24px !important;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-tech-info {\n            padding: 16px !important;\n            margin-bottom: 24px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 24px;\n        }\n        \n        .button-responsive {\n            min-height: 50px !important;\n            font-size: 16px !important;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 14px;\n            font-size: 15px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 18px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 15px !important;\n        }\n        \n        .responsive-bullet-point {\n            margin-bottom: 6px;\n        }\n        \n        .main-content {\n            padding-left: 16px !important;\n            padding-right: 16px !important;\n        }\n    }\n    \n    /* Mobile breakpoint */\n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 12px !important;\n        }\n        \n        .responsive-header {\n            font-size: 20px !important;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px !important;\n            margin-bottom: 20px;\n        }\n        \n        .responsive-buttons {\n            margin-bottom: 20px;\n            gap: 10px !important;\n        }\n        \n        .button-responsive {\n            min-height: 52px !important;\n            max-width: 100% !important;\n            font-size: 16px !important;\n            padding: 16px 20px !important;\n        }\n        \n        .responsive-paragraph {\n            margin-bottom: 12px;\n            font-size: 14px !important;\n            line-height: 1.5 !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 16px !important;\n            margin-bottom: 6px;\n        }\n        \n        .responsive-content-description {\n            font-size: 14px !important;\n            margin-bottom: 10px;\n        }\n        \n        .responsive-bullet-point {\n            margin-bottom: 8px;\n            font-size: 14px;\n        }\n        \n        .responsive-bullet-list {\n            gap: 4px;\n        }\n        \n        .main-content {\n            padding-left: 12px !important;\n            padding-right: 12px !important;\n        }\n    }\n    </style>\n    ';
 var $mdgriffith$elm_ui$Element$rgba255 = F4(
 	function (red, green, blue, a) {
 		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, a);
@@ -12302,10 +12323,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 												]))
 										])),
 									A2(
-									$mdgriffith$elm_ui$Element$column,
+									$mdgriffith$elm_ui$Element$row,
 									_List_fromArray(
 										[
-											$mdgriffith$elm_ui$Element$spacing(15),
 											$mdgriffith$elm_ui$Element$centerX,
 											$mdgriffith$elm_ui$Element$htmlAttribute(
 											$elm$html$Html$Attributes$class('responsive-buttons'))
@@ -12330,6 +12350,8 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 													$mdgriffith$elm_ui$Element$Font$semiBold,
 													A2($mdgriffith$elm_ui$Element$paddingXY, 30, 15),
 													$mdgriffith$elm_ui$Element$Border$rounded(8),
+													$mdgriffith$elm_ui$Element$htmlAttribute(
+													$elm$html$Html$Attributes$class('button-responsive')),
 													$mdgriffith$elm_ui$Element$mouseOver(
 													_List_fromArray(
 														[
@@ -12365,6 +12387,8 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 													$mdgriffith$elm_ui$Element$Font$semiBold,
 													A2($mdgriffith$elm_ui$Element$paddingXY, 30, 15),
 													$mdgriffith$elm_ui$Element$Border$rounded(8),
+													$mdgriffith$elm_ui$Element$htmlAttribute(
+													$elm$html$Html$Attributes$class('button-responsive')),
 													$mdgriffith$elm_ui$Element$mouseOver(
 													_List_fromArray(
 														[
@@ -12400,6 +12424,8 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 													$mdgriffith$elm_ui$Element$Font$semiBold,
 													A2($mdgriffith$elm_ui$Element$paddingXY, 30, 15),
 													$mdgriffith$elm_ui$Element$Border$rounded(8),
+													$mdgriffith$elm_ui$Element$htmlAttribute(
+													$elm$html$Html$Attributes$class('button-responsive')),
 													$mdgriffith$elm_ui$Element$mouseOver(
 													_List_fromArray(
 														[
@@ -12499,7 +12525,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(24),
 																		$mdgriffith$elm_ui$Element$Font$bold,
 																		$mdgriffith$elm_ui$Element$Font$color(
-																		A3($mdgriffith$elm_ui$Element$rgb255, 30, 64, 175))
+																		A3($mdgriffith$elm_ui$Element$rgb255, 30, 64, 175)),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-title'))
 																	]),
 																$mdgriffith$elm_ui$Element$text('🔝 Top of Container')),
 																A2(
@@ -12509,7 +12537,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 30, 58, 138)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
@@ -12522,7 +12553,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 30, 58, 138)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
@@ -12570,7 +12604,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(24),
 																		$mdgriffith$elm_ui$Element$Font$bold,
 																		$mdgriffith$elm_ui$Element$Font$color(
-																		A3($mdgriffith$elm_ui$Element$rgb255, 6, 95, 70))
+																		A3($mdgriffith$elm_ui$Element$rgb255, 6, 95, 70)),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-title'))
 																	]),
 																$mdgriffith$elm_ui$Element$text('🎯 Content Block 4 - Middle Target')),
 																A2(
@@ -12580,7 +12616,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 6, 95, 70)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
@@ -12593,7 +12632,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 6, 95, 70)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
@@ -12654,7 +12696,9 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(24),
 																		$mdgriffith$elm_ui$Element$Font$bold,
 																		$mdgriffith$elm_ui$Element$Font$color(
-																		A3($mdgriffith$elm_ui$Element$rgb255, 153, 27, 27))
+																		A3($mdgriffith$elm_ui$Element$rgb255, 153, 27, 27)),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-title'))
 																	]),
 																$mdgriffith$elm_ui$Element$text('🔻 Bottom of Container')),
 																A2(
@@ -12664,7 +12708,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 153, 27, 27)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
@@ -12677,7 +12724,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 153, 27, 27)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
@@ -12690,7 +12740,10 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$Font$size(16),
 																		$mdgriffith$elm_ui$Element$Font$color(
 																		A3($mdgriffith$elm_ui$Element$rgb255, 153, 27, 27)),
-																		$mdgriffith$elm_ui$Element$spacing(6)
+																		$mdgriffith$elm_ui$Element$spacing(6),
+																		$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+																		$mdgriffith$elm_ui$Element$htmlAttribute(
+																		$elm$html$Html$Attributes$class('responsive-content-description'))
 																	]),
 																_List_fromArray(
 																	[
