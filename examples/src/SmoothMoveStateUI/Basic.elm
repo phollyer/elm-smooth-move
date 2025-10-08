@@ -190,7 +190,7 @@ viewContent model =
             , Font.color (rgb255 107 114 128)
             , centerX
             ]
-            (text ("Position: (" ++ String.fromFloat position.x ++ ", " ++ String.fromFloat position.y ++ ")"))
+            (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
 
         , -- Buttons for predefined moves
           column

@@ -29,7 +29,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Html
 import Html.Attributes
-import SmoothMoveSub exposing (defaultConfig, transform, isAnimating, getPosition, animateTo, setInitialPosition)
+import SmoothMoveSub exposing (animateTo, subscriptions, transform, getPosition, isAnimating, setInitialPosition, init)
 
 
 -- MAIN
@@ -176,7 +176,7 @@ viewContent model =
             , Font.color (rgb255 107 114 128)
             , centerX
             ]
-            (text ("Position: (" ++ String.fromFloat position.x ++ ", " ++ String.fromFloat position.y ++ ")"))
+            (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
 
         , -- Buttons for predefined moves
           column

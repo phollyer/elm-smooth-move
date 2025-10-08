@@ -11805,7 +11805,9 @@ var $author$project$SmoothMovePortsUI$Basic$viewContent = function (model) {
 						$mdgriffith$elm_ui$Element$centerX
 					]),
 				$mdgriffith$elm_ui$Element$text(
-					'Position: (' + ($elm$core$String$fromFloat(position.x) + (', ' + ($elm$core$String$fromFloat(position.y) + ')'))))),
+					'Position: (' + ($elm$core$String$fromInt(
+						$elm$core$Basics$round(position.x)) + (', ' + ($elm$core$String$fromInt(
+						$elm$core$Basics$round(position.y)) + ')'))))),
 				A2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
