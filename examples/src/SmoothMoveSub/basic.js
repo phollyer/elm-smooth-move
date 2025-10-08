@@ -5716,10 +5716,10 @@ var $author$project$SmoothMoveSub$Basic$StartMove = F2(
 		return {$: 'StartMove', a: a, b: b};
 	});
 var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$core$String$fromFloat = _String_fromNumber;
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5761,7 +5761,7 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $elm$core$Basics$round = _Basics_round;
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
@@ -5802,11 +5802,13 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'position', 'relative'),
-						A2($elm$html$Html$Attributes$style, 'width', '100vw'),
-						A2($elm$html$Html$Attributes$style, 'height', '100vh'),
-						A2($elm$html$Html$Attributes$style, 'padding-top', '60px'),
-						A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box')
+						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+						A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+						A2($elm$html$Html$Attributes$style, 'padding', '60px 40px'),
+						A2($elm$html$Html$Attributes$style, 'min-height', '100vh'),
+						A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(to bottom, #f8fafc, #e2e8f0)'),
+						A2($elm$html$Html$Attributes$style, 'font-family', '-apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif')
 					]),
 				_List_fromArray(
 					[
@@ -5814,39 +5816,75 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$id('moving-element'),
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'width', '50px'),
-								A2($elm$html$Html$Attributes$style, 'height', '50px'),
-								A2($elm$html$Html$Attributes$style, 'background-color', 'blue'),
-								A2($elm$html$Html$Attributes$style, 'border-radius', '50%'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'transform',
-								A2($author$project$SmoothMoveSub$transform, currentPos.x, currentPos.y)),
-								A2($elm$html$Html$Attributes$style, 'transition', 'none')
+								A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
+								A2($elm$html$Html$Attributes$style, 'margin-bottom', '40px')
 							]),
 						_List_fromArray(
 							[
 								A2(
-								$elm$html$Html$div,
+								$elm$html$Html$h1,
 								_List_fromArray(
 									[
-										A2($elm$html$Html$Attributes$style, 'color', 'white'),
-										A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
-										A2($elm$html$Html$Attributes$style, 'line-height', '50px'),
-										A2($elm$html$Html$Attributes$style, 'font-size', '12px')
+										A2($elm$html$Html$Attributes$style, 'font-size', '32px'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', '600'),
+										A2($elm$html$Html$Attributes$style, 'color', '#1e293b'),
+										A2($elm$html$Html$Attributes$style, 'margin', '0 0 20px 0')
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Element')
+										$elm$html$Html$text('SmoothMoveSub Basic Example')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'font-size', '18px'),
+										A2($elm$html$Html$Attributes$style, 'color', '#475569'),
+										A2($elm$html$Html$Attributes$style, 'margin', '0 0 20px 0')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('HTML Version - Use buttons to move the blue box')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'font-size', '16px'),
+										A2(
+										$elm$html$Html$Attributes$style,
+										'color',
+										$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? '#10b981' : '#475569'),
+										A2($elm$html$Html$Attributes$style, 'margin', '0 0 10px 0')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? 'Animating...' : 'Ready')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+										A2($elm$html$Html$Attributes$style, 'color', '#6b7280'),
+										A2($elm$html$Html$Attributes$style, 'margin', '0')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										'Position: (' + ($elm$core$String$fromFloat(currentPos.x) + (', ' + ($elm$core$String$fromFloat(currentPos.y) + ')'))))
 									]))
 							])),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'margin', '20px')
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'gap', '20px'),
+								A2($elm$html$Html$Attributes$style, 'margin-bottom', '40px'),
+								A2($elm$html$Html$Attributes$style, 'flex-wrap', 'wrap'),
+								A2($elm$html$Html$Attributes$style, 'justify-content', 'center')
 							]),
 						_List_fromArray(
 							[
@@ -5855,7 +5893,14 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveSub$Basic$StartMove, 100, 100))
+										A2($author$project$SmoothMoveSub$Basic$StartMove, 100, 100)),
+										A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(to right, #3b82f6, #2563eb)'),
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'padding', '12px 24px'),
+										A2($elm$html$Html$Attributes$style, 'border', 'none'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '8px'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', '500'),
+										A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
 									]),
 								_List_fromArray(
 									[
@@ -5866,7 +5911,14 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveSub$Basic$StartMove, 300, 150))
+										A2($author$project$SmoothMoveSub$Basic$StartMove, 300, 150)),
+										A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(to right, #10b981, #059669)'),
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'padding', '12px 24px'),
+										A2($elm$html$Html$Attributes$style, 'border', 'none'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '8px'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', '500'),
+										A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
 									]),
 								_List_fromArray(
 									[
@@ -5877,41 +5929,69 @@ var $author$project$SmoothMoveSub$Basic$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveSub$Basic$StartMove, 500, 300))
+										A2($author$project$SmoothMoveSub$Basic$StartMove, 200, 250)),
+										A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(to right, #f59e0b, #d97706)'),
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'padding', '12px 24px'),
+										A2($elm$html$Html$Attributes$style, 'border', 'none'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '8px'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', '500'),
+										A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Move to (500, 300)')
+										$elm$html$Html$text('Move to (200, 250)')
 									])),
 								A2(
 								$elm$html$Html$button,
 								_List_fromArray(
 									[
 										$elm$html$Html$Events$onClick(
-										A2($author$project$SmoothMoveSub$Basic$StartMove, 0, 0))
+										A2($author$project$SmoothMoveSub$Basic$StartMove, 0, 0)),
+										A2($elm$html$Html$Attributes$style, 'background', 'linear-gradient(to right, #a855f7, #9333ea)'),
+										A2($elm$html$Html$Attributes$style, 'color', 'white'),
+										A2($elm$html$Html$Attributes$style, 'padding', '12px 24px'),
+										A2($elm$html$Html$Attributes$style, 'border', 'none'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '8px'),
+										A2($elm$html$Html$Attributes$style, 'font-weight', '500'),
+										A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Move to (0, 0)')
+										$elm$html$Html$text('Return to Origin')
 									]))
 							])),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'margin', '20px')
+								A2($elm$html$Html$Attributes$style, 'position', 'relative'),
+								A2($elm$html$Html$Attributes$style, 'width', '500px'),
+								A2($elm$html$Html$Attributes$style, 'height', '400px'),
+								A2($elm$html$Html$Attributes$style, 'background', 'white'),
+								A2($elm$html$Html$Attributes$style, 'border-radius', '12px'),
+								A2($elm$html$Html$Attributes$style, 'box-shadow', '0 4px 8px rgba(0, 0, 0, 0.1)'),
+								A2($elm$html$Html$Attributes$style, 'overflow', 'hidden')
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text(
-								'Current position: (' + ($elm$core$String$fromFloat(
-									$elm$core$Basics$round(currentPos.x * 10) / 10) + (', ' + ($elm$core$String$fromFloat(
-									$elm$core$Basics$round(currentPos.y * 10) / 10) + ')')))),
-								A2($elm$html$Html$br, _List_Nil, _List_Nil),
-								$elm$html$Html$text(
-								$author$project$SmoothMoveSub$isAnimating(model.smoothMove) ? 'Animation: Running' : 'Animation: Stopped'),
-								A2($elm$html$Html$br, _List_Nil, _List_Nil),
-								$elm$html$Html$text('Blue circle: Animated element using transform with getPosition')
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$id('moving-element'),
+										A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+										A2($elm$html$Html$Attributes$style, 'width', '50px'),
+										A2($elm$html$Html$Attributes$style, 'height', '50px'),
+										A2($elm$html$Html$Attributes$style, 'background-color', '#3b82f6'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '8px'),
+										A2(
+										$elm$html$Html$Attributes$style,
+										'transform',
+										A2($author$project$SmoothMoveSub$transform, currentPos.x, currentPos.y)),
+										A2($elm$html$Html$Attributes$style, 'transition', 'none')
+									]),
+								_List_Nil)
 							]))
 					]))
 			]),

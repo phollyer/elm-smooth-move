@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Move ElmUI Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .module-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+
+        .module-section.task {
+            border-left-color: #3182ce;
+        }
+
+        .module-section.sub {
+            border-left-color: #38a169;
+        }
+
+        .module-section.state {
+            border-left-color: #805ad5;
+        }
+
+        .module-section.css {
+            border-left-color: #d69e2e;
+        }
+
+        .module-section.ports {
+            border-left-color: #e53e3e;
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .module-description {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .example-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .example-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .example-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+
+        .comparison-note {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4299e1;
+        }
+
+        .comparison-note h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature {
+            background: #f0fff4;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #38a169;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 999999 !important;
+            background-color: #007acc !important;
+            color: white !important;
+            padding: 8px 16px !important;
+            text-decoration: none !important;
+            border-radius: 4px !important;
+            font-size: 14px !important;
+            font-weight: bold !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        .back-nav:hover {
+            background-color: #005a9e !important;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-nav">← Back to Main Dashboard</a>
+
+    <div class="container">
+        <h1>🎨 Smooth Move ElmUI Examples</h1>
+        <p class="subtitle">
+            Comprehensive demonstration of all 5 animation approaches using ElmUI instead of traditional HTML
+        </p>
+
+        <div class="comparison-note">
+            <h3>🚀 ElmUI vs HTML Comparison</h3>
+            <p>These examples demonstrate the same smooth animation capabilities using
+                <strong>mdgriffith/elm-ui</strong> for layout and styling instead of traditional HTML and CSS. Each
+                animation module works seamlessly with ElmUI's Element-based architecture while maintaining full
+                animation functionality.
+            </p>
+        </div>
+
+        <div class="examples-grid">
+            <div class="module-section task">
+                <div class="module-title">📋 SmoothMoveTask</div>
+                <div class="module-description">
+                    Task-based scrolling animations with composable error handling. Perfect for document and container
+                    scrolling with sequential operations.
+                </div>
+                <div class="example-links">
+                    <a href="src/SmoothMoveTaskUI/basic.html" class="example-link">Basic Scrolling</a>
+                    <a href="src/SmoothMoveTaskUI/container.html" class="example-link">Container Scrolling</a>
+                </div>
+            </div>
+
+            <div class="module-section sub">
+                <div class="module-title">🔄 SmoothMoveSub</div>
+                <div class="module-description">
+                    Subscription-based element positioning with frame-rate independent animations. Ideal for multiple
+                    simultaneous element animations.
+                </div>
+                <div class="example-links">
+                    <a href="src/SmoothMoveSubUI/basic.html" class="example-link">Single Element</a>
+                    <a href="src/SmoothMoveSubUI/multiple.html" class="example-link">Multiple Elements</a>
+                </div>
+            </div>
+
+            <div class="module-section state">
+                <div class="module-title">🎯 SmoothMoveState</div>
+                <div class="module-description">
+                    Simplified state management wrapper around subscription-based approach. Provides convenience
+                    functions for easier state handling.
+                </div>
+                <div class="example-links">
+                    <a href="src/SmoothMoveStateUI/basic.html" class="example-link">Basic State</a>
+                    <a href="src/SmoothMoveStateUI/multiple.html" class="example-link">Formation Control</a>
+                </div>
+            </div>
+
+            <div class="module-section css">
+                <div class="module-title">⚡ SmoothMoveCSS</div>
+                <div class="module-description">
+                    Native browser CSS transitions for optimal performance. Hardware accelerated with excellent battery
+                    efficiency.
+                </div>
+                <div class="example-links">
+                    <a href="src/SmoothMoveCSSUI/basic.html" class="example-link">CSS Transitions</a>
+                    <a href="src/SmoothMoveCSSUI/multiple.html" class="example-link">Batch Transitions</a>
+                </div>
+            </div>
+
+            <div class="module-section ports">
+                <div class="module-title">🔌 SmoothMovePorts</div>
+                <div class="module-description">
+                    Web Animations API integration via JavaScript ports. Provides access to advanced animation features
+                    and platform-specific optimizations.
+                </div>
+                <div class="example-links">
+                    <a href="src/SmoothMovePortsUI/basic.html" class="example-link">Basic Ports</a>
+                    <a href="src/SmoothMovePortsUI/multiple.html" class="example-link">Complex Animations</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-title">🎨 ElmUI Integration</div>
+                <div class="feature-desc">Seamless integration with Element-based layouts while preserving all animation
+                    capabilities</div>
+            </div>
+            <div class="feature">
+                <div class="feature-title">📱 Responsive Design</div>
+                <div class="feature-desc">All examples work beautifully across different screen sizes using ElmUI's
+                    responsive features</div>
+            </div>
+            <div class="feature">
+                <div class="feature-title">🎨 Consistent Styling</div>
+                <div class="feature-desc">Unified gradient themes and modern design patterns throughout all examples
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-title">⚡ Performance</div>
+                <div class="feature-desc">Each approach optimized for different use cases - from hardware acceleration
+                    to JavaScript integration</div>
+            </div>
+        </div>
+
+        <div class="comparison-note">
+            <h3>📊 Choose Your Animation Approach</h3>
+            <ul>
+                <li><strong>SmoothMoveTask:</strong> Best for scrolling and sequential animations</li>
+                <li><strong>SmoothMoveSub:</strong> Perfect for real-time element positioning</li>
+                <li><strong>SmoothMoveState:</strong> Simplified API for common use cases</li>
+                <li><strong>SmoothMoveCSS:</strong> Hardware accelerated for best performance</li>
+                <li><strong>SmoothMovePorts:</strong> Advanced features via Web Animations API</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

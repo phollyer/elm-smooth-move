@@ -73,27 +73,49 @@ window.SmoothMovePorts = (function () {
     }
 
     /**
+     * Get element's current position from left/top style properties (container-relative)
+     */
+    function getCurrentElementPosition(element) {
+        const style = window.getComputedStyle(element);
+        return {
+            x: parseFloat(style.left) || 0,
+            y: parseFloat(style.top) || 0
+        };
+    }
+
+    /**
      * Create keyframes for animation based on axis constraint
      */
     function createKeyframes(currentPos, targetX, targetY, axis) {
-        const keyframes = [
-            { transform: `translate(${currentPos.x}px, ${currentPos.y}px)` }
-        ];
+        const startFrame = {
+            left: currentPos.x + 'px',
+            top: currentPos.y + 'px'
+        };
 
+        let endFrame;
         switch (axis) {
             case 'x':
-                keyframes.push({ transform: `translate(${targetX}px, ${currentPos.y}px)` });
+                endFrame = {
+                    left: targetX + 'px',
+                    top: currentPos.y + 'px'
+                };
                 break;
             case 'y':
-                keyframes.push({ transform: `translate(${currentPos.x}px, ${targetY}px)` });
+                endFrame = {
+                    left: currentPos.x + 'px',
+                    top: targetY + 'px'
+                };
                 break;
             case 'both':
             default:
-                keyframes.push({ transform: `translate(${targetX}px, ${targetY}px)` });
+                endFrame = {
+                    left: targetX + 'px',
+                    top: targetY + 'px'
+                };
                 break;
         }
 
-        return keyframes;
+        return [startFrame, endFrame];
     }
 
     /**
@@ -109,7 +131,8 @@ window.SmoothMovePorts = (function () {
         // Stop any existing animation for this element
         stopAnimation(command.elementId);
 
-        const currentPos = getCurrentPosition(element);
+        // Get current position from the element's style (container-relative)
+        const currentPos = getCurrentElementPosition(element);
         const keyframes = createKeyframes(currentPos, command.targetX, command.targetY, command.axis);
 
         // Get easing function
@@ -132,7 +155,7 @@ window.SmoothMovePorts = (function () {
         function sendPositionUpdate() {
             const now = performance.now();
             if (now - lastTime >= updateInterval) {
-                const currentPos = getCurrentPosition(element);
+                const currentPos = getCurrentElementPosition(element);
                 if (positionUpdatePort) {
                     positionUpdatePort.send({
                         elementId: command.elementId,
@@ -172,7 +195,7 @@ window.SmoothMovePorts = (function () {
 
             // Send current position when cancelled
             if (positionUpdatePort) {
-                const currentPos = getCurrentPosition(element);
+                const currentPos = getCurrentElementPosition(element);
                 positionUpdatePort.send({
                     elementId: command.elementId,
                     x: currentPos.x,
