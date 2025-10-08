@@ -340,7 +340,7 @@ viewContent model =
                 ]
                 [ column
                     [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 249 115 22) ] (text "D")
+                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
                     , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
                         (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
@@ -349,7 +349,7 @@ viewContent model =
 
                 , column
                     [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 239 68 68) ] (text "E")
+                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
                     , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
                         (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
@@ -358,7 +358,7 @@ viewContent model =
 
                 , column
                     [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 6 182 212) ] (text "F")
+                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
                     , el [ Font.size 11, Font.color (if isAnimating then rgb255 16 185 129 else rgb255 107 114 128) ] 
                         (text (if isAnimating then "Animating" else "Static"))
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]

@@ -12294,7 +12294,7 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 												$mdgriffith$elm_ui$Element$Font$size(14),
 												$mdgriffith$elm_ui$Element$Font$medium,
 												$mdgriffith$elm_ui$Element$Font$color(
-												A3($mdgriffith$elm_ui$Element$rgb255, 249, 115, 22))
+												A3($mdgriffith$elm_ui$Element$rgb255, 245, 101, 101))
 											]),
 										$mdgriffith$elm_ui$Element$text('D')),
 										A2(
@@ -12335,7 +12335,7 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 												$mdgriffith$elm_ui$Element$Font$size(14),
 												$mdgriffith$elm_ui$Element$Font$medium,
 												$mdgriffith$elm_ui$Element$Font$color(
-												A3($mdgriffith$elm_ui$Element$rgb255, 239, 68, 68))
+												A3($mdgriffith$elm_ui$Element$rgb255, 251, 146, 60))
 											]),
 										$mdgriffith$elm_ui$Element$text('E')),
 										A2(
@@ -12376,7 +12376,7 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 												$mdgriffith$elm_ui$Element$Font$size(14),
 												$mdgriffith$elm_ui$Element$Font$medium,
 												$mdgriffith$elm_ui$Element$Font$color(
-												A3($mdgriffith$elm_ui$Element$rgb255, 6, 182, 212))
+												A3($mdgriffith$elm_ui$Element$rgb255, 34, 197, 94))
 											]),
 										$mdgriffith$elm_ui$Element$text('F')),
 										A2(
