@@ -11827,6 +11827,17 @@ var $mdgriffith$elm_ui$Element$Background$color = function (clr) {
 			'background-color',
 			clr));
 };
+var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
+var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderColor,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Colored,
+			'bc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
+			'border-color',
+			clr));
+};
 var $mdgriffith$elm_ui$Element$Font$color = function (fontColor) {
 	return A2(
 		$mdgriffith$elm_ui$Internal$Model$StyleClass,
@@ -11923,6 +11934,14 @@ var $mdgriffith$elm_ui$Element$link = F2(
 				_List_fromArray(
 					[label])));
 	});
+var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+	function (a, b) {
+		return {$: 'Max', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Element$maximum = F2(
+	function (i, l) {
+		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+	});
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
 var $mdgriffith$elm_ui$Element$padding = function (x) {
@@ -11938,6 +11957,44 @@ var $mdgriffith$elm_ui$Element$padding = function (x) {
 			f,
 			f));
 };
+var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
+var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
+	function (a, b, c) {
+		return {$: 'SpacingStyle', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
+var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
+	function (x, y) {
+		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
+	});
+var $mdgriffith$elm_ui$Element$spacing = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$spacing,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
+			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
+			x,
+			x));
+};
+var $mdgriffith$elm_ui$Element$paragraph = F2(
+	function (attrs, children) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asParagraph,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Paragraph),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$spacing(5),
+						attrs))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+	});
 var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
@@ -12005,25 +12062,8 @@ var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 		$mdgriffith$elm_ui$Internal$Flag$fontSize,
 		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
-var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
-	function (a, b, c) {
-		return {$: 'SpacingStyle', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
-var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
-	function (x, y) {
-		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
-	});
-var $mdgriffith$elm_ui$Element$spacing = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$spacing,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
-			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
-			x,
-			x));
-};
+var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
+var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
@@ -12036,6 +12076,22 @@ var $author$project$SmoothMoveState$transform = F2(
 	function (x, y) {
 		return 'translate(' + ($elm$core$String$fromFloat(x) + ('px, ' + ($elm$core$String$fromFloat(y) + 'px)')));
 	});
+var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
+	function (a, b, c, d, e) {
+		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Element$Border$width = function (v) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + $elm$core$String$fromInt(v),
+			v,
+			v,
+			v,
+			v));
+};
 var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 	var positionF = A2(
 		$elm$core$Maybe$withDefault,
@@ -12108,26 +12164,69 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 					]),
 				$mdgriffith$elm_ui$Element$text('SmoothMoveState Multiple Example')),
 				A2(
-				$mdgriffith$elm_ui$Element$el,
+				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$size(18),
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-						$mdgriffith$elm_ui$Element$centerX
+						$mdgriffith$elm_ui$Element$spacing(16),
+						$mdgriffith$elm_ui$Element$width(
+						A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill)),
+						$mdgriffith$elm_ui$Element$centerX,
+						A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
+						$mdgriffith$elm_ui$Element$Background$color(
+						A3($mdgriffith$elm_ui$Element$rgb255, 248, 250, 252)),
+						$mdgriffith$elm_ui$Element$Border$rounded(8),
+						$mdgriffith$elm_ui$Element$Border$solid,
+						$mdgriffith$elm_ui$Element$Border$width(1),
+						$mdgriffith$elm_ui$Element$Border$color(
+						A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240))
 					]),
-				$mdgriffith$elm_ui$Element$text('ElmUI Version - Multiple elements with formation patterns')),
-				A2(
-				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$size(16),
-						$mdgriffith$elm_ui$Element$Font$color(
-						isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-						$mdgriffith$elm_ui$Element$centerX
-					]),
-				$mdgriffith$elm_ui$Element$text(
-					isMoving ? 'Animations: Running' : 'Animations: Stopped')),
+						A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('This example demonstrates the SmoothMoveState module managing '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('multiple elements simultaneously')),
+								$mdgriffith$elm_ui$Element$text(' with predefined formation patterns. The state wrapper provides '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('simplified coordination')),
+								$mdgriffith$elm_ui$Element$text(' of complex multi-element animations while preserving individual element positioning data.')
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('Perfect for choreographed animations, UI transitions, and formation-based layouts with '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('reduced complexity')),
+								$mdgriffith$elm_ui$Element$text(' compared to managing individual subscription states.')
+							]))
+					])),
 				A2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
@@ -12168,16 +12267,6 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isMoving ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12209,16 +12298,6 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isMoving ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12246,16 +12325,6 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 												A3($mdgriffith$elm_ui$Element$rgb255, 168, 85, 247))
 											]),
 										$mdgriffith$elm_ui$Element$text('C')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isMoving ? 'Animating' : 'Static')),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
@@ -12301,16 +12370,6 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isMoving ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12342,16 +12401,6 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isMoving ? 'Animating' : 'Static')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
 												$mdgriffith$elm_ui$Element$Font$size(10),
 												$mdgriffith$elm_ui$Element$Font$color(
 												A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
@@ -12379,16 +12428,6 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 												A3($mdgriffith$elm_ui$Element$rgb255, 34, 197, 94))
 											]),
 										$mdgriffith$elm_ui$Element$text('F')),
-										A2(
-										$mdgriffith$elm_ui$Element$el,
-										_List_fromArray(
-											[
-												$mdgriffith$elm_ui$Element$Font$size(11),
-												$mdgriffith$elm_ui$Element$Font$color(
-												isMoving ? A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129) : A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
-											]),
-										$mdgriffith$elm_ui$Element$text(
-											isMoving ? 'Animating' : 'Static')),
 										A2(
 										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
@@ -12674,17 +12713,7 @@ var $author$project$SmoothMoveStateUI$Multiple$viewContent = function (model) {
 									[
 										$elm$html$Html$text('F')
 									]))
-							])))),
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Font$size(14),
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128)),
-						$mdgriffith$elm_ui$Element$centerX
-					]),
-				$mdgriffith$elm_ui$Element$text('State-based animation management with predefined formation patterns'))
+							]))))
 			]));
 };
 var $author$project$SmoothMoveStateUI$Multiple$view = function (model) {

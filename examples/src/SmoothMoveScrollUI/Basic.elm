@@ -1,8 +1,8 @@
-module SmoothMoveTaskUI.Basic exposing (main)
+module SmoothMoveScrollUI.Basic exposing (main)
 
 import Browser exposing (Document)
 import Browser.Dom
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, link, alignLeft, padding)
+import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -45,6 +45,7 @@ type Msg
     = NoOp
     | ScrollToParagraphOne
     | ScrollToParagraphTwo
+    | ScrollToParagraphThree
     | ScrollToTop
 
 
@@ -59,6 +60,9 @@ update msg model =
 
         ScrollToParagraphTwo ->
             ( model, animateToCmdWithConfig NoOp { defaultConfig | speed = 20 } "paragraph-two" )
+
+        ScrollToParagraphThree ->
+            ( model, animateToCmdWithConfig NoOp { defaultConfig | speed = 20 } "paragraph-three" )
 
         ScrollToTop ->
             ( model, animateToCmdWithConfig NoOp { defaultConfig | speed = 20 } "top" )
@@ -77,7 +81,7 @@ subscriptions _ =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveTask Basic ElmUI Example"
+    { title = "SmoothMoveScroll Basic ElmUI Example"
     , body = 
         [ layout
             [ Background.gradient
@@ -125,14 +129,54 @@ viewContent model =
             , Font.color (rgb255 30 41 59)
             , centerX
             ]
-            (text "SmoothMoveTask Basic Example")
+            (text "SmoothMoveScroll Document Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Task-based scrolling with composable error handling")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveScroll module, which provides "
+                , el [ Font.semiBold ] (text "task-based scrolling animations")
+                , text " with composable error handling. It offers "
+                , el [ Font.semiBold ] (text "smooth document navigation")
+                , text " using the browser's native scrolling capabilities with customizable easing and timing controls."
+                ]
+
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for applications requiring "
+                , el [ Font.semiBold ] (text "sequential animations")
+                , text " and reliable scrolling operations with comprehensive error handling and task composition."
+                ]
+
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "For beginners, this module provides an easy-to-use, fully managed approach that returns "
+                , el [ Font.semiBold ] (text "Cmds")
+                , text " rather than "
+                , el [ Font.semiBold ] (text "Tasks")
+                , text "."
+                ]
+            ]
 
         , -- Buttons
           column
@@ -174,6 +218,24 @@ viewContent model =
                 { onPress = Just ScrollToParagraphTwo
                 , label = text "Scroll to Paragraph Two ↓"
                 }
+
+            , Input.button
+                [ Background.gradient
+                    { angle = 0
+                    , steps = 
+                        [ rgb255 168 85 247
+                        , rgb255 147 51 234
+                        ]
+                    }
+                , Font.color (rgb255 255 255 255)
+                , Font.medium
+                , paddingXY 24 12
+                , Border.rounded 8
+                , centerX
+                ]
+                { onPress = Just ScrollToParagraphThree
+                , label = text "Scroll to Paragraph Three ↓"
+                }
             ]
 
         , -- Add some space before content
@@ -184,6 +246,7 @@ viewContent model =
             [ spacing 20
             , htmlAttribute (Html.Attributes.id "paragraph-one")
             , Background.color (rgb255 255 255 255)
+            , centerX
             , paddingXY 32 24
             , Border.rounded 12
             , Border.shadow
@@ -200,28 +263,30 @@ viewContent model =
                 ]
                 (text "Paragraph One")
 
-            , column
+            , paragraph
                 [ spacing 16
                 , Font.size 16
                 , Font.color (rgb255 71 85 105)
+                , width <|
+                    maximum 1200 fill
                 ]
-                [ el [] (text "This is the first paragraph of our example. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-                , el [] (text "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.")
+                [ el [] (text "This is the first paragraph of our example. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
+                , el [] (text "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ")
                 , el [] (text "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.")
                 ]
 
             , Input.button
                 [ Font.size 14
-                , Font.color (rgb255 34 197 94)
+                , Font.color (rgb255 16 185 129)
                 , Font.medium
                 , paddingXY 12 8
                 , Border.rounded 6
                 , Background.color (rgb255 240 253 244)
                 , Border.width 1
-                , Border.color (rgb255 220 252 231)
+                , Border.color (rgb255 209 250 229)
                 ]
-                { onPress = Just ScrollToTop
-                , label = text "Scroll to Top ↑"
+                { onPress = Just ScrollToParagraphTwo
+                , label = text "Continue to Paragraph Two ↓"
                 }
             ]
 
@@ -241,6 +306,7 @@ viewContent model =
                 , blur = 8
                 , color = Element.rgba 0 0 0 0.1
                 }
+            , centerX
             ]
             [ el
                 [ Font.size 24
@@ -249,10 +315,12 @@ viewContent model =
                 ]
                 (text "Paragraph Two")
 
-            , column
+            , paragraph
                 [ spacing 16
                 , Font.size 16
                 , Font.color (rgb255 71 85 105)
+                , width <|
+                    maximum 1200 fill
                 ]
                 [ el [] (text "This is the second paragraph. Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.")
                 , el [] (text "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.")
@@ -261,19 +329,72 @@ viewContent model =
 
             , Input.button
                 [ Font.size 14
-                , Font.color (rgb255 220 38 38)
+                , Font.color (rgb255 168 85 247)
                 , Font.medium
                 , paddingXY 12 8
                 , Border.rounded 6
-                , Background.color (rgb255 254 242 242)
+                , Background.color (rgb255 250 245 255)
                 , Border.width 1
-                , Border.color (rgb255 254 226 226)
+                , Border.color (rgb255 233 213 255)
                 ]
-                { onPress = Just ScrollToParagraphOne
-                , label = text "Click me to scroll back to Paragraph One ↑"
+                { onPress = Just ScrollToParagraphThree
+                , label = text "Continue to Paragraph Three ↓"
                 }
             ]
 
-        , -- Add space at the bottom
-          el [ height (px 400) ] (text "")
+        , -- Add space between paragraphs
+          el [ height (px 100) ] (text "")
+
+        , -- Paragraph Three
+          column
+            [ spacing 20
+            , htmlAttribute (Html.Attributes.id "paragraph-three")
+            , Background.color (rgb255 255 255 255)
+            , paddingXY 32 24
+            , Border.rounded 12
+            , Border.shadow
+                { offset = (0, 4)
+                , size = 0
+                , blur = 8
+                , color = Element.rgba 0 0 0 0.1
+                }
+            , centerX
+            ]
+            [ el
+                [ Font.size 24
+                , Font.semiBold
+                , Font.color (rgb255 30 41 59)
+                ]
+                (text "Paragraph Three")
+
+            , paragraph
+                [ spacing 16
+                , Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width <|
+                    maximum 1200 fill
+                ]
+                [ el [] (text "This is the third and final paragraph. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.")
+                , el [] (text "Nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.")
+                , el [] (text "Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.")
+                ]
+
+            , Input.button
+                [ Font.size 14
+                , Font.color (rgb255 34 197 94)
+                , Font.medium
+                , paddingXY 12 8
+                , Border.rounded 6
+                , Background.color (rgb255 240 253 244)
+                , Border.width 1
+                , Border.color (rgb255 220 252 231)
+                ]
+                { onPress = Just ScrollToTop
+                , label = text "Click me to scroll back to Top ↑"
+                }
+            ]
+        , -- Add some space after content
+          el [ height (px 500)
+          , centerX ] 
+          (text "...")
         ]

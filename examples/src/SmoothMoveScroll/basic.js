@@ -5161,14 +5161,14 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$document = _Browser_document;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$SmoothMoveTask$Basic$init = function (_v0) {
+var $author$project$SmoothMoveScroll$Basic$init = function (_v0) {
 	return _Utils_Tuple2(
 		{foo: 'bar'},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$SmoothMoveTask$Basic$NoOp = {$: 'NoOp'};
+var $author$project$SmoothMoveScroll$Basic$NoOp = {$: 'NoOp'};
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -5354,7 +5354,7 @@ var $author$project$SmoothMoveTask$animateTo = function (elementId) {
 		A2($author$project$SmoothMoveTask$animateToTaskWithConfig, $author$project$SmoothMoveTask$defaultConfig, elementId));
 };
 var $elm$core$Platform$Cmd$map = _Platform_map;
-var $author$project$SmoothMoveTask$Basic$update = F2(
+var $author$project$SmoothMoveScroll$Basic$update = F2(
 	function (msg, model) {
 		if (msg.$ === 'NoOp') {
 			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5364,11 +5364,11 @@ var $author$project$SmoothMoveTask$Basic$update = F2(
 				model,
 				A2(
 					$elm$core$Platform$Cmd$map,
-					$elm$core$Basics$always($author$project$SmoothMoveTask$Basic$NoOp),
+					$elm$core$Basics$always($author$project$SmoothMoveScroll$Basic$NoOp),
 					$author$project$SmoothMoveTask$animateTo(id)));
 		}
 	});
-var $author$project$SmoothMoveTask$Basic$SmoothScroll = function (a) {
+var $author$project$SmoothMoveScroll$Basic$SmoothScroll = function (a) {
 	return {$: 'SmoothScroll', a: a};
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
@@ -5410,7 +5410,7 @@ var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$SmoothMoveTask$Basic$view = function (model) {
+var $author$project$SmoothMoveScroll$Basic$view = function (model) {
 	return {
 		body: _Utils_ap(
 			_List_fromArray(
@@ -5452,7 +5452,7 @@ var $author$project$SmoothMoveTask$Basic$view = function (model) {
 								[
 									$elm$html$Html$Attributes$id('p-one'),
 									$elm$html$Html$Events$onClick(
-									$author$project$SmoothMoveTask$Basic$SmoothScroll('p-two'))
+									$author$project$SmoothMoveScroll$Basic$SmoothScroll('p-two'))
 								]),
 							_List_fromArray(
 								[
@@ -5465,7 +5465,7 @@ var $author$project$SmoothMoveTask$Basic$view = function (model) {
 									$elm$html$Html$Attributes$id('p-two'),
 									A2($elm$html$Html$Attributes$style, 'margin-top', '2500px'),
 									$elm$html$Html$Events$onClick(
-									$author$project$SmoothMoveTask$Basic$SmoothScroll('p-one'))
+									$author$project$SmoothMoveScroll$Basic$SmoothScroll('p-one'))
 								]),
 							_List_fromArray(
 								[
@@ -5473,17 +5473,17 @@ var $author$project$SmoothMoveTask$Basic$view = function (model) {
 								]))
 						]))
 				])),
-		title: 'SmoothMoveTask Basic Example'
+		title: 'SmoothMoveScroll Document Example'
 	};
 };
-var $author$project$SmoothMoveTask$Basic$main = $elm$browser$Browser$document(
+var $author$project$SmoothMoveScroll$Basic$main = $elm$browser$Browser$document(
 	{
-		init: $author$project$SmoothMoveTask$Basic$init,
+		init: $author$project$SmoothMoveScroll$Basic$init,
 		subscriptions: function (_v0) {
 			return $elm$core$Platform$Sub$none;
 		},
-		update: $author$project$SmoothMoveTask$Basic$update,
-		view: $author$project$SmoothMoveTask$Basic$view
+		update: $author$project$SmoothMoveScroll$Basic$update,
+		view: $author$project$SmoothMoveScroll$Basic$view
 	});
-_Platform_export({'SmoothMoveTask':{'Basic':{'init':$author$project$SmoothMoveTask$Basic$main(
+_Platform_export({'SmoothMoveScroll':{'Basic':{'init':$author$project$SmoothMoveScroll$Basic$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));

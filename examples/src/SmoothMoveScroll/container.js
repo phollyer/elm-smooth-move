@@ -5161,14 +5161,14 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$document = _Browser_document;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$SmoothMoveTask$Container$init = function (_v0) {
+var $author$project$SmoothMoveScroll$Container$init = function (_v0) {
 	return _Utils_Tuple2(
-		{message: 'Ready to scroll within the container'},
+		{},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$SmoothMoveTask$Container$NoOp = {$: 'NoOp'};
+var $author$project$SmoothMoveScroll$Container$NoOp = {$: 'NoOp'};
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -5365,46 +5365,40 @@ var $author$project$SmoothMoveTask$setContainer = F2(
 				container: $author$project$SmoothMoveTask$InnerNode(elementId)
 			});
 	});
-var $author$project$SmoothMoveTask$Container$update = F2(
+var $author$project$SmoothMoveScroll$Container$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'NoOp':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'ScrollToTop':
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{message: 'Scrolling to top of container...'}),
+					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTask$Container$NoOp,
+						$author$project$SmoothMoveScroll$Container$NoOp,
 						A2($author$project$SmoothMoveTask$setContainer, 'scroll-container', $author$project$SmoothMoveTask$defaultConfig),
 						'top-element'));
 			case 'ScrollToMiddle':
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{message: 'Scrolling to middle of container...'}),
+					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTask$Container$NoOp,
+						$author$project$SmoothMoveScroll$Container$NoOp,
 						A2($author$project$SmoothMoveTask$setContainer, 'scroll-container', $author$project$SmoothMoveTask$defaultConfig),
 						'middle-element'));
 			default:
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{message: 'Scrolling to bottom of container...'}),
+					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTask$Container$NoOp,
+						$author$project$SmoothMoveScroll$Container$NoOp,
 						A2($author$project$SmoothMoveTask$setContainer, 'scroll-container', $author$project$SmoothMoveTask$defaultConfig),
 						'bottom-element'));
 		}
 	});
-var $author$project$SmoothMoveTask$Container$ScrollToBottom = {$: 'ScrollToBottom'};
-var $author$project$SmoothMoveTask$Container$ScrollToMiddle = {$: 'ScrollToMiddle'};
-var $author$project$SmoothMoveTask$Container$ScrollToTop = {$: 'ScrollToTop'};
+var $author$project$SmoothMoveScroll$Container$ScrollToBottom = {$: 'ScrollToBottom'};
+var $author$project$SmoothMoveScroll$Container$ScrollToMiddle = {$: 'ScrollToMiddle'};
+var $author$project$SmoothMoveScroll$Container$ScrollToTop = {$: 'ScrollToTop'};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -5423,7 +5417,7 @@ var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$ul = _VirtualDom_node('ul');
-var $author$project$SmoothMoveTask$Container$contentBlock = F2(
+var $author$project$SmoothMoveScroll$Container$contentBlock = F2(
 	function (num, description) {
 		return A2(
 			$elm$html$Html$div,
@@ -5477,7 +5471,7 @@ var $author$project$SmoothMoveTask$Container$contentBlock = F2(
 						]))
 				]));
 	});
-var $author$project$SmoothMoveTask$Container$css = '\nbody {\n    margin: 0;\n    padding: 0;\n    font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', system-ui, sans-serif;\n    background: #f5f7fa;\n    color: #333;\n}\n\n.back-button {\n    position: fixed;\n    top: 20px;\n    left: 20px;\n    background: #6c757d;\n    color: white;\n    padding: 12px 20px;\n    text-decoration: none;\n    border-radius: 8px;\n    font-size: 14px;\n    font-weight: 500;\n    z-index: 1000;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.15);\n    transition: background-color 0.2s ease;\n}\n\n.back-button:hover {\n    background: #5a6268;\n}\n\n.main-content {\n    max-width: 1000px;\n    margin: 0 auto;\n    padding: 80px 20px 40px;\n    text-align: center;\n}\n\nh1 {\n    color: #2c3e50;\n    margin-bottom: 20px;\n    font-size: 2.5em;\n    font-weight: 300;\n}\n\np {\n    font-size: 1.1em;\n    line-height: 1.6;\n    margin-bottom: 20px;\n    color: #666;\n}\n\n.status {\n    background: #e8f4fd;\n    color: #0066cc;\n    padding: 15px 25px;\n    border-radius: 25px;\n    font-weight: 500;\n    margin: 30px 0;\n    display: inline-block;\n    border-left: 4px solid #0066cc;\n}\n\n.controls {\n    margin: 40px 0;\n}\n\n.control-btn {\n    padding: 15px 30px;\n    font-size: 16px;\n    font-weight: 600;\n    border: none;\n    border-radius: 8px;\n    cursor: pointer;\n    margin: 0 10px 10px;\n    transition: all 0.3s ease;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n}\n\n.top-btn {\n    background: linear-gradient(135deg, #74b9ff, #0984e3);\n    color: white;\n}\n\n.top-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4);\n}\n\n.middle-btn {\n    background: linear-gradient(135deg, #00b894, #00a085);\n    color: white;\n}\n\n.middle-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);\n}\n\n.bottom-btn {\n    background: linear-gradient(135deg, #fd79a8, #e84393);\n    color: white;\n}\n\n.bottom-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(253, 121, 168, 0.4);\n}\n\n.scroll-container {\n    width: 100%;\n    height: 600px;\n    border: 2px solid #dee2e6;\n    border-radius: 12px;\n    overflow-y: auto;\n    overflow-x: hidden;\n    background: white;\n    box-shadow: 0 4px 20px rgba(0,0,0,0.1);\n    margin-top: 30px;\n    text-align: left;\n}\n\n.scroll-content {\n    background: linear-gradient(to bottom, \n        #ffffff 0%,\n        #f8f9fa 15%,\n        #e9ecef 30%,\n        #dee2e6 45%,\n        #ced4da 60%,\n        #adb5bd 75%,\n        #6c757d 90%,\n        #495057 100%\n    );\n    min-height: 2000px;\n    padding: 0;\n}\n\n.content-block {\n    padding: 40px;\n    margin: 0;\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.content-block h2, .content-block h3 {\n    margin-top: 0;\n    color: #2c3e50;\n}\n\n.content-block h2 {\n    font-size: 2em;\n    margin-bottom: 20px;\n}\n\n.content-block h3 {\n    font-size: 1.5em;\n    margin-bottom: 15px;\n    color: #34495e;\n}\n\n.content-block p {\n    color: #555;\n    line-height: 1.6;\n    margin-bottom: 15px;\n}\n\n.content-block ul {\n    margin: 20px 0;\n    padding-left: 30px;\n}\n\n.content-block li {\n    margin: 8px 0;\n    color: #666;\n}\n\n.top-block {\n    background: rgba(255,255,255,0.8);\n    border-bottom: 3px solid #74b9ff;\n}\n\n.bottom-block {\n    background: rgba(0,0,0,0.1);\n    border-top: 3px solid #fd79a8;\n    color: #2c3e50;\n}\n\n.bottom-block h2 {\n    color: #2c3e50;\n}\n\n/* Smooth scrolling disabled - we handle it programmatically */\n.scroll-container {\n    scroll-behavior: auto;\n}\n\n/* Responsive design */\n@media (max-width: 768px) {\n    .main-content {\n        padding: 60px 15px 20px;\n    }\n    \n    h1 {\n        font-size: 2em;\n    }\n    \n    .scroll-container {\n        height: 500px;\n    }\n    \n    .control-btn {\n        display: block;\n        width: 200px;\n        margin: 10px auto;\n    }\n    \n    .content-block {\n        padding: 30px 20px;\n    }\n}\n';
+var $author$project$SmoothMoveScroll$Container$css = '\nbody {\n    margin: 0;\n    padding: 0;\n    font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', system-ui, sans-serif;\n    background: #f5f7fa;\n    color: #333;\n}\n\n.back-button {\n    position: fixed;\n    top: 20px;\n    left: 20px;\n    background: #6c757d;\n    color: white;\n    padding: 12px 20px;\n    text-decoration: none;\n    border-radius: 8px;\n    font-size: 14px;\n    font-weight: 500;\n    z-index: 1000;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.15);\n    transition: background-color 0.2s ease;\n}\n\n.back-button:hover {\n    background: #5a6268;\n}\n\n.main-content {\n    max-width: 1000px;\n    margin: 0 auto;\n    padding: 80px 20px 40px;\n    text-align: center;\n}\n\nh1 {\n    color: #2c3e50;\n    margin-bottom: 20px;\n    font-size: 2.5em;\n    font-weight: 300;\n}\n\np {\n    font-size: 1.1em;\n    line-height: 1.6;\n    margin-bottom: 20px;\n    color: #666;\n}\n\n.status {\n    background: #e8f4fd;\n    color: #0066cc;\n    padding: 15px 25px;\n    border-radius: 25px;\n    font-weight: 500;\n    margin: 30px 0;\n    display: inline-block;\n    border-left: 4px solid #0066cc;\n}\n\n.controls {\n    margin: 40px 0;\n}\n\n.control-btn {\n    padding: 15px 30px;\n    font-size: 16px;\n    font-weight: 600;\n    border: none;\n    border-radius: 8px;\n    cursor: pointer;\n    margin: 0 10px 10px;\n    transition: all 0.3s ease;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n}\n\n.top-btn {\n    background: linear-gradient(135deg, #74b9ff, #0984e3);\n    color: white;\n}\n\n.top-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4);\n}\n\n.middle-btn {\n    background: linear-gradient(135deg, #00b894, #00a085);\n    color: white;\n}\n\n.middle-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);\n}\n\n.bottom-btn {\n    background: linear-gradient(135deg, #fd79a8, #e84393);\n    color: white;\n}\n\n.bottom-btn:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 4px 15px rgba(253, 121, 168, 0.4);\n}\n\n.scroll-container {\n    width: 100%;\n    height: 600px;\n    border: 2px solid #dee2e6;\n    border-radius: 12px;\n    overflow-y: auto;\n    overflow-x: hidden;\n    background: white;\n    box-shadow: 0 4px 20px rgba(0,0,0,0.1);\n    margin-top: 30px;\n    text-align: left;\n}\n\n.scroll-content {\n    background: linear-gradient(to bottom, \n        #ffffff 0%,\n        #f8f9fa 15%,\n        #e9ecef 30%,\n        #dee2e6 45%,\n        #ced4da 60%,\n        #adb5bd 75%,\n        #6c757d 90%,\n        #495057 100%\n    );\n    min-height: 2000px;\n    padding: 0;\n}\n\n.content-block {\n    padding: 40px;\n    margin: 0;\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.content-block h2, .content-block h3 {\n    margin-top: 0;\n    color: #2c3e50;\n}\n\n.content-block h2 {\n    font-size: 2em;\n    margin-bottom: 20px;\n}\n\n.content-block h3 {\n    font-size: 1.5em;\n    margin-bottom: 15px;\n    color: #34495e;\n}\n\n.content-block p {\n    color: #555;\n    line-height: 1.6;\n    margin-bottom: 15px;\n}\n\n.content-block ul {\n    margin: 20px 0;\n    padding-left: 30px;\n}\n\n.content-block li {\n    margin: 8px 0;\n    color: #666;\n}\n\n.top-block {\n    background: rgba(255,255,255,0.8);\n    border-bottom: 3px solid #74b9ff;\n}\n\n.bottom-block {\n    background: rgba(0,0,0,0.1);\n    border-top: 3px solid #fd79a8;\n    color: #2c3e50;\n}\n\n.bottom-block h2 {\n    color: #2c3e50;\n}\n\n/* Smooth scrolling disabled - we handle it programmatically */\n.scroll-container {\n    scroll-behavior: auto;\n}\n\n/* Responsive design */\n@media (max-width: 768px) {\n    .main-content {\n        padding: 60px 15px 20px;\n    }\n    \n    h1 {\n        font-size: 2em;\n    }\n    \n    .scroll-container {\n        height: 500px;\n    }\n    \n    .control-btn {\n        display: block;\n        width: 200px;\n        margin: 10px auto;\n    }\n    \n    .content-block {\n        padding: 30px 20px;\n    }\n}\n';
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$Attributes$href = function (url) {
@@ -5509,7 +5503,7 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $author$project$SmoothMoveTask$Container$view = function (model) {
+var $author$project$SmoothMoveScroll$Container$view = function (model) {
 	return {
 		body: _List_fromArray(
 			[
@@ -5547,16 +5541,6 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 								$elm$html$Html$text('This demonstrates smooth scrolling within a scrollable container (not the document itself).')
 							])),
 						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('status')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text(model.message)
-							])),
-						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
@@ -5568,7 +5552,7 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 								$elm$html$Html$button,
 								_List_fromArray(
 									[
-										$elm$html$Html$Events$onClick($author$project$SmoothMoveTask$Container$ScrollToTop),
+										$elm$html$Html$Events$onClick($author$project$SmoothMoveScroll$Container$ScrollToTop),
 										$elm$html$Html$Attributes$class('control-btn top-btn')
 									]),
 								_List_fromArray(
@@ -5579,7 +5563,7 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 								$elm$html$Html$button,
 								_List_fromArray(
 									[
-										$elm$html$Html$Events$onClick($author$project$SmoothMoveTask$Container$ScrollToMiddle),
+										$elm$html$Html$Events$onClick($author$project$SmoothMoveScroll$Container$ScrollToMiddle),
 										$elm$html$Html$Attributes$class('control-btn middle-btn')
 									]),
 								_List_fromArray(
@@ -5590,7 +5574,7 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 								$elm$html$Html$button,
 								_List_fromArray(
 									[
-										$elm$html$Html$Events$onClick($author$project$SmoothMoveTask$Container$ScrollToBottom),
+										$elm$html$Html$Events$onClick($author$project$SmoothMoveScroll$Container$ScrollToBottom),
 										$elm$html$Html$Attributes$class('control-btn bottom-btn')
 									]),
 								_List_fromArray(
@@ -5646,9 +5630,9 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 														$elm$html$Html$text('Click \'Scroll to Top\' to smoothly scroll to this position.')
 													]))
 											])),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 1, 'This is content block 1. Each block has enough content to make scrolling meaningful.'),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 2, 'Content block 2 continues the gradient transition from white to dark.'),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 3, 'Content block 3 shows the middle section of our scrollable content.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 1, 'This is content block 1. Each block has enough content to make scrolling meaningful.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 2, 'Content block 2 continues the gradient transition from white to dark.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 3, 'Content block 3 shows the middle section of our scrollable content.'),
 										A2(
 										$elm$html$Html$div,
 										_List_fromArray(
@@ -5707,10 +5691,10 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 															]))
 													]))
 											])),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 5, 'Content block 5 continues toward the bottom of the container.'),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 6, 'Content block 6 shows we\'re getting closer to the bottom.'),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 7, 'Content block 7 is near the end with darker background colors.'),
-										A2($author$project$SmoothMoveTask$Container$contentBlock, 8, 'Content block 8 is almost at the bottom of the scrollable content.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 5, 'Content block 5 continues toward the bottom of the container.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 6, 'Content block 6 shows we\'re getting closer to the bottom.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 7, 'Content block 7 is near the end with darker background colors.'),
+										A2($author$project$SmoothMoveScroll$Container$contentBlock, 8, 'Content block 8 is almost at the bottom of the scrollable content.'),
 										A2(
 										$elm$html$Html$div,
 										_List_fromArray(
@@ -5758,20 +5742,20 @@ var $author$project$SmoothMoveTask$Container$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text($author$project$SmoothMoveTask$Container$css)
+						$elm$html$Html$text($author$project$SmoothMoveScroll$Container$css)
 					]))
 			]),
-		title: 'SmoothMoveTask - Container Scrolling'
+		title: 'SmoothMoveScroll - Container Scrolling'
 	};
 };
-var $author$project$SmoothMoveTask$Container$main = $elm$browser$Browser$document(
+var $author$project$SmoothMoveScroll$Container$main = $elm$browser$Browser$document(
 	{
-		init: $author$project$SmoothMoveTask$Container$init,
+		init: $author$project$SmoothMoveScroll$Container$init,
 		subscriptions: function (_v0) {
 			return $elm$core$Platform$Sub$none;
 		},
-		update: $author$project$SmoothMoveTask$Container$update,
-		view: $author$project$SmoothMoveTask$Container$view
+		update: $author$project$SmoothMoveScroll$Container$update,
+		view: $author$project$SmoothMoveScroll$Container$view
 	});
-_Platform_export({'SmoothMoveTask':{'Container':{'init':$author$project$SmoothMoveTask$Container$main(
+_Platform_export({'SmoothMoveScroll':{'Container':{'init':$author$project$SmoothMoveScroll$Container$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));

@@ -21,7 +21,7 @@ USAGE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding)
+import Element exposing (Element, column, el, maximum, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -163,14 +163,40 @@ viewContent model =
             ]
             (text "SmoothMoveCSS Basic Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Hardware-accelerated CSS transitions")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveCSS module, which leverages "
+                , el [ Font.semiBold ] (text "native CSS transitions")
+                , text " for optimal performance. The browser handles all animation calculations using "
+                , el [ Font.semiBold ] (text "hardware acceleration")
+                , text ", resulting in smooth, efficient animations with minimal JavaScript overhead."
+                ]
 
-
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for battery-efficient mobile animations and high-performance transitions where "
+                , el [ Font.semiBold ] (text "native browser optimization")
+                , text " provides the best user experience."
+                ]
+            ]
 
         , -- Position display
           el
@@ -269,46 +295,4 @@ viewContent model =
                 ]
                 (text "")
             )
-
-        , -- Footer with technical information
-          column
-            [ spacing 16
-            , width fill
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ el
-                [ Font.size 20
-                , Font.semiBold
-                , Font.color (rgb255 30 41 59)
-                , centerX
-                ]
-                (text "🚀 SmoothMoveCSS - Hardware Acceleration")
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveCSS module, which leverages "
-                , el [ Font.semiBold ] (text "native CSS transitions")
-                , text " for optimal performance. The browser handles all animation calculations using "
-                , el [ Font.semiBold ] (text "hardware acceleration")
-                , text ", resulting in smooth, efficient animations with minimal JavaScript overhead."
-                ]
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for battery-efficient mobile animations and high-performance transitions where "
-                , el [ Font.semiBold ] (text "native browser optimization")
-                , text " provides the best user experience."
-                ]
-            ]
         ]

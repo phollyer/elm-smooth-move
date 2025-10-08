@@ -21,7 +21,7 @@ USAGE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding)
+import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -169,14 +169,40 @@ viewContent model =
             ]
             (text "SmoothMoveState Basic Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - State wrapper for subscription-based animations")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveState module, which provides a "
+                , el [ Font.semiBold ] (text "convenience wrapper")
+                , text " around the subscription-based animation system. It offers "
+                , el [ Font.semiBold ] (text "simplified state management")
+                , text " with helper functions while maintaining frame-rate independent positioning and smooth element transitions."
+                ]
 
-
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for developers who want the power of subscription-based animations with "
+                , el [ Font.semiBold ] (text "reduced boilerplate")
+                , text " and easier integration into existing Elm applications."
+                ]
+            ]
 
         , -- Position display
           el
@@ -274,46 +300,4 @@ viewContent model =
                 ]
                 (text "")
             )
-
-        , -- Footer with technical information
-          column
-            [ spacing 16
-            , width fill
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ el
-                [ Font.size 20
-                , Font.semiBold
-                , Font.color (rgb255 30 41 59)
-                , centerX
-                ]
-                (text "🧩 SmoothMoveState - Convenience Wrapper")
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveState module, which provides a "
-                , el [ Font.semiBold ] (text "convenience wrapper")
-                , text " around the subscription-based animation system. It offers "
-                , el [ Font.semiBold ] (text "simplified state management")
-                , text " with helper functions while maintaining frame-rate independent positioning and smooth element transitions."
-                ]
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for developers who want the power of subscription-based animations with "
-                , el [ Font.semiBold ] (text "reduced boilerplate")
-                , text " and easier integration into existing Elm applications."
-                ]
-            ]
         ]

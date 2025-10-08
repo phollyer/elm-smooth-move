@@ -21,7 +21,7 @@ REQUIREMENTS:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding)
+import Element exposing (Element, column, el, maximum, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -226,14 +226,40 @@ viewContent model =
             ]
             (text "SmoothMovePorts Basic Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Web Animations API integration")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMovePorts module, which integrates with the "
+                , el [ Font.semiBold ] (text "Web Animations API")
+                , text " through JavaScript ports. This approach provides access to "
+                , el [ Font.semiBold ] (text "platform-specific optimizations")
+                , text " and advanced animation features not available through pure Elm."
+                ]
 
-
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for complex animations requiring "
+                , el [ Font.semiBold ] (text "native performance")
+                , text " and advanced timing controls beyond what CSS transitions can provide."
+                ]
+            ]
 
         , -- Position display
           el
@@ -331,46 +357,4 @@ viewContent model =
                 ]
                 (text "")
             )
-
-        , -- Footer with technical information
-          column
-            [ spacing 16
-            , width fill
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ el
-                [ Font.size 20
-                , Font.semiBold
-                , Font.color (rgb255 30 41 59)
-                , centerX
-                ]
-                (text "🔌 SmoothMovePorts - Web Animations API")
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMovePorts module, which integrates with the "
-                , el [ Font.semiBold ] (text "Web Animations API")
-                , text " through JavaScript ports. This approach provides access to "
-                , el [ Font.semiBold ] (text "platform-specific optimizations")
-                , text " and advanced animation features not available through pure Elm."
-                ]
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for complex animations requiring "
-                , el [ Font.semiBold ] (text "native performance")
-                , text " and advanced timing controls beyond what CSS transitions can provide."
-                ]
-            ]
         ]

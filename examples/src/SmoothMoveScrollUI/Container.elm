@@ -1,4 +1,4 @@
-module SmoothMoveTaskUI.Container exposing (main)
+module SmoothMoveScrollUI.Container exposing (main)
 
 import Browser exposing (Document)
 import Element exposing (..)
@@ -22,12 +22,12 @@ main =
 
 
 type alias Model =
-    { message : String }
+    {}
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { message = "Ready to scroll within the container" }, Cmd.none )
+    ( {}, Cmd.none )
 
 
 type Msg
@@ -44,24 +44,24 @@ update msg model =
             ( model, Cmd.none )
 
         ScrollToTop ->
-            ( { model | message = "Scrolling to top of container..." }
+            ( model
             , animateToCmdWithConfig NoOp (setContainer "scroll-container" { defaultConfig | speed = 20 }) "top-element"
             )
 
         ScrollToMiddle ->
-            ( { model | message = "Scrolling to middle of container..." }
+            ( model
             , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container", speed = 20 } "middle-element"
             )
 
         ScrollToBottom ->
-            ( { model | message = "Scrolling to bottom of container..." }
+            ( model
             , animateToCmdWithConfig NoOp (setContainer "scroll-container" { defaultConfig | speed = 20 }) "bottom-element"
             )
 
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveTask - Container Scrolling (ElmUI)"
+    { title = "SmoothMoveScroll - Container Scrolling (ElmUI)"
     , body =
         [ Element.layout
             [ Font.family
@@ -111,29 +111,49 @@ view model =
                         [ Font.size 32
                         , Font.bold
                         , Font.color (rgb255 30 41 59)
+                        , centerX
                         ]
-                        (text "Container Scrolling Example")
-                    , paragraph
-                        [ Font.size 18
-                        , Font.color (rgb255 71 85 105)
-                        , spacing 8
-                        ]
-                        [ text "This demonstrates smooth scrolling within a scrollable container (not the document itself) using ElmUI." ]
-                    , el
-                        [ Font.size 16
-                        , Font.color (rgb255 139 69 19)
-                        , Font.medium
-                        , paddingXY 20 12
-                        , Background.color (rgb255 254 243 199)
-                        , Border.color (rgb255 245 158 11)
-                        , Border.width 1
+                        (text "SmoothMoveScroll - Container Example")
+                    -- Technical information
+                    , column
+                        [ spacing 16
+                        , width (maximum 1200 fill)
+                        , centerX
+                        , paddingXY 32 24
+                        , Background.color (rgb255 248 250 252)
                         , Border.rounded 8
+                        , Border.solid
+                        , Border.width 1
+                        , Border.color (rgb255 226 232 240)
                         ]
-                        (text model.message)
+                        [ paragraph
+                            [ Font.size 16
+                            , Font.color (rgb255 71 85 105)
+                            , width fill
+                            ]
+                            [ text "This example demonstrates the SmoothMoveScroll module handling "
+                            , el [ Font.semiBold ] (text "container-specific scrolling")
+                            , text " with boundary detection and viewport calculations. It provides "
+                            , el [ Font.semiBold ] (text "precise element positioning")
+                            , text " within scrollable containers while respecting container bounds and scroll limits."
+                            ]
+
+                        , paragraph
+                            [ Font.size 16
+                            , Font.color (rgb255 71 85 105)
+                            , width fill
+                            ]
+                            [ text "Perfect for applications with "
+                            , el [ Font.semiBold ] (text "nested scrollable content")
+                            , text " requiring smooth navigation within constrained viewport areas and complex layout hierarchies."
+                            ]
+                        ]
 
                     -- Control buttons
                     , row
-                        [ spacing 15 ]
+                        [ spacing 15
+                        , centerX
+                        ]
                         [ Input.button
                             [ Background.gradient
                                 { angle = 135
@@ -432,12 +452,12 @@ bulletPoint text_ =
     row
         [ spacing 8 ]
         [ el
-            [ Font.size 14
+            [ Font.size 16
             , Font.color (rgb255 139 69 19)
             ]
             (text "•")
         , el
-            [ Font.size 14
+            [ Font.size 16
             , Font.color (rgb255 107 114 128)
             ]
             (text text_)

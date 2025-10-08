@@ -18,7 +18,7 @@ ARCHITECTURE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding)
+import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -208,12 +208,40 @@ viewContent model =
             ]
             (text "SmoothMoveSub Multiple Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Multiple elements via subscriptions")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveSub module coordinating "
+                , el [ Font.semiBold ] (text "multiple elements simultaneously")
+                , text " with subscription-based animations. Each element receives "
+                , el [ Font.semiBold ] (text "frame-rate independent updates")
+                , text ", ensuring smooth formation control and synchronized movement patterns across different device capabilities."
+                ]
+
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for complex choreographed animations where "
+                , el [ Font.semiBold ] (text "precise timing synchronization")
+                , text " and real-time positioning control are essential requirements."
+                ]
+            ]
 
         , -- Element status and positions (6 elements in 2 rows)
           column
@@ -468,24 +496,4 @@ viewContent model =
                     ]
                 )
             )
-
-        , -- Technology information
-          column
-            [ spacing 8
-            , centerX
-            ]
-            [ el
-                [ Font.size 14
-                , Font.color (rgb255 107 114 128)
-                , centerX
-                ]
-                (text "🔄 Advanced multi-element subscription-based animations")
-
-            , el
-                [ Font.size 12
-                , Font.color (rgb255 107 114 128)
-                , centerX
-                ]
-                (text "Frame-rate independent positioning with formation control")
-            ]
         ]

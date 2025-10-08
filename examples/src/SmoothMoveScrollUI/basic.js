@@ -5198,17 +5198,17 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$document = _Browser_document;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$SmoothMoveTaskUI$Basic$init = function (_v0) {
+var $author$project$SmoothMoveScrollUI$Basic$init = function (_v0) {
 	return _Utils_Tuple2(
 		{},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$SmoothMoveTaskUI$Basic$subscriptions = function (_v0) {
+var $author$project$SmoothMoveScrollUI$Basic$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
-var $author$project$SmoothMoveTaskUI$Basic$NoOp = {$: 'NoOp'};
+var $author$project$SmoothMoveScrollUI$Basic$NoOp = {$: 'NoOp'};
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -5394,7 +5394,7 @@ var $elm_community$easing_functions$Ease$inQuint = function (time) {
 };
 var $elm_community$easing_functions$Ease$outQuint = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inQuint);
 var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, container: $author$project$SmoothMoveTask$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
-var $author$project$SmoothMoveTaskUI$Basic$update = F2(
+var $author$project$SmoothMoveScrollUI$Basic$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'NoOp':
@@ -5404,7 +5404,7 @@ var $author$project$SmoothMoveTaskUI$Basic$update = F2(
 					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTaskUI$Basic$NoOp,
+						$author$project$SmoothMoveScrollUI$Basic$NoOp,
 						_Utils_update(
 							$author$project$SmoothMoveTask$defaultConfig,
 							{speed: 20}),
@@ -5414,17 +5414,27 @@ var $author$project$SmoothMoveTaskUI$Basic$update = F2(
 					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTaskUI$Basic$NoOp,
+						$author$project$SmoothMoveScrollUI$Basic$NoOp,
 						_Utils_update(
 							$author$project$SmoothMoveTask$defaultConfig,
 							{speed: 20}),
 						'paragraph-two'));
+			case 'ScrollToParagraphThree':
+				return _Utils_Tuple2(
+					model,
+					A3(
+						$author$project$SmoothMoveTask$animateToCmdWithConfig,
+						$author$project$SmoothMoveScrollUI$Basic$NoOp,
+						_Utils_update(
+							$author$project$SmoothMoveTask$defaultConfig,
+							{speed: 20}),
+						'paragraph-three'));
 			default:
 				return _Utils_Tuple2(
 					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTaskUI$Basic$NoOp,
+						$author$project$SmoothMoveScrollUI$Basic$NoOp,
 						_Utils_update(
 							$author$project$SmoothMoveTask$defaultConfig,
 							{speed: 20}),
@@ -11397,9 +11407,10 @@ var $mdgriffith$elm_ui$Element$rgb255 = F3(
 	function (red, green, blue) {
 		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
 	});
-var $author$project$SmoothMoveTaskUI$Basic$ScrollToParagraphOne = {$: 'ScrollToParagraphOne'};
-var $author$project$SmoothMoveTaskUI$Basic$ScrollToParagraphTwo = {$: 'ScrollToParagraphTwo'};
-var $author$project$SmoothMoveTaskUI$Basic$ScrollToTop = {$: 'ScrollToTop'};
+var $author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphOne = {$: 'ScrollToParagraphOne'};
+var $author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphThree = {$: 'ScrollToParagraphThree'};
+var $author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphTwo = {$: 'ScrollToParagraphTwo'};
+var $author$project$SmoothMoveScrollUI$Basic$ScrollToTop = {$: 'ScrollToTop'};
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 	return {$: 'AlignX', a: a};
 };
@@ -11679,6 +11690,14 @@ var $mdgriffith$elm_ui$Element$link = F2(
 				_List_fromArray(
 					[label])));
 	});
+var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+	function (a, b) {
+		return {$: 'Max', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Element$maximum = F2(
+	function (i, l) {
+		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+	});
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
 var $mdgriffith$elm_ui$Element$padding = function (x) {
@@ -11694,6 +11713,44 @@ var $mdgriffith$elm_ui$Element$padding = function (x) {
 			f,
 			f));
 };
+var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
+var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
+	function (a, b, c) {
+		return {$: 'SpacingStyle', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
+var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
+	function (x, y) {
+		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
+	});
+var $mdgriffith$elm_ui$Element$spacing = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$spacing,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
+			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
+			x,
+			x));
+};
+var $mdgriffith$elm_ui$Element$paragraph = F2(
+	function (attrs, children) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asParagraph,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Paragraph),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$spacing(5),
+						attrs))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+	});
 var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
@@ -11741,25 +11798,8 @@ var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 		$mdgriffith$elm_ui$Internal$Flag$fontSize,
 		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
-var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
-	function (a, b, c) {
-		return {$: 'SpacingStyle', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
-var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
-	function (x, y) {
-		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
-	});
-var $mdgriffith$elm_ui$Element$spacing = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$spacing,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
-			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
-			x,
-			x));
-};
+var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
+var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 	return {$: 'Text', a: a};
 };
@@ -11782,7 +11822,7 @@ var $mdgriffith$elm_ui$Element$Border$width = function (v) {
 			v,
 			v));
 };
-var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
+var $author$project$SmoothMoveScrollUI$Basic$viewContent = function (model) {
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
 		_List_fromArray(
@@ -11829,17 +11869,96 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 						A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59)),
 						$mdgriffith$elm_ui$Element$centerX
 					]),
-				$mdgriffith$elm_ui$Element$text('SmoothMoveTask Basic Example')),
+				$mdgriffith$elm_ui$Element$text('SmoothMoveScroll Document Example')),
 				A2(
-				$mdgriffith$elm_ui$Element$el,
+				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$size(18),
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-						$mdgriffith$elm_ui$Element$centerX
+						$mdgriffith$elm_ui$Element$spacing(16),
+						$mdgriffith$elm_ui$Element$width(
+						A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill)),
+						$mdgriffith$elm_ui$Element$centerX,
+						A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
+						$mdgriffith$elm_ui$Element$Background$color(
+						A3($mdgriffith$elm_ui$Element$rgb255, 248, 250, 252)),
+						$mdgriffith$elm_ui$Element$Border$rounded(8),
+						$mdgriffith$elm_ui$Element$Border$solid,
+						$mdgriffith$elm_ui$Element$Border$width(1),
+						$mdgriffith$elm_ui$Element$Border$color(
+						A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240))
 					]),
-				$mdgriffith$elm_ui$Element$text('ElmUI Version - Task-based scrolling with composable error handling')),
+				_List_fromArray(
+					[
+						A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('This example demonstrates the SmoothMoveScroll module, which provides '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('task-based scrolling animations')),
+								$mdgriffith$elm_ui$Element$text(' with composable error handling. It offers '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('smooth document navigation')),
+								$mdgriffith$elm_ui$Element$text(' using the browser\'s native scrolling capabilities with customizable easing and timing controls.')
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('Perfect for applications requiring '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('sequential animations')),
+								$mdgriffith$elm_ui$Element$text(' and reliable scrolling operations with comprehensive error handling and task composition.')
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+							]),
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('For beginners, this module provides an easy-to-use, fully managed approach that returns '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('Cmds')),
+								$mdgriffith$elm_ui$Element$text(' rather than '),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[$mdgriffith$elm_ui$Element$Font$semiBold]),
+								$mdgriffith$elm_ui$Element$text('Tasks')),
+								$mdgriffith$elm_ui$Element$text('.')
+							]))
+					])),
 				A2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
@@ -11871,7 +11990,7 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							]),
 						{
 							label: $mdgriffith$elm_ui$Element$text('Scroll to Paragraph One ↓'),
-							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Basic$ScrollToParagraphOne)
+							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphOne)
 						}),
 						A2(
 						$mdgriffith$elm_ui$Element$Input$button,
@@ -11895,7 +12014,31 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							]),
 						{
 							label: $mdgriffith$elm_ui$Element$text('Scroll to Paragraph Two ↓'),
-							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Basic$ScrollToParagraphTwo)
+							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphTwo)
+						}),
+						A2(
+						$mdgriffith$elm_ui$Element$Input$button,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Background$gradient(
+								{
+									angle: 0,
+									steps: _List_fromArray(
+										[
+											A3($mdgriffith$elm_ui$Element$rgb255, 168, 85, 247),
+											A3($mdgriffith$elm_ui$Element$rgb255, 147, 51, 234)
+										])
+								}),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255)),
+								$mdgriffith$elm_ui$Element$Font$medium,
+								A2($mdgriffith$elm_ui$Element$paddingXY, 24, 12),
+								$mdgriffith$elm_ui$Element$Border$rounded(8),
+								$mdgriffith$elm_ui$Element$centerX
+							]),
+						{
+							label: $mdgriffith$elm_ui$Element$text('Scroll to Paragraph Three ↓'),
+							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphThree)
 						})
 					])),
 				A2(
@@ -11915,6 +12058,7 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 						$elm$html$Html$Attributes$id('paragraph-one')),
 						$mdgriffith$elm_ui$Element$Background$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255)),
+						$mdgriffith$elm_ui$Element$centerX,
 						A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
 						$mdgriffith$elm_ui$Element$Border$rounded(12),
 						$mdgriffith$elm_ui$Element$Border$shadow(
@@ -11938,24 +12082,26 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							]),
 						$mdgriffith$elm_ui$Element$text('Paragraph One')),
 						A2(
-						$mdgriffith$elm_ui$Element$column,
+						$mdgriffith$elm_ui$Element$paragraph,
 						_List_fromArray(
 							[
 								$mdgriffith$elm_ui$Element$spacing(16),
 								$mdgriffith$elm_ui$Element$Font$size(16),
 								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105))
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width(
+								A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill))
 							]),
 						_List_fromArray(
 							[
 								A2(
 								$mdgriffith$elm_ui$Element$el,
 								_List_Nil,
-								$mdgriffith$elm_ui$Element$text('This is the first paragraph of our example. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')),
+								$mdgriffith$elm_ui$Element$text('This is the first paragraph of our example. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ')),
 								A2(
 								$mdgriffith$elm_ui$Element$el,
 								_List_Nil,
-								$mdgriffith$elm_ui$Element$text('Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.')),
+								$mdgriffith$elm_ui$Element$text('Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ')),
 								A2(
 								$mdgriffith$elm_ui$Element$el,
 								_List_Nil,
@@ -11967,7 +12113,7 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							[
 								$mdgriffith$elm_ui$Element$Font$size(14),
 								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 34, 197, 94)),
+								A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129)),
 								$mdgriffith$elm_ui$Element$Font$medium,
 								A2($mdgriffith$elm_ui$Element$paddingXY, 12, 8),
 								$mdgriffith$elm_ui$Element$Border$rounded(6),
@@ -11975,11 +12121,11 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 								A3($mdgriffith$elm_ui$Element$rgb255, 240, 253, 244)),
 								$mdgriffith$elm_ui$Element$Border$width(1),
 								$mdgriffith$elm_ui$Element$Border$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 220, 252, 231))
+								A3($mdgriffith$elm_ui$Element$rgb255, 209, 250, 229))
 							]),
 						{
-							label: $mdgriffith$elm_ui$Element$text('Scroll to Top ↑'),
-							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Basic$ScrollToTop)
+							label: $mdgriffith$elm_ui$Element$text('Continue to Paragraph Two ↓'),
+							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphTwo)
 						})
 					])),
 				A2(
@@ -12007,7 +12153,8 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							color: A4($mdgriffith$elm_ui$Element$rgba, 0, 0, 0, 0.1),
 							offset: _Utils_Tuple2(0, 4),
 							size: 0
-						})
+						}),
+						$mdgriffith$elm_ui$Element$centerX
 					]),
 				_List_fromArray(
 					[
@@ -12022,13 +12169,15 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							]),
 						$mdgriffith$elm_ui$Element$text('Paragraph Two')),
 						A2(
-						$mdgriffith$elm_ui$Element$column,
+						$mdgriffith$elm_ui$Element$paragraph,
 						_List_fromArray(
 							[
 								$mdgriffith$elm_ui$Element$spacing(16),
 								$mdgriffith$elm_ui$Element$Font$size(16),
 								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105))
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width(
+								A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill))
 							]),
 						_List_fromArray(
 							[
@@ -12051,19 +12200,19 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 							[
 								$mdgriffith$elm_ui$Element$Font$size(14),
 								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 220, 38, 38)),
+								A3($mdgriffith$elm_ui$Element$rgb255, 168, 85, 247)),
 								$mdgriffith$elm_ui$Element$Font$medium,
 								A2($mdgriffith$elm_ui$Element$paddingXY, 12, 8),
 								$mdgriffith$elm_ui$Element$Border$rounded(6),
 								$mdgriffith$elm_ui$Element$Background$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 254, 242, 242)),
+								A3($mdgriffith$elm_ui$Element$rgb255, 250, 245, 255)),
 								$mdgriffith$elm_ui$Element$Border$width(1),
 								$mdgriffith$elm_ui$Element$Border$color(
-								A3($mdgriffith$elm_ui$Element$rgb255, 254, 226, 226))
+								A3($mdgriffith$elm_ui$Element$rgb255, 233, 213, 255))
 							]),
 						{
-							label: $mdgriffith$elm_ui$Element$text('Click me to scroll back to Paragraph One ↑'),
-							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Basic$ScrollToParagraphOne)
+							label: $mdgriffith$elm_ui$Element$text('Continue to Paragraph Three ↓'),
+							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Basic$ScrollToParagraphThree)
 						})
 					])),
 				A2(
@@ -12071,12 +12220,100 @@ var $author$project$SmoothMoveTaskUI$Basic$viewContent = function (model) {
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$height(
-						$mdgriffith$elm_ui$Element$px(400))
+						$mdgriffith$elm_ui$Element$px(100))
 					]),
-				$mdgriffith$elm_ui$Element$text(''))
+				$mdgriffith$elm_ui$Element$text('')),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$spacing(20),
+						$mdgriffith$elm_ui$Element$htmlAttribute(
+						$elm$html$Html$Attributes$id('paragraph-three')),
+						$mdgriffith$elm_ui$Element$Background$color(
+						A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255)),
+						A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
+						$mdgriffith$elm_ui$Element$Border$rounded(12),
+						$mdgriffith$elm_ui$Element$Border$shadow(
+						{
+							blur: 8,
+							color: A4($mdgriffith$elm_ui$Element$rgba, 0, 0, 0, 0.1),
+							offset: _Utils_Tuple2(0, 4),
+							size: 0
+						}),
+						$mdgriffith$elm_ui$Element$centerX
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(24),
+								$mdgriffith$elm_ui$Element$Font$semiBold,
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59))
+							]),
+						$mdgriffith$elm_ui$Element$text('Paragraph Three')),
+						A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$spacing(16),
+								$mdgriffith$elm_ui$Element$Font$size(16),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+								$mdgriffith$elm_ui$Element$width(
+								A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill))
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_Nil,
+								$mdgriffith$elm_ui$Element$text('This is the third and final paragraph. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.')),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_Nil,
+								$mdgriffith$elm_ui$Element$text('Nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.')),
+								A2(
+								$mdgriffith$elm_ui$Element$el,
+								_List_Nil,
+								$mdgriffith$elm_ui$Element$text('Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.'))
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$Input$button,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$Font$size(14),
+								$mdgriffith$elm_ui$Element$Font$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 34, 197, 94)),
+								$mdgriffith$elm_ui$Element$Font$medium,
+								A2($mdgriffith$elm_ui$Element$paddingXY, 12, 8),
+								$mdgriffith$elm_ui$Element$Border$rounded(6),
+								$mdgriffith$elm_ui$Element$Background$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 240, 253, 244)),
+								$mdgriffith$elm_ui$Element$Border$width(1),
+								$mdgriffith$elm_ui$Element$Border$color(
+								A3($mdgriffith$elm_ui$Element$rgb255, 220, 252, 231))
+							]),
+						{
+							label: $mdgriffith$elm_ui$Element$text('Click me to scroll back to Top ↑'),
+							onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Basic$ScrollToTop)
+						})
+					])),
+				A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(500)),
+						$mdgriffith$elm_ui$Element$centerX
+					]),
+				$mdgriffith$elm_ui$Element$text('...'))
 			]));
 };
-var $author$project$SmoothMoveTaskUI$Basic$view = function (model) {
+var $author$project$SmoothMoveScrollUI$Basic$view = function (model) {
 	return {
 		body: _List_fromArray(
 			[
@@ -12095,12 +12332,12 @@ var $author$project$SmoothMoveTaskUI$Basic$view = function (model) {
 						}),
 						A2($mdgriffith$elm_ui$Element$paddingXY, 40, 20)
 					]),
-				$author$project$SmoothMoveTaskUI$Basic$viewContent(model))
+				$author$project$SmoothMoveScrollUI$Basic$viewContent(model))
 			]),
-		title: 'SmoothMoveTask Basic ElmUI Example'
+		title: 'SmoothMoveScroll Basic ElmUI Example'
 	};
 };
-var $author$project$SmoothMoveTaskUI$Basic$main = $elm$browser$Browser$document(
-	{init: $author$project$SmoothMoveTaskUI$Basic$init, subscriptions: $author$project$SmoothMoveTaskUI$Basic$subscriptions, update: $author$project$SmoothMoveTaskUI$Basic$update, view: $author$project$SmoothMoveTaskUI$Basic$view});
-_Platform_export({'SmoothMoveTaskUI':{'Basic':{'init':$author$project$SmoothMoveTaskUI$Basic$main(
+var $author$project$SmoothMoveScrollUI$Basic$main = $elm$browser$Browser$document(
+	{init: $author$project$SmoothMoveScrollUI$Basic$init, subscriptions: $author$project$SmoothMoveScrollUI$Basic$subscriptions, update: $author$project$SmoothMoveScrollUI$Basic$update, view: $author$project$SmoothMoveScrollUI$Basic$view});
+_Platform_export({'SmoothMoveScrollUI':{'Basic':{'init':$author$project$SmoothMoveScrollUI$Basic$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));

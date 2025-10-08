@@ -52,7 +52,7 @@
             border-left: 4px solid;
         }
 
-        .module-section.task {
+        .module-section.scroll {
             border-left-color: #3182ce;
         }
 
@@ -77,6 +77,7 @@
             font-weight: 600;
             margin-bottom: 10px;
             color: #2d3748;
+            text-align: center;
         }
 
         .module-description {
@@ -89,6 +90,7 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .example-link {
@@ -180,22 +182,24 @@
         <div class="comparison-note">
             <h3>🚀 ElmUI vs HTML Comparison</h3>
             <p>These examples demonstrate the same smooth animation capabilities using
-                <strong>mdgriffith/elm-ui</strong> for layout and styling instead of traditional HTML and CSS. Each
+                <a href="https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/" target="_blank"
+                    rel="noopener"><strong>mdgriffith/elm-ui</strong></a> for layout and styling instead of traditional
+                HTML and CSS. Each
                 animation module works seamlessly with ElmUI's Element-based architecture while maintaining full
                 animation functionality.
             </p>
         </div>
 
         <div class="examples-grid">
-            <div class="module-section task">
-                <div class="module-title">📋 SmoothMoveTask</div>
+            <div class="module-section scroll">
+                <div class="module-title">📋 SmoothMoveScroll</div>
                 <div class="module-description">
-                    Task-based scrolling animations with composable error handling. Perfect for document and container
-                    scrolling with sequential operations.
+                    Scroll-based animations with composable error handling. Perfect for document and container
+                    scrolling operations.
                 </div>
                 <div class="example-links">
-                    <a href="src/SmoothMoveTaskUI/basic.html" class="example-link">Body Scrolling</a>
-                    <a href="src/SmoothMoveTaskUI/container.html" class="example-link">Container Scrolling</a>
+                    <a href="src/SmoothMoveScrollUI/basic.html" class="example-link">Document Scrolling</a>
+                    <a href="src/SmoothMoveScrollUI/container.html" class="example-link">Container Scrolling</a>
                 </div>
             </div>
 
@@ -274,7 +278,7 @@
         <div class="comparison-note">
             <h3>📊 Choose Your Animation Approach</h3>
             <ul>
-                <li><strong>SmoothMoveTask:</strong> Best for scrolling and sequential animations</li>
+                <li><strong>SmoothMoveScroll:</strong> Best for scrolling and sequential animations</li>
                 <li><strong>SmoothMoveSub:</strong> Perfect for real-time element positioning</li>
                 <li><strong>SmoothMoveState:</strong> Simplified API for common use cases</li>
                 <li><strong>SmoothMoveCSS:</strong> Hardware accelerated for best performance</li>

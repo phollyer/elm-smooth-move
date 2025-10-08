@@ -16,7 +16,7 @@ FEATURES:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding)
+import Element exposing (Element, column, el, maximum, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -207,14 +207,40 @@ viewContent model =
             ]
             (text "SmoothMoveCSS Multiple Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Multiple elements via CSS transitions")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveCSS module coordinating "
+                , el [ Font.semiBold ] (text "multiple CSS transitions")
+                , text " simultaneously. Each element uses native browser optimization with "
+                , el [ Font.semiBold ] (text "hardware acceleration")
+                , text ", eliminating animation frame subscriptions while maintaining smooth formation control."
+                ]
 
-
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for complex multi-element choreography where "
+                , el [ Font.semiBold ] (text "battery efficiency")
+                , text " and native performance are critical requirements."
+                ]
+            ]
 
         , -- Element status and positions (6 elements in 2 rows)
           column
@@ -469,46 +495,4 @@ viewContent model =
                     ]
                 )
             )
-
-        , -- Footer with technical information
-          column
-            [ spacing 16
-            , width fill
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ el
-                [ Font.size 20
-                , Font.semiBold
-                , Font.color (rgb255 30 41 59)
-                , centerX
-                ]
-                (text "🚀 SmoothMoveCSS - Advanced Hardware Acceleration")
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveCSS module coordinating "
-                , el [ Font.semiBold ] (text "multiple CSS transitions")
-                , text " simultaneously. Each element uses native browser optimization with "
-                , el [ Font.semiBold ] (text "hardware acceleration")
-                , text ", eliminating animation frame subscriptions while maintaining smooth formation control."
-                ]
-
-            , paragraph
-                [ Font.size 14
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for complex multi-element choreography where "
-                , el [ Font.semiBold ] (text "battery efficiency")
-                , text " and native performance are critical requirements."
-                ]
-            ]
         ]

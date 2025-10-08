@@ -22,7 +22,7 @@ DEVELOPER EXPERIENCE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, moveUp, moveDown, link, alignLeft, padding)
+import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, moveUp, moveDown, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -155,12 +155,40 @@ viewContent model =
             ]
             (text "SmoothMoveSub Basic Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Frame-rate independent subscriptions")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMoveSub module, which provides "
+                , el [ Font.semiBold ] (text "subscription-based positioning")
+                , text " with frame-rate independent animations. It offers "
+                , el [ Font.semiBold ] (text "real-time updates")
+                , text " via onAnimationFrameDelta subscriptions, ensuring smooth element transitions across different device capabilities."
+                ]
+
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for applications requiring "
+                , el [ Font.semiBold ] (text "precise timing control")
+                , text " and multiple simultaneous animations with automatic state management."
+                ]
+            ]
 
         , -- Position display
           el
@@ -258,24 +286,4 @@ viewContent model =
                 ]
                 (text "")
             )
-
-        , -- Technology information
-          column
-            [ spacing 8
-            , centerX
-            ]
-            [ el
-                [ Font.size 14
-                , Font.color (rgb255 107 114 128)
-                , centerX
-                ]
-                (text "🔄 Subscription-based positioning with automatic state management")
-
-            , el
-                [ Font.size 12
-                , Font.color (rgb255 107 114 128)
-                , centerX
-                ]
-                (text "Real-time animation updates via onAnimationFrameDelta")
-            ]
         ]

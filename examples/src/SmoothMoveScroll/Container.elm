@@ -1,4 +1,4 @@
-module SmoothMoveTask.Container exposing (main)
+module SmoothMoveScroll.Container exposing (main)
 
 import Browser exposing (Document)
 import Html exposing (..)
@@ -17,12 +17,12 @@ main =
 
 
 type alias Model =
-    { message : String }
+    {}
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { message = "Ready to scroll within the container" }, Cmd.none )
+    ( {}, Cmd.none )
 
 
 type Msg
@@ -39,17 +39,17 @@ update msg model =
             ( model, Cmd.none )
 
         ScrollToTop ->
-            ( { model | message = "Scrolling to top of container..." }
+            ( model
             , animateToCmdWithConfig NoOp (setContainer "scroll-container" defaultConfig) "top-element"
             )
 
         ScrollToMiddle ->
-            ( { model | message = "Scrolling to middle of container..." }
+            ( model
             , animateToCmdWithConfig NoOp (setContainer "scroll-container" defaultConfig) "middle-element"
             )
 
         ScrollToBottom ->
-            ( { model | message = "Scrolling to bottom of container..." }
+            ( model
             , animateToCmdWithConfig NoOp (setContainer "scroll-container" defaultConfig) "bottom-element"
             )
 
@@ -59,7 +59,7 @@ update msg model =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveTask - Container Scrolling"
+    { title = "SmoothMoveScroll - Container Scrolling"
     , body =
         [ -- Navigation
           a [ href "../../index.html", class "back-button" ] [ text "← Back to Dashboard" ]
@@ -68,7 +68,6 @@ view model =
           div [ class "main-content" ]
             [ h1 [] [ text "Container Scrolling Example" ]
             , p [] [ text "This demonstrates smooth scrolling within a scrollable container (not the document itself)." ]
-            , p [ class "status" ] [ text model.message ]
             
             , -- Control buttons
             div [ class "controls" ]

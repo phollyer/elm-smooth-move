@@ -16,7 +16,7 @@ FEATURES:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding)
+import Element exposing (Element, column, el, maximum, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -282,14 +282,42 @@ viewContent model =
             ]
             (text "SmoothMovePorts Multiple Example")
 
-        , el
-            [ Font.size 18
-            , Font.color (rgb255 71 85 105)
+        , -- Technical information
+          column
+            [ spacing 16
+            , width (maximum 1200 fill)
             , centerX
+            , paddingXY 32 24
+            , Background.color (rgb255 248 250 252)
+            , Border.rounded 8
+            , Border.solid
+            , Border.width 1
+            , Border.color (rgb255 226 232 240)
             ]
-            (text "ElmUI Version - Multiple elements via Web Animations API")
+            [ paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "This example demonstrates the SmoothMovePorts module orchestrating "
+                , el [ Font.semiBold ] (text "multiple elements simultaneously")
+                , text " via the Web Animations API. Each element receives "
+                , el [ Font.semiBold ] (text "real-time position feedback")
+                , text " through JavaScript ports, enabling advanced animation coordination and platform-specific optimizations."
+                ]
 
-
+            , paragraph
+                [ Font.size 16
+                , Font.color (rgb255 71 85 105)
+                , width fill
+                ]
+                [ text "Perfect for complex choreographed animations requiring "
+                , el [ Font.semiBold ] (text "native performance")
+                , text " and advanced timing controls. "
+                , el [ Font.color (rgb255 239 68 68), Font.semiBold ] (text "⚠️ Requires smooth-move-ports.js")
+                , text " to be loaded for full functionality."
+                ]
+            ]
 
         , -- Element status and positions (6 elements in 2 rows)
           column
@@ -549,31 +577,4 @@ viewContent model =
                     ]
                 )
             )
-
-        , -- Technology information
-          column
-            [ spacing 8
-            , centerX
-            ]
-            [ el
-                [ Font.size 14
-                , Font.color (rgb255 107 114 128)
-                , centerX
-                ]
-                (text "Web Animations API with real-time position feedback")
-
-            , el
-                [ Font.size 12
-                , Font.color (rgb255 107 114 128)
-                , centerX
-                ]
-                (text "Advanced animation orchestration via Elm ports")
-
-            , el
-                [ Font.size 12
-                , Font.color (rgb255 239 68 68)
-                , centerX
-                ]
-                (text "⚠️ Requires smooth-move-ports.js to be loaded")
-            ]
         ]

@@ -5198,14 +5198,14 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$document = _Browser_document;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$SmoothMoveTaskUI$Container$init = function (_v0) {
+var $author$project$SmoothMoveScrollUI$Container$init = function (_v0) {
 	return _Utils_Tuple2(
-		{message: 'Ready to scroll within the container'},
+		{},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$SmoothMoveTaskUI$Container$NoOp = {$: 'NoOp'};
+var $author$project$SmoothMoveScrollUI$Container$NoOp = {$: 'NoOp'};
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -5405,19 +5405,17 @@ var $author$project$SmoothMoveTask$setContainer = F2(
 				container: $author$project$SmoothMoveTask$InnerNode(elementId)
 			});
 	});
-var $author$project$SmoothMoveTaskUI$Container$update = F2(
+var $author$project$SmoothMoveScrollUI$Container$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'NoOp':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'ScrollToTop':
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{message: 'Scrolling to top of container...'}),
+					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTaskUI$Container$NoOp,
+						$author$project$SmoothMoveScrollUI$Container$NoOp,
 						A2(
 							$author$project$SmoothMoveTask$setContainer,
 							'scroll-container',
@@ -5427,12 +5425,10 @@ var $author$project$SmoothMoveTaskUI$Container$update = F2(
 						'top-element'));
 			case 'ScrollToMiddle':
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{message: 'Scrolling to middle of container...'}),
+					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTaskUI$Container$NoOp,
+						$author$project$SmoothMoveScrollUI$Container$NoOp,
 						_Utils_update(
 							$author$project$SmoothMoveTask$defaultConfig,
 							{
@@ -5442,12 +5438,10 @@ var $author$project$SmoothMoveTaskUI$Container$update = F2(
 						'middle-element'));
 			default:
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{message: 'Scrolling to bottom of container...'}),
+					model,
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
-						$author$project$SmoothMoveTaskUI$Container$NoOp,
+						$author$project$SmoothMoveScrollUI$Container$NoOp,
 						A2(
 							$author$project$SmoothMoveTask$setContainer,
 							'scroll-container',
@@ -5457,9 +5451,9 @@ var $author$project$SmoothMoveTaskUI$Container$update = F2(
 						'bottom-element'));
 		}
 	});
-var $author$project$SmoothMoveTaskUI$Container$ScrollToBottom = {$: 'ScrollToBottom'};
-var $author$project$SmoothMoveTaskUI$Container$ScrollToMiddle = {$: 'ScrollToMiddle'};
-var $author$project$SmoothMoveTaskUI$Container$ScrollToTop = {$: 'ScrollToTop'};
+var $author$project$SmoothMoveScrollUI$Container$ScrollToBottom = {$: 'ScrollToBottom'};
+var $author$project$SmoothMoveScrollUI$Container$ScrollToMiddle = {$: 'ScrollToMiddle'};
+var $author$project$SmoothMoveScrollUI$Container$ScrollToTop = {$: 'ScrollToTop'};
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 	return {$: 'AlignX', a: a};
 };
@@ -11196,7 +11190,7 @@ var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 var $mdgriffith$elm_ui$Element$text = function (content) {
 	return $mdgriffith$elm_ui$Internal$Model$Text(content);
 };
-var $author$project$SmoothMoveTaskUI$Container$bulletPoint = function (text_) {
+var $author$project$SmoothMoveScrollUI$Container$bulletPoint = function (text_) {
 	return A2(
 		$mdgriffith$elm_ui$Element$row,
 		_List_fromArray(
@@ -11209,7 +11203,7 @@ var $author$project$SmoothMoveTaskUI$Container$bulletPoint = function (text_) {
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$size(14),
+						$mdgriffith$elm_ui$Element$Font$size(16),
 						$mdgriffith$elm_ui$Element$Font$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 139, 69, 19))
 					]),
@@ -11218,7 +11212,7 @@ var $author$project$SmoothMoveTaskUI$Container$bulletPoint = function (text_) {
 				$mdgriffith$elm_ui$Element$el,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$Font$size(14),
+						$mdgriffith$elm_ui$Element$Font$size(16),
 						$mdgriffith$elm_ui$Element$Font$color(
 						A3($mdgriffith$elm_ui$Element$rgb255, 107, 114, 128))
 					]),
@@ -11373,6 +11367,8 @@ var $mdgriffith$elm_ui$Element$Input$button = F2(
 				_List_fromArray(
 					[label])));
 	});
+var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
+var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
 var $mdgriffith$elm_ui$Internal$Flag$overflow = $mdgriffith$elm_ui$Internal$Flag$flag(20);
 var $mdgriffith$elm_ui$Element$clipY = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.clipY);
 var $mdgriffith$elm_ui$Internal$Flag$bgColor = $mdgriffith$elm_ui$Internal$Flag$flag(8);
@@ -11527,7 +11523,7 @@ var $mdgriffith$elm_ui$Element$Border$width = function (v) {
 			v,
 			v));
 };
-var $author$project$SmoothMoveTaskUI$Container$contentBlock = F2(
+var $author$project$SmoothMoveScrollUI$Container$contentBlock = F2(
 	function (num, description) {
 		return A2(
 			$mdgriffith$elm_ui$Element$el,
@@ -11590,9 +11586,9 @@ var $author$project$SmoothMoveTaskUI$Container$contentBlock = F2(
 							]),
 						_List_fromArray(
 							[
-								$author$project$SmoothMoveTaskUI$Container$bulletPoint('Each block adds to the scrollable height'),
-								$author$project$SmoothMoveTaskUI$Container$bulletPoint('The gradient background shows scroll position'),
-								$author$project$SmoothMoveTaskUI$Container$bulletPoint('Smooth scrolling animates between positions')
+								$author$project$SmoothMoveScrollUI$Container$bulletPoint('Each block adds to the scrollable height'),
+								$author$project$SmoothMoveScrollUI$Container$bulletPoint('The gradient background shows scroll position'),
+								$author$project$SmoothMoveScrollUI$Container$bulletPoint('Smooth scrolling animates between positions')
 							]))
 					])));
 	});
@@ -11905,7 +11901,14 @@ var $mdgriffith$elm_ui$Element$link = F2(
 				_List_fromArray(
 					[label])));
 	});
-var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
+var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+	function (a, b) {
+		return {$: 'Max', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Element$maximum = F2(
+	function (i, l) {
+		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+	});
 var $mdgriffith$elm_ui$Internal$Model$Hover = {$: 'Hover'};
 var $mdgriffith$elm_ui$Internal$Model$PseudoSelector = F2(
 	function (a, b) {
@@ -12120,7 +12123,9 @@ var $mdgriffith$elm_ui$Element$Border$shadow = function (almostShade) {
 			'box-shadow',
 			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
 };
-var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
+var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
+var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
+var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 	return {
 		body: _List_fromArray(
 			[
@@ -12200,44 +12205,80 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 											$mdgriffith$elm_ui$Element$Font$size(32),
 											$mdgriffith$elm_ui$Element$Font$bold,
 											$mdgriffith$elm_ui$Element$Font$color(
-											A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59))
+											A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59)),
+											$mdgriffith$elm_ui$Element$centerX
 										]),
-									$mdgriffith$elm_ui$Element$text('Container Scrolling Example')),
+									$mdgriffith$elm_ui$Element$text('SmoothMoveScroll - Container Example')),
 									A2(
-									$mdgriffith$elm_ui$Element$paragraph,
+									$mdgriffith$elm_ui$Element$column,
 									_List_fromArray(
 										[
-											$mdgriffith$elm_ui$Element$Font$size(18),
-											$mdgriffith$elm_ui$Element$Font$color(
-											A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
-											$mdgriffith$elm_ui$Element$spacing(8)
-										]),
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$text('This demonstrates smooth scrolling within a scrollable container (not the document itself) using ElmUI.')
-										])),
-									A2(
-									$mdgriffith$elm_ui$Element$el,
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$Font$size(16),
-											$mdgriffith$elm_ui$Element$Font$color(
-											A3($mdgriffith$elm_ui$Element$rgb255, 139, 69, 19)),
-											$mdgriffith$elm_ui$Element$Font$medium,
-											A2($mdgriffith$elm_ui$Element$paddingXY, 20, 12),
+											$mdgriffith$elm_ui$Element$spacing(16),
+											$mdgriffith$elm_ui$Element$width(
+											A2($mdgriffith$elm_ui$Element$maximum, 1200, $mdgriffith$elm_ui$Element$fill)),
+											$mdgriffith$elm_ui$Element$centerX,
+											A2($mdgriffith$elm_ui$Element$paddingXY, 32, 24),
 											$mdgriffith$elm_ui$Element$Background$color(
-											A3($mdgriffith$elm_ui$Element$rgb255, 254, 243, 199)),
-											$mdgriffith$elm_ui$Element$Border$color(
-											A3($mdgriffith$elm_ui$Element$rgb255, 245, 158, 11)),
+											A3($mdgriffith$elm_ui$Element$rgb255, 248, 250, 252)),
+											$mdgriffith$elm_ui$Element$Border$rounded(8),
+											$mdgriffith$elm_ui$Element$Border$solid,
 											$mdgriffith$elm_ui$Element$Border$width(1),
-											$mdgriffith$elm_ui$Element$Border$rounded(8)
+											$mdgriffith$elm_ui$Element$Border$color(
+											A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240))
 										]),
-									$mdgriffith$elm_ui$Element$text(model.message)),
+									_List_fromArray(
+										[
+											A2(
+											$mdgriffith$elm_ui$Element$paragraph,
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$Font$size(16),
+													$mdgriffith$elm_ui$Element$Font$color(
+													A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+												]),
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$text('This example demonstrates the SmoothMoveScroll module handling '),
+													A2(
+													$mdgriffith$elm_ui$Element$el,
+													_List_fromArray(
+														[$mdgriffith$elm_ui$Element$Font$semiBold]),
+													$mdgriffith$elm_ui$Element$text('container-specific scrolling')),
+													$mdgriffith$elm_ui$Element$text(' with boundary detection and viewport calculations. It provides '),
+													A2(
+													$mdgriffith$elm_ui$Element$el,
+													_List_fromArray(
+														[$mdgriffith$elm_ui$Element$Font$semiBold]),
+													$mdgriffith$elm_ui$Element$text('precise element positioning')),
+													$mdgriffith$elm_ui$Element$text(' within scrollable containers while respecting container bounds and scroll limits.')
+												])),
+											A2(
+											$mdgriffith$elm_ui$Element$paragraph,
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$Font$size(16),
+													$mdgriffith$elm_ui$Element$Font$color(
+													A3($mdgriffith$elm_ui$Element$rgb255, 71, 85, 105)),
+													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+												]),
+											_List_fromArray(
+												[
+													$mdgriffith$elm_ui$Element$text('Perfect for applications with '),
+													A2(
+													$mdgriffith$elm_ui$Element$el,
+													_List_fromArray(
+														[$mdgriffith$elm_ui$Element$Font$semiBold]),
+													$mdgriffith$elm_ui$Element$text('nested scrollable content')),
+													$mdgriffith$elm_ui$Element$text(' requiring smooth navigation within constrained viewport areas and complex layout hierarchies.')
+												]))
+										])),
 									A2(
 									$mdgriffith$elm_ui$Element$row,
 									_List_fromArray(
 										[
-											$mdgriffith$elm_ui$Element$spacing(15)
+											$mdgriffith$elm_ui$Element$spacing(15),
+											$mdgriffith$elm_ui$Element$centerX
 										]),
 									_List_fromArray(
 										[
@@ -12274,7 +12315,7 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 												]),
 											{
 												label: $mdgriffith$elm_ui$Element$text('Scroll to Top'),
-												onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Container$ScrollToTop)
+												onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Container$ScrollToTop)
 											}),
 											A2(
 											$mdgriffith$elm_ui$Element$Input$button,
@@ -12309,7 +12350,7 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 												]),
 											{
 												label: $mdgriffith$elm_ui$Element$text('Scroll to Middle'),
-												onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Container$ScrollToMiddle)
+												onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Container$ScrollToMiddle)
 											}),
 											A2(
 											$mdgriffith$elm_ui$Element$Input$button,
@@ -12344,7 +12385,7 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 												]),
 											{
 												label: $mdgriffith$elm_ui$Element$text('Scroll to Bottom'),
-												onPress: $elm$core$Maybe$Just($author$project$SmoothMoveTaskUI$Container$ScrollToBottom)
+												onPress: $elm$core$Maybe$Just($author$project$SmoothMoveScrollUI$Container$ScrollToBottom)
 											})
 										])),
 									A2(
@@ -12456,9 +12497,9 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 																		$mdgriffith$elm_ui$Element$text('Click \'Scroll to Top\' to smoothly scroll to this position using ElmUI.')
 																	]))
 															]))),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 1, 'This is content block 1. Each block adds to the scrollable height and demonstrates ElmUI styling.'),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 2, 'Content block 2 continues the gradient transition from white to dark with ElmUI elements.'),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 3, 'Content block 3 shows the middle section of our scrollable content using ElmUI layout.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 1, 'This is content block 1. Each block adds to the scrollable height and demonstrates ElmUI styling.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 2, 'Content block 2 continues the gradient transition from white to dark with ElmUI elements.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 3, 'Content block 3 shows the middle section of our scrollable content using ElmUI layout.'),
 													A2(
 													$mdgriffith$elm_ui$Element$el,
 													_List_fromArray(
@@ -12534,15 +12575,15 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 																	]),
 																_List_fromArray(
 																	[
-																		$author$project$SmoothMoveTaskUI$Container$bulletPoint('This block serves as the middle anchor point'),
-																		$author$project$SmoothMoveTaskUI$Container$bulletPoint('The gradient background shows scroll position'),
-																		$author$project$SmoothMoveTaskUI$Container$bulletPoint('Smooth scrolling animates between positions')
+																		$author$project$SmoothMoveScrollUI$Container$bulletPoint('This block serves as the middle anchor point'),
+																		$author$project$SmoothMoveScrollUI$Container$bulletPoint('The gradient background shows scroll position'),
+																		$author$project$SmoothMoveScrollUI$Container$bulletPoint('Smooth scrolling animates between positions')
 																	]))
 															]))),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 5, 'Content block 5 continues toward the bottom of the container with ElmUI.'),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 6, 'Content block 6 shows we\'re getting closer to the bottom using ElmUI layout.'),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 7, 'Content block 7 is near the end with darker background colors in ElmUI.'),
-													A2($author$project$SmoothMoveTaskUI$Container$contentBlock, 8, 'Content block 8 is almost at the bottom of the scrollable ElmUI content.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 5, 'Content block 5 continues toward the bottom of the container with ElmUI.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 6, 'Content block 6 shows we\'re getting closer to the bottom using ElmUI layout.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 7, 'Content block 7 is near the end with darker background colors in ElmUI.'),
+													A2($author$project$SmoothMoveScrollUI$Container$contentBlock, 8, 'Content block 8 is almost at the bottom of the scrollable ElmUI content.'),
 													A2(
 													$mdgriffith$elm_ui$Element$el,
 													_List_fromArray(
@@ -12628,17 +12669,17 @@ var $author$project$SmoothMoveTaskUI$Container$view = function (model) {
 								]))
 						])))
 			]),
-		title: 'SmoothMoveTask - Container Scrolling (ElmUI)'
+		title: 'SmoothMoveScroll - Container Scrolling (ElmUI)'
 	};
 };
-var $author$project$SmoothMoveTaskUI$Container$main = $elm$browser$Browser$document(
+var $author$project$SmoothMoveScrollUI$Container$main = $elm$browser$Browser$document(
 	{
-		init: $author$project$SmoothMoveTaskUI$Container$init,
+		init: $author$project$SmoothMoveScrollUI$Container$init,
 		subscriptions: function (_v0) {
 			return $elm$core$Platform$Sub$none;
 		},
-		update: $author$project$SmoothMoveTaskUI$Container$update,
-		view: $author$project$SmoothMoveTaskUI$Container$view
+		update: $author$project$SmoothMoveScrollUI$Container$update,
+		view: $author$project$SmoothMoveScrollUI$Container$view
 	});
-_Platform_export({'SmoothMoveTaskUI':{'Container':{'init':$author$project$SmoothMoveTaskUI$Container$main(
+_Platform_export({'SmoothMoveScrollUI':{'Container':{'init':$author$project$SmoothMoveScrollUI$Container$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));

@@ -8,10 +8,10 @@ echo "🚀 Building Elm Smooth Move Examples..."
 # Change to examples directory
 cd "$(dirname "$0")"
 
-# Build SmoothMoveTask examples
-echo "📦 Building SmoothMoveTask examples..."
-elm make src/SmoothMoveTask/Basic.elm --output=src/SmoothMoveTask/basic.js
-elm make src/SmoothMoveTask/Container.elm --output=src/SmoothMoveTask/container.js
+# Build SmoothMoveScroll examples
+echo "📦 Building SmoothMoveScroll examples..."
+elm make src/SmoothMoveScroll/Basic.elm --output=src/SmoothMoveScroll/basic.js
+elm make src/SmoothMoveScroll/Container.elm --output=src/SmoothMoveScroll/container.js
 
 # Build SmoothMoveSub examples
 echo "📦 Building SmoothMoveSub examples..."
@@ -35,8 +35,8 @@ elm make src/SmoothMovePorts/Multiple.elm --output=src/SmoothMovePorts/multiple.
 
 # Build ElmUI examples
 echo "🎨 Building ElmUI examples..."
-elm make src/SmoothMoveTaskUI/Basic.elm --output=src/SmoothMoveTaskUI/basic.js
-elm make src/SmoothMoveTaskUI/Container.elm --output=src/SmoothMoveTaskUI/container.js
+elm make src/SmoothMoveScrollUI/Basic.elm --output=src/SmoothMoveScrollUI/basic.js
+elm make src/SmoothMoveScrollUI/Container.elm --output=src/SmoothMoveScrollUI/container.js
 elm make src/SmoothMoveSubUI/Basic.elm --output=src/SmoothMoveSubUI/basic.js
 elm make src/SmoothMoveSubUI/Multiple.elm --output=src/SmoothMoveSubUI/multiple.js
 elm make src/SmoothMoveStateUI/Basic.elm --output=src/SmoothMoveStateUI/basic.js
@@ -49,8 +49,8 @@ elm make src/SmoothMovePortsUI/Multiple.elm --output=src/SmoothMovePortsUI/multi
 echo "✅ All examples built successfully!"
 echo "🌐 Open index.html to view the examples dashboard"
 echo "🎨 ElmUI examples available at:"
-echo "   - http://localhost:8080/src/SmoothMoveTaskUI/basic.html"
-echo "   - http://localhost:8080/src/SmoothMoveTaskUI/container.html"
+echo "   - http://localhost:8080/src/SmoothMoveScrollUI/basic.html"
+echo "   - http://localhost:8080/src/SmoothMoveScrollUI/container.html"
 echo "   - http://localhost:8080/src/SmoothMoveSubUI/basic.html"
 echo "   - http://localhost:8080/src/SmoothMoveSubUI/multiple.html"
 echo "   - http://localhost:8080/src/SmoothMoveStateUI/basic.html"

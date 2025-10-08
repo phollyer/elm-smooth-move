@@ -1,4 +1,4 @@
-module SmoothMoveTask.Basic exposing (main)
+module SmoothMoveScroll.Basic exposing (main)
 
 import Browser exposing (Document)
 import Browser.Dom as Dom
@@ -46,7 +46,7 @@ update msg model =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveTask Basic Example"
+    { title = "SmoothMoveScroll Document Example"
     , body =
         [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
         ] ++
