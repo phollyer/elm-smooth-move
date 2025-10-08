@@ -5397,6 +5397,14 @@ var $elm_community$easing_functions$Ease$inQuint = function (time) {
 };
 var $elm_community$easing_functions$Ease$outQuint = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inQuint);
 var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, container: $author$project$SmoothMoveTask$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
+var $author$project$SmoothMoveTask$setContainer = F2(
+	function (elementId, config) {
+		return _Utils_update(
+			config,
+			{
+				container: $author$project$SmoothMoveTask$InnerNode(elementId)
+			});
+	});
 var $author$project$SmoothMoveTaskUI$Container$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5410,12 +5418,12 @@ var $author$project$SmoothMoveTaskUI$Container$update = F2(
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
 						$author$project$SmoothMoveTaskUI$Container$NoOp,
-						_Utils_update(
-							$author$project$SmoothMoveTask$defaultConfig,
-							{
-								container: $author$project$SmoothMoveTask$containerElement('scroll-container'),
-								speed: 20
-							}),
+						A2(
+							$author$project$SmoothMoveTask$setContainer,
+							'scroll-container',
+							_Utils_update(
+								$author$project$SmoothMoveTask$defaultConfig,
+								{speed: 20})),
 						'top-element'));
 			case 'ScrollToMiddle':
 				return _Utils_Tuple2(
@@ -5440,12 +5448,12 @@ var $author$project$SmoothMoveTaskUI$Container$update = F2(
 					A3(
 						$author$project$SmoothMoveTask$animateToCmdWithConfig,
 						$author$project$SmoothMoveTaskUI$Container$NoOp,
-						_Utils_update(
-							$author$project$SmoothMoveTask$defaultConfig,
-							{
-								container: $author$project$SmoothMoveTask$containerElement('scroll-container'),
-								speed: 20
-							}),
+						A2(
+							$author$project$SmoothMoveTask$setContainer,
+							'scroll-container',
+							_Utils_update(
+								$author$project$SmoothMoveTask$defaultConfig,
+								{speed: 20})),
 						'bottom-element'));
 		}
 	});

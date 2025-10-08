@@ -9,7 +9,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Html
 import Html.Attributes
-import SmoothMoveTask exposing (animateToCmdWithConfig, containerElement, defaultConfig)
+import SmoothMoveTask exposing (animateToCmdWithConfig, setContainer, containerElement, defaultConfig)
 
 
 main =
@@ -45,7 +45,7 @@ update msg model =
 
         ScrollToTop ->
             ( { model | message = "Scrolling to top of container..." }
-            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container", speed = 20 } "top-element"
+            , animateToCmdWithConfig NoOp (setContainer "scroll-container" { defaultConfig | speed = 20 }) "top-element"
             )
 
         ScrollToMiddle ->
@@ -55,7 +55,7 @@ update msg model =
 
         ScrollToBottom ->
             ( { model | message = "Scrolling to bottom of container..." }
-            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container", speed = 20 } "bottom-element"
+            , animateToCmdWithConfig NoOp (setContainer "scroll-container" { defaultConfig | speed = 20 }) "bottom-element"
             )
 
 

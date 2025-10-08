@@ -1,7 +1,7 @@
 module SmoothMoveTask exposing
     ( Axis(..)
     , Config
-    , Container(..)
+    , Container
     , animateTo
     , animateToCmd
     , animateToCmdWithConfig
@@ -9,12 +9,9 @@ module SmoothMoveTask exposing
     , animateToTaskWithConfig
     , animateToWithConfig
     , containerElement
-    , containerElementCmd
-    , containerElementCmdWithConfig
-    , containerElementTask
-    , containerElementTaskWithConfig
-    , containerElementWithConfig
     , defaultConfig
+    , setContainer
+    , setDocumentBody
     )
 
 import Browser.Dom as Dom
@@ -85,7 +82,32 @@ defaultConfig =
     }
 
 
-{-| Configure which DOM node to scroll inside of
+{-| Set the container to scroll within to a specific DOM element by ID.
+
+    import SmoothMoveTask exposing (setContainer, animateToWithConfig, defaultConfig)
+
+    animateToWithConfig (setContainer "article-list" defaultConfig) "article-42"
+
+-}
+setContainer : String -> Config -> Config
+setContainer elementId config =
+    { config | container = InnerNode elementId }
+
+
+{-| Set the container to scroll within to the document body (default behavior).
+
+    import SmoothMoveTask exposing (setDocumentBody, animateToWithConfig, defaultConfig)
+
+    animateToWithConfig (setDocumentBody defaultConfig) "article-42"
+
+-}
+setDocumentBody : Config -> Config
+setDocumentBody config =
+    { config | container = DocumentBody }
+
+
+{-| Create a container reference for use with record update syntax.
+Provides an alternative coding style for developers who prefer this approach.
 
     import SmoothMoveTask exposing (containerElement, animateToWithConfig, defaultConfig)
 
@@ -215,60 +237,3 @@ animateToTaskWithConfig config id =
     in
     Task.map3 scrollTask getViewport (Dom.getElement id) getContainerInfo
         |> Task.andThen identity
-
-
-{-| Simple container scrolling. Returns a Cmd that produces no meaningful messages.
-
-    ScrollInContainer containerId elementId ->
-        ( model, containerElementWithConfig (containerElement containerId) elementId )
-
--}
-containerElementWithConfig : Container -> String -> Cmd ()
-containerElementWithConfig container elementId =
-    animateToTaskWithConfig { defaultConfig | container = container } elementId
-        |> Task.attempt (always ())
-
-
-{-| Cmd-based container scrolling with custom completion message.
-
-    ScrollInContainer containerId elementId ->
-        ( model, containerElementCmd ScrollComplete (containerElement containerId) elementId )
-
--}
-containerElementCmd : msg -> Container -> String -> Cmd msg
-containerElementCmd msg container elementId =
-    containerElementCmdWithConfig msg defaultConfig container elementId
-
-
-{-| Cmd-based container scrolling with configuration and custom completion message.
-
-    ScrollInContainer containerId elementId ->
-        ( model, containerElementCmdWithConfig ScrollComplete config (containerElement containerId) elementId )
-
--}
-containerElementCmdWithConfig : msg -> Config -> Container -> String -> Cmd msg
-containerElementCmdWithConfig msg config container elementId =
-    animateToTaskWithConfig { config | container = container } elementId
-        |> Task.attempt (always msg)
-
-
-{-| Task-based container scrolling for advanced users.
-
-    ScrollInContainer containerId elementId ->
-        ( model, Task.attempt HandleScrollError (containerElementTask (containerElement containerId) elementId) )
-
--}
-containerElementTask : Container -> String -> Task Dom.Error (List ())
-containerElementTask container elementId =
-    containerElementTaskWithConfig defaultConfig container elementId
-
-
-{-| Task-based container scrolling with configuration for advanced users.
-
-    ScrollInContainer containerId elementId ->
-        ( model, Task.attempt HandleScrollError (containerElementTaskWithConfig config (containerElement containerId) elementId) )
-
--}
-containerElementTaskWithConfig : Config -> Container -> String -> Task Dom.Error (List ())
-containerElementTaskWithConfig config container elementId =
-    animateToTaskWithConfig { config | container = container } elementId

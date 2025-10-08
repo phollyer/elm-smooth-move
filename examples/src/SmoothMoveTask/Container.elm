@@ -4,7 +4,7 @@ import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveTask exposing (containerElement, animateToCmdWithConfig, defaultConfig)
+import SmoothMoveTask exposing (setContainer, animateToCmdWithConfig, defaultConfig)
 
 
 main =
@@ -40,17 +40,17 @@ update msg model =
 
         ScrollToTop ->
             ( { model | message = "Scrolling to top of container..." }
-            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "top-element"
+            , animateToCmdWithConfig NoOp (setContainer "scroll-container" defaultConfig) "top-element"
             )
 
         ScrollToMiddle ->
             ( { model | message = "Scrolling to middle of container..." }
-            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "middle-element"
+            , animateToCmdWithConfig NoOp (setContainer "scroll-container" defaultConfig) "middle-element"
             )
 
         ScrollToBottom ->
             ( { model | message = "Scrolling to bottom of container..." }
-            , animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "scroll-container" } "bottom-element"
+            , animateToCmdWithConfig NoOp (setContainer "scroll-container" defaultConfig) "bottom-element"
             )
 
 
