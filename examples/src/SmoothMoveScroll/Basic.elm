@@ -7,7 +7,7 @@ import Ease
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveTask exposing (animateToCmd)
+import SmoothMoveScroll exposing (animateToCmd)
 import Task exposing (Task)
 
 

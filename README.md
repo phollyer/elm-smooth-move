@@ -6,10 +6,10 @@ A comprehensive Elm package providing **5 different animation approaches** for s
 
 ## 🎯 Five Animation Approaches
 
-### 1. **SmoothMoveTask** - Scrolling (Simple & Advanced)
+### 1. **SmoothMoveScroll** - Scrolling (Simple & Advanced)
 Perfect for **document/container scrolling** with both simple and advanced APIs.
 ```elm
-import SmoothMoveTask exposing (animateTo, animateToWithConfig)
+import SmoothMoveScroll exposing (animateTo, animateToWithConfig)
 
 -- Simple usage (recommended for most users)
 animateTo "target-element-id"  -- Returns Cmd ()
@@ -20,7 +20,7 @@ animateToWithConfig
     "target-element-id"
 
 -- Advanced: Task-based for composition/error handling
-import SmoothMoveTask exposing (animateToTask)
+import SmoothMoveScroll exposing (animateToTask)
 import Task
 
 animateToTask "target-element-id"
@@ -94,7 +94,7 @@ elm install phollyer/elm-smooth-move
 
 **For page scrolling:**  
 ```elm
-import SmoothMoveTask exposing (animateTo)
+import SmoothMoveScroll exposing (animateTo)
 
 -- In your update function (simple!)
 SmoothScroll elementId ->
@@ -135,7 +135,7 @@ open src/SmoothMoveState/basic.html
 ```bash
 cd examples/
 elm reactor
-# Navigate to: http://localhost:8000/src/SmoothMoveTask/Basic.elm
+# Navigate to: http://localhost:8000/src/SmoothMoveScroll/Basic.elm
 ```
 
 ### 4. Experiment with different approaches
@@ -145,7 +145,7 @@ Once you're comfortable, try switching `SmoothMoveState` to `SmoothMoveCSS` in y
 
 Interactive examples are ready to run! Each approach has its own folder with compiled HTML files:
 
-- **`SmoothMoveTask/`** - Task-based scrolling ([basic.html](examples/src/SmoothMoveTask/basic.html), [container.html](examples/src/SmoothMoveTask/container.html))
+- **`SmoothMoveScroll/`** - Task-based scrolling ([basic.html](examples/src/SmoothMoveScroll/basic.html), [container.html](examples/src/SmoothMoveScroll/container.html))
 - **`SmoothMoveSub/`** - Subscription-based positioning ([basic.html](examples/src/SmoothMoveSub/basic.html), [multiple.html](examples/src/SmoothMoveSub/multiple.html))  
 - **`SmoothMoveState/`** - State-based convenience ([basic.html](examples/src/SmoothMoveState/basic.html), [multiple.html](examples/src/SmoothMoveState/multiple.html))
 - **`SmoothMoveCSS/`** - CSS transition-based ([basic.html](examples/src/SmoothMoveCSS/basic.html), [multiple.html](examples/src/SmoothMoveCSS/multiple.html))
@@ -156,7 +156,7 @@ Interactive examples are ready to run! Each approach has its own folder with com
 ## 🎨 Choosing the Right Approach
 
 ### Quick Decision Guide
-- **Scrolling a page?** → Use `SmoothMoveTask`
+- **Scrolling a page?** → Use `SmoothMoveScroll`
 - **Moving multiple elements?** → Use `SmoothMoveSub` or `SmoothMoveState`
 - **Need best battery life?** → Use `SmoothMoveCSS` or `SmoothMovePorts`
 - **Complex animations?** → Use `SmoothMovePorts`
@@ -166,7 +166,7 @@ Interactive examples are ready to run! Each approach has its own folder with com
 
 | Approach | Best For | Performance | Battery | Complexity |
 |----------|----------|-------------|---------|------------|
-| **SmoothMoveTask** | Document/container scrolling | Good | Medium | Simple |
+| **SmoothMoveScroll** | Document/container scrolling | Good | Medium | Simple |
 | **SmoothMoveSub** | Multiple simultaneous elements | Good | Medium | Medium |
 | **SmoothMoveState** | Clean state management | Good | Medium | Simple |
 | **SmoothMoveCSS** | Battery efficiency, simple UI | Excellent* | Best* | Simple |
@@ -207,7 +207,7 @@ Most approaches now share very similar APIs!
 **✅ Easy transitions (consistent Cmd-based patterns):**
 ```elm
 -- Scrolling (simple Cmd-based)
-ScrollTo elementId -> ( model, SmoothMoveTask.animateTo elementId )
+ScrollTo elementId -> ( model, SmoothMoveScroll.animateTo elementId )
 
 -- Element positioning (state-based)
 MoveElement -> { model | animations = SmoothMoveState.animateTo "elem" 100 200 model.animations }
@@ -217,11 +217,11 @@ MoveElement -> { model | animations = SmoothMoveCSS.animateTo "elem" 100 200 mod
 **⚠️ Requires additional changes:**
 - **SmoothMovePorts**: Returns `( Model, Cmd )` - needs tuple destructuring + JavaScript setup
 - **Subscriptions**: SmoothMoveSub/State/CSS need subscriptions, Task/Ports don't
-- **Advanced Task API**: Use `SmoothMoveTask.animateToTask` for composition/error handling
+- **Advanced Task API**: Use `SmoothMoveScroll.animateToTask` for composition/error handling
 
 ## 📖 API Documentation
 
-- **SmoothMoveTask**: `animateTo`, `animateToWithConfig`, `containerElement`, `containerElementWithConfig` (simple Cmd-based) + `animateToTask`, `animateToTaskWithConfig`, `containerElementTask`, `containerElementTaskWithConfig` (advanced Task-based)
+- **SmoothMoveScroll**: `animateTo`, `animateToWithConfig`, `containerElement`, `containerElementWithConfig` (simple Cmd-based) + `animateToTask`, `animateToTaskWithConfig`, `containerElementTask`, `containerElementTaskWithConfig` (advanced Task-based)
 - **SmoothMoveSub**: `animateTo`, `animateToWithConfig`, `subscriptions`, `transform`, `setInitialPosition`
 - **SmoothMoveState**: `animateTo`, `animateToWithConfig`, `subscriptions`, `transform`, `transformElement`, `setInitialPosition`
 - **SmoothMoveCSS**: `animateTo`, `animateToWithConfig`, `cssTransitionStyle`, `setInitialPosition`
@@ -243,7 +243,7 @@ MoveElement -> { model | animations = SmoothMoveCSS.animateTo "elem" 100 200 mod
 ### Need help choosing an approach?
 - Start with `SmoothMoveState` - it's the simplest
 - Move to `SmoothMoveCSS` when you need better performance
-- Use `SmoothMoveTask` for scrolling
+- Use `SmoothMoveScroll` for scrolling
 - Use `SmoothMovePorts` when you need maximum control
 
 ## 🙏 Credits

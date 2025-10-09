@@ -8,7 +8,7 @@ Interactive examples showcasing all 5 animation approaches. Each example is comp
 
 **Just open `index.html`** in your browser to see the examples dashboard, or open any specific example directly:
 
-- `src/SmoothMoveTask/basic.html` - Basic scrolling
+- `src/SmoothMoveScroll/basic.html` - Basic scrolling
 - `src/SmoothMoveState/basic.html` - Simple element movement (recommended for beginners)
 - `src/SmoothMoveCSS/basic.html` - Hardware-accelerated animations
 - And many more...
@@ -29,7 +29,7 @@ Each animation approach has its own subdirectory with properly organized Elm mod
 
 ```
 examples/src/
-├── SmoothMoveTask/   - Task-based API with pre-calculated animation steps
+├── SmoothMoveScroll/   - Task-based API with pre-calculated animation steps
 │   ├── Basic.elm     - Simple scrolling to elements
 │   └── Container.elm - Scrolling within container elements
 ├── SmoothMoveSub/    - Subscription-based with Browser.Events.onAnimationFrameDelta  
@@ -54,20 +54,20 @@ From the `examples/` directory:
 
 ```bash
 # Compile any example
-elm make src/SmoothMoveTask/Basic.elm --output=basic.html
+elm make src/SmoothMoveScroll/Basic.elm --output=basic.html
 
 # Run with elm reactor for development
 elm reactor
-# Then navigate to http://localhost:8000/src/SmoothMoveTask/Basic.elm
+# Then navigate to http://localhost:8000/src/SmoothMoveScroll/Basic.elm
 
 # Build all examples
-elm make src/SmoothMoveTask/Basic.elm src/SmoothMoveSub/Multiple.elm src/SmoothMoveCSS/Basic.elm --output=demo.html
+elm make src/SmoothMoveScroll/Basic.elm src/SmoothMoveSub/Multiple.elm src/SmoothMoveCSS/Basic.elm --output=demo.html
 ```
 
 ## Module Hierarchy
 
 All examples use proper hierarchical module names:
-- `SmoothMoveTask.Basic` 
+- `SmoothMoveScroll.Basic` 
 - `SmoothMoveSub.Multiple`
 - `SmoothMoveState.Basic`
 - etc.

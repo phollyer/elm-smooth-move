@@ -5,7 +5,7 @@ This is an Elm 0.19 package that provides multiple animation approaches for smoo
 
 ## Five Animation Approaches
 
-### 1. Task-Based API (SmoothMoveTask)
+### 1. Task-Based API (SmoothMoveScroll)
 - **Purpose**: Scrolling animations with task-based error handling
 - **API**: Functions return `Task Dom.Error (List ())` for composable operations
 - **Usage**: `scrollTo "element-id" |> Task.attempt (always NoOp)`
@@ -64,12 +64,12 @@ moveToWithOptions { defaultConfig | speed = 500, axis = Both } "element-id" 0 0 
 ### Examples Organization
 - **Location**: `examples/src/` with hierarchical module structure
 - **Structure**: Each animation approach has its own subdirectory
-  - `SmoothMoveTask/` - Task-based examples (Basic.elm, Container.elm)
+  - `SmoothMoveScroll/` - Task-based examples (Basic.elm, Container.elm)
   - `SmoothMoveSub/` - Subscription-based examples (Basic.elm, Multiple.elm)
   - `SmoothMoveState/` - State-based examples (Basic.elm, Multiple.elm)  
   - `SmoothMoveCSS/` - CSS-based examples (Basic.elm, Multiple.elm)
   - `SmoothMovePorts/` - Ports-based examples (Basic.elm, Multiple.elm, README.md, smooth-move-ports.js)
-- **Compilation**: `elm make examples/src/SmoothMoveTask/Basic.elm`
+- **Compilation**: `elm make examples/src/SmoothMoveScroll/Basic.elm`
 - **Development**: `elm reactor` from `examples/` directory
 
 ### Package Structure
@@ -85,12 +85,12 @@ moveToWithOptions { defaultConfig | speed = 500, axis = Both } "element-id" 0 0 
 - Always clamp scroll destination between 0 and max scrollable area
 
 ### Animation Systems
-- **SmoothMoveTask**: Pre-calculated frame steps using `Internal.interpolate` function
+- **SmoothMoveScroll**: Pre-calculated frame steps using `Internal.interpolate` function
 - **SmoothMoveSub**: Time-based interpolation with `onAnimationFrameDelta`
 - **SmoothMoveState**: Convenience wrapper around subscription approach
 - **SmoothMoveCSS**: Native CSS transitions with `cssTransitionStyle` helper
 - **SmoothMovePorts**: Web Animations API via JavaScript integration
-- Speed parameter: pixels per second for SmoothMoveSub, frame count divisor for SmoothMoveTask
+- Speed parameter: pixels per second for SmoothMoveSub, frame count divisor for SmoothMoveScroll
 - Easing functions from `elm-community/easing-functions` package applied to progress values
 
 ### Error Handling
@@ -103,14 +103,14 @@ moveToWithOptions { defaultConfig | speed = 500, axis = Both } "element-id" 0 0 
 src/
 ├── Internal/
 │   └── AnimationSteps.elm    - Pure interpolation logic (interpolate function)
-├── SmoothMoveTask.elm        - Task-based scrolling API
+├── SmoothMoveScroll.elm        - Task-based scrolling API
 ├── SmoothMoveSub.elm         - Subscription-based positioning API  
 ├── SmoothMoveState.elm       - State-based convenience API
 ├── SmoothMoveCSS.elm         - CSS transition-based API
 └── SmoothMovePorts.elm       - Ports-based Web Animations API
 
 examples/src/
-├── SmoothMoveTask/           - Task examples (Basic.elm, Container.elm)
+├── SmoothMoveScroll/           - Task examples (Basic.elm, Container.elm)
 ├── SmoothMoveSub/            - Subscription examples (Basic.elm, Multiple.elm)
 ├── SmoothMoveState/          - State examples (Basic.elm, Multiple.elm)
 ├── SmoothMoveCSS/            - CSS examples (Basic.elm, Multiple.elm)

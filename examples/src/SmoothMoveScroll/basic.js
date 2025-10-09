@@ -5231,7 +5231,7 @@ var $elm$core$Basics$min = F2(
 	});
 var $elm$browser$Browser$Dom$setViewport = _Browser_setViewport;
 var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
-var $author$project$SmoothMoveTask$animateToTaskWithConfig = F2(
+var $author$project$SmoothMoveScroll$animateToTaskWithConfig = F2(
 	function (config, id) {
 		var getContainerInfo = function () {
 			var _v7 = config.container;
@@ -5335,8 +5335,15 @@ var $elm$core$Task$attempt = F2(
 							$elm$core$Result$Ok),
 						task))));
 	});
-var $author$project$SmoothMoveTask$DocumentBody = {$: 'DocumentBody'};
-var $author$project$SmoothMoveTask$Y = {$: 'Y'};
+var $author$project$SmoothMoveScroll$animateToCmdWithConfig = F3(
+	function (msg, config, elementId) {
+		return A2(
+			$elm$core$Task$attempt,
+			$elm$core$Basics$always(msg),
+			A2($author$project$SmoothMoveScroll$animateToTaskWithConfig, config, elementId));
+	});
+var $author$project$SmoothMoveScroll$DocumentBody = {$: 'DocumentBody'};
+var $author$project$SmoothMoveScroll$Y = {$: 'Y'};
 var $elm_community$easing_functions$Ease$flip = F2(
 	function (easing, time) {
 		return 1 - easing(1 - time);
@@ -5346,14 +5353,11 @@ var $elm_community$easing_functions$Ease$inQuint = function (time) {
 	return A2($elm$core$Basics$pow, time, 5);
 };
 var $elm_community$easing_functions$Ease$outQuint = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inQuint);
-var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, container: $author$project$SmoothMoveTask$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
-var $author$project$SmoothMoveTask$animateTo = function (elementId) {
-	return A2(
-		$elm$core$Task$attempt,
-		$elm$core$Basics$always(_Utils_Tuple0),
-		A2($author$project$SmoothMoveTask$animateToTaskWithConfig, $author$project$SmoothMoveTask$defaultConfig, elementId));
-};
-var $elm$core$Platform$Cmd$map = _Platform_map;
+var $author$project$SmoothMoveScroll$defaultConfig = {axis: $author$project$SmoothMoveScroll$Y, container: $author$project$SmoothMoveScroll$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
+var $author$project$SmoothMoveScroll$animateToCmd = F2(
+	function (msg, elementId) {
+		return A3($author$project$SmoothMoveScroll$animateToCmdWithConfig, msg, $author$project$SmoothMoveScroll$defaultConfig, elementId);
+	});
 var $author$project$SmoothMoveScroll$Basic$update = F2(
 	function (msg, model) {
 		if (msg.$ === 'NoOp') {
@@ -5362,10 +5366,7 @@ var $author$project$SmoothMoveScroll$Basic$update = F2(
 			var id = msg.a;
 			return _Utils_Tuple2(
 				model,
-				A2(
-					$elm$core$Platform$Cmd$map,
-					$elm$core$Basics$always($author$project$SmoothMoveScroll$Basic$NoOp),
-					$author$project$SmoothMoveTask$animateTo(id)));
+				A2($author$project$SmoothMoveScroll$animateToCmd, $author$project$SmoothMoveScroll$Basic$NoOp, id));
 		}
 	});
 var $author$project$SmoothMoveScroll$Basic$SmoothScroll = function (a) {

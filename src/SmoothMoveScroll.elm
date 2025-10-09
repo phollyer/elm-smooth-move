@@ -1,4 +1,4 @@
-module SmoothMoveTask exposing
+module SmoothMoveScroll exposing
     ( Config
     , defaultConfig
     , Axis(..)
@@ -12,7 +12,7 @@ module SmoothMoveTask exposing
     , animateToTaskWithConfig
     )
 
-{-| Task-based smooth scrolling animations for precise DOM element targeting.
+{-| Smooth scrolling animations for precise DOM element targeting.
 
 This module provides both simple Cmd-based functions (recommended for most users)
 and Task-based functions for more complex control flow and error handling.
@@ -63,7 +63,7 @@ and advanced Task-based functions (for composition and custom error handling).
 
   - speed: Animation speed divider (lower = faster, higher = slower)
   - offset: Vertical offset in pixels from the target position
-  - easing: Easing function from elm-community/easing-functions
+  - easing: Easing function from [elm-community/easing-functions](https://package.elm-lang.org/packages/elm-community/easing-functions/latest/)
   - axis: Movement axis (Y for scrolling, X for horizontal)
   - container: Which element to scroll within (document body or container)
   - scrollBar: Whether to show scrollbar during animation
@@ -117,7 +117,7 @@ type Container
 {-| The default configuration which can be modified
 
     import Ease
-    import SmoothMoveTask exposing (defaultConfig)
+    import SmoothMoveScroll exposing (defaultConfig)
 
     defaultConfig : Config
     defaultConfig =
@@ -143,7 +143,7 @@ defaultConfig =
 
 {-| Set the container to scroll within to a specific DOM element by ID.
 
-    import SmoothMoveTask exposing (setContainer, animateToCmdWithConfig, defaultConfig)
+    import SmoothMoveScroll exposing (setContainer, animateToCmdWithConfig, defaultConfig)
 
     animateToCmdWithConfig NoOp (setContainer "article-list" defaultConfig) "article-42"
 
@@ -155,7 +155,7 @@ setContainer elementId config =
 
 {-| Set the container to scroll within to the document body (default behavior).
 
-    import SmoothMoveTask exposing (setDocumentBody, animateToCmdWithConfig, defaultConfig)
+    import SmoothMoveScroll exposing (setDocumentBody, animateToCmdWithConfig, defaultConfig)
 
     animateToCmdWithConfig NoOp (setDocumentBody defaultConfig) "article-42"
 
@@ -168,7 +168,7 @@ setDocumentBody config =
 {-| Create a container reference for use with record update syntax.
 Provides an alternative coding style for developers who prefer this approach.
 
-    import SmoothMoveTask exposing (containerElement, animateToCmdWithConfig, defaultConfig)
+    import SmoothMoveScroll exposing (containerElement, animateToCmdWithConfig, defaultConfig)
 
     animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "article-list" } "article-42"
 

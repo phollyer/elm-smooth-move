@@ -5231,7 +5231,7 @@ var $elm$core$Basics$min = F2(
 	});
 var $elm$browser$Browser$Dom$setViewport = _Browser_setViewport;
 var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
-var $author$project$SmoothMoveTask$animateToTaskWithConfig = F2(
+var $author$project$SmoothMoveScroll$animateToTaskWithConfig = F2(
 	function (config, id) {
 		var getContainerInfo = function () {
 			var _v7 = config.container;
@@ -5335,15 +5335,15 @@ var $elm$core$Task$attempt = F2(
 							$elm$core$Result$Ok),
 						task))));
 	});
-var $author$project$SmoothMoveTask$animateToCmdWithConfig = F3(
+var $author$project$SmoothMoveScroll$animateToCmdWithConfig = F3(
 	function (msg, config, elementId) {
 		return A2(
 			$elm$core$Task$attempt,
 			$elm$core$Basics$always(msg),
-			A2($author$project$SmoothMoveTask$animateToTaskWithConfig, config, elementId));
+			A2($author$project$SmoothMoveScroll$animateToTaskWithConfig, config, elementId));
 	});
-var $author$project$SmoothMoveTask$DocumentBody = {$: 'DocumentBody'};
-var $author$project$SmoothMoveTask$Y = {$: 'Y'};
+var $author$project$SmoothMoveScroll$DocumentBody = {$: 'DocumentBody'};
+var $author$project$SmoothMoveScroll$Y = {$: 'Y'};
 var $elm_community$easing_functions$Ease$flip = F2(
 	function (easing, time) {
 		return 1 - easing(1 - time);
@@ -5353,16 +5353,16 @@ var $elm_community$easing_functions$Ease$inQuint = function (time) {
 	return A2($elm$core$Basics$pow, time, 5);
 };
 var $elm_community$easing_functions$Ease$outQuint = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inQuint);
-var $author$project$SmoothMoveTask$defaultConfig = {axis: $author$project$SmoothMoveTask$Y, container: $author$project$SmoothMoveTask$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
-var $author$project$SmoothMoveTask$InnerNode = function (a) {
+var $author$project$SmoothMoveScroll$defaultConfig = {axis: $author$project$SmoothMoveScroll$Y, container: $author$project$SmoothMoveScroll$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offset: 12, scrollBar: true, speed: 200};
+var $author$project$SmoothMoveScroll$InnerNode = function (a) {
 	return {$: 'InnerNode', a: a};
 };
-var $author$project$SmoothMoveTask$setContainer = F2(
+var $author$project$SmoothMoveScroll$setContainer = F2(
 	function (elementId, config) {
 		return _Utils_update(
 			config,
 			{
-				container: $author$project$SmoothMoveTask$InnerNode(elementId)
+				container: $author$project$SmoothMoveScroll$InnerNode(elementId)
 			});
 	});
 var $author$project$SmoothMoveScroll$Container$update = F2(
@@ -5374,25 +5374,25 @@ var $author$project$SmoothMoveScroll$Container$update = F2(
 				return _Utils_Tuple2(
 					model,
 					A3(
-						$author$project$SmoothMoveTask$animateToCmdWithConfig,
+						$author$project$SmoothMoveScroll$animateToCmdWithConfig,
 						$author$project$SmoothMoveScroll$Container$NoOp,
-						A2($author$project$SmoothMoveTask$setContainer, 'scroll-container', $author$project$SmoothMoveTask$defaultConfig),
+						A2($author$project$SmoothMoveScroll$setContainer, 'scroll-container', $author$project$SmoothMoveScroll$defaultConfig),
 						'top-element'));
 			case 'ScrollToMiddle':
 				return _Utils_Tuple2(
 					model,
 					A3(
-						$author$project$SmoothMoveTask$animateToCmdWithConfig,
+						$author$project$SmoothMoveScroll$animateToCmdWithConfig,
 						$author$project$SmoothMoveScroll$Container$NoOp,
-						A2($author$project$SmoothMoveTask$setContainer, 'scroll-container', $author$project$SmoothMoveTask$defaultConfig),
+						A2($author$project$SmoothMoveScroll$setContainer, 'scroll-container', $author$project$SmoothMoveScroll$defaultConfig),
 						'middle-element'));
 			default:
 				return _Utils_Tuple2(
 					model,
 					A3(
-						$author$project$SmoothMoveTask$animateToCmdWithConfig,
+						$author$project$SmoothMoveScroll$animateToCmdWithConfig,
 						$author$project$SmoothMoveScroll$Container$NoOp,
-						A2($author$project$SmoothMoveTask$setContainer, 'scroll-container', $author$project$SmoothMoveTask$defaultConfig),
+						A2($author$project$SmoothMoveScroll$setContainer, 'scroll-container', $author$project$SmoothMoveScroll$defaultConfig),
 						'bottom-element'));
 		}
 	});
@@ -5730,7 +5730,7 @@ var $author$project$SmoothMoveScroll$Container$view = function (model) {
 												_List_Nil,
 												_List_fromArray(
 													[
-														$elm$html$Html$text('The smooth animation should work reliably using the new SmoothMoveTask API.')
+														$elm$html$Html$text('The smooth animation should work reliably using the new SmoothMoveScroll API.')
 													]))
 											]))
 									]))

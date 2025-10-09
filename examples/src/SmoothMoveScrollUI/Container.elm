@@ -9,7 +9,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Html
 import Html.Attributes
-import SmoothMoveTask exposing (animateToCmdWithConfig, containerElement, defaultConfig, setContainer)
+import SmoothMoveScroll exposing (animateToCmdWithConfig, containerElement, defaultConfig, setContainer)
 
 
 
@@ -441,7 +441,7 @@ view model =
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
-                                                [ text "The smooth animation works reliably using the new SmoothMoveTask API with ElmUI." ]
+                                                [ text "The smooth animation works reliably using the new SmoothMoveScroll API with ElmUI." ]
                                             ]
                                         )
                                     ]

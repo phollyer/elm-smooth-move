@@ -9,7 +9,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Html
 import Html.Attributes
-import SmoothMoveTask exposing (animateToCmd, animateToTask, animateToCmdWithConfig, defaultConfig)
+import SmoothMoveScroll exposing (animateToCmd, animateToTask, animateToCmdWithConfig, defaultConfig)
 import Task
 
 

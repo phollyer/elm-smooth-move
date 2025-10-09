@@ -4,7 +4,7 @@ import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveTask exposing (setContainer, animateToCmdWithConfig, defaultConfig)
+import SmoothMoveScroll exposing (setContainer, animateToCmdWithConfig, defaultConfig)
 
 
 main =
@@ -107,7 +107,7 @@ view model =
                         [ h2 [] [ text "🔻 Bottom of Container" ]
                         , p [] [ text "This is the bottom of the scrollable container content. Notice the dark background." ]
                         , p [] [ text "Click 'Scroll to Bottom' to smoothly scroll to this position." ]
-                        , p [] [ text "The smooth animation should work reliably using the new SmoothMoveTask API." ]
+                        , p [] [ text "The smooth animation should work reliably using the new SmoothMoveScroll API." ]
                         ]
                     ]
                 ]
