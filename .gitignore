@@ -4,3 +4,12 @@ example/index.html
 
 #Ignore vscode AI rules
 .github/instructions/codacy.instructions.md
+
+# Ignore NPM Modules
+node_modules
+package-lock.json
+npm-debug.log
+
+# Ignore OS files
+.DS_Store
+.vscode
