@@ -282,7 +282,7 @@ view model =
                                 ]
                                 (Element.column
                                     [ width fill
-                                    , spacing 0
+                                    , spacing 30
                                     , paddingXY 30 30
                                     ]
                                     [ -- Top element

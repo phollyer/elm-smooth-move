@@ -12482,7 +12482,7 @@ var $author$project$SmoothMoveScrollUI$Container$view = function (model) {
 											_List_fromArray(
 												[
 													$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-													$mdgriffith$elm_ui$Element$spacing(0),
+													$mdgriffith$elm_ui$Element$spacing(30),
 													A2($mdgriffith$elm_ui$Element$paddingXY, 30, 30)
 												]),
 											_List_fromArray(
