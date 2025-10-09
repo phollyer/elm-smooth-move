@@ -85,6 +85,7 @@ Use this to control whether your animation moves horizontally or vertically:
 
   - `Y` - Vertical scrolling (most common, default for page scrolling)
   - `X` - Horizontal scrolling (for sideways carousels or horizontal content)
+  - `Both` - Both horizontal and vertical scrolling to reach the target element
 
 Examples:
 
@@ -101,10 +102,16 @@ Examples:
         }
         "slide-3"
 
+    -- Both horizontal and vertical scrolling
+    animateToCmdWithConfig
+        { defaultConfig | axis = Both }
+        "target-element"
+
 -}
 type Axis
     = X
     | Y
+    | Both
 
 
 {-| An internal type for configuring which element to scroll within.
@@ -221,27 +228,13 @@ animateToTask elementId =
 animateToTaskWithConfig : Config -> String -> Task Dom.Error (List ())
 animateToTaskWithConfig config id =
     let
-        ( getViewport, setViewport ) =
+        getViewport =
             case config.container of
                 DocumentBody ->
-                    ( Dom.getViewport
-                    , case config.axis of
-                        Y ->
-                            Dom.setViewport 0
-
-                        X ->
-                            \i -> Dom.setViewport i 0
-                    )
+                    Dom.getViewport
 
                 InnerNode containerNodeId ->
-                    ( Dom.getViewportOf containerNodeId
-                    , case config.axis of
-                        Y ->
-                            Dom.setViewportOf containerNodeId 0
-
-                        X ->
-                            \i -> Dom.setViewportOf containerNodeId i 0
-                    )
+                    Dom.getViewportOf containerNodeId
 
         getContainerInfo =
             case config.container of
@@ -253,22 +246,76 @@ animateToTaskWithConfig config id =
 
         scrollTask { scene, viewport } { element } container =
             let
-                destination =
+                ( targetX, targetY ) =
                     case container of
                         Nothing ->
-                            element.y - toFloat config.offset
+                            ( element.x - toFloat config.offset
+                            , element.y - toFloat config.offset
+                            )
 
                         Just containerInfo ->
-                            viewport.y + element.y - toFloat config.offset - containerInfo.element.y
+                            ( viewport.x + element.x - toFloat config.offset - containerInfo.element.x
+                            , viewport.y + element.y - toFloat config.offset - containerInfo.element.y
+                            )
 
-                clamped =
-                    destination
+                ( clampedX, clampedY ) =
+                    ( targetX
+                        |> min (scene.width - viewport.width)
+                        |> Basics.max 0
+                    , targetY
                         |> min (scene.height - viewport.height)
                         |> Basics.max 0
+                    )
+
+                setViewportTask =
+                    case config.container of
+                        DocumentBody ->
+                            case config.axis of
+                                X ->
+                                    animationSteps config.speed config.easing viewport.x clampedX
+                                        |> List.map (\x -> Dom.setViewport x viewport.y)
+                                        |> Task.sequence
+
+                                Y ->
+                                    animationSteps config.speed config.easing viewport.y clampedY
+                                        |> List.map (\y -> Dom.setViewport viewport.x y)
+                                        |> Task.sequence
+
+                                Both ->
+                                    let
+                                        xSteps =
+                                            animationSteps config.speed config.easing viewport.x clampedX
+
+                                        ySteps =
+                                            animationSteps config.speed config.easing viewport.y clampedY
+                                    in
+                                    List.map2 Dom.setViewport xSteps ySteps
+                                        |> Task.sequence
+
+                        InnerNode containerNodeId ->
+                            case config.axis of
+                                X ->
+                                    animationSteps config.speed config.easing viewport.x clampedX
+                                        |> List.map (\x -> Dom.setViewportOf containerNodeId x viewport.y)
+                                        |> Task.sequence
+
+                                Y ->
+                                    animationSteps config.speed config.easing viewport.y clampedY
+                                        |> List.map (\y -> Dom.setViewportOf containerNodeId viewport.x y)
+                                        |> Task.sequence
+
+                                Both ->
+                                    let
+                                        xSteps =
+                                            animationSteps config.speed config.easing viewport.x clampedX
+
+                                        ySteps =
+                                            animationSteps config.speed config.easing viewport.y clampedY
+                                    in
+                                    List.map2 (Dom.setViewportOf containerNodeId) xSteps ySteps
+                                        |> Task.sequence
             in
-            animationSteps config.speed config.easing viewport.y clamped
-                |> List.map setViewport
-                |> Task.sequence
+            setViewportTask
     in
     Task.map3 scrollTask getViewport (Dom.getElement id) getContainerInfo
         |> Task.andThen identity
