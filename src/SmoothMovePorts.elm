@@ -85,7 +85,6 @@ See the accompanying `smooth-move-ports.js` file for the JavaScript implementati
 @docs handleAnimationComplete
 @docs encodeAnimationCommand
 @docs encodeStopCommand
-@docs positionUpdateDecoder
 @docs AnimationCommand
 @docs AnimationSpec
 @docs PositionUpdate

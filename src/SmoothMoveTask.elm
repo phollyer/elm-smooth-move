@@ -1,18 +1,54 @@
 module SmoothMoveTask exposing
-    ( Axis(..)
-    , Config
+    ( Config
+    , defaultConfig
+    , Axis(..)
     , Container
-    , animateTo
+    , containerElement
+    , setContainer
+    , setDocumentBody
     , animateToCmd
     , animateToCmdWithConfig
     , animateToTask
     , animateToTaskWithConfig
-    , animateToWithConfig
-    , containerElement
-    , defaultConfig
-    , setContainer
-    , setDocumentBody
     )
+
+{-| Task-based smooth scrolling animations for precise DOM element targeting.
+
+This module provides both simple Cmd-based functions (recommended for most users)
+and Task-based functions for more complex control flow and error handling.
+
+Key features:
+
+  - Smooth scrolling to specific DOM elements
+  - Support for both document body and container element scrolling
+  - Configurable animation parameters (speed, easing, axis)
+  - Task-based API for composable operations
+  - Error handling for missing DOM elements
+
+
+# Configuration
+
+@docs Config
+@docs defaultConfig
+@docs Axis
+@docs Container
+@docs containerElement
+@docs setContainer
+@docs setDocumentBody
+
+
+# Simple Commands (Recommended)
+
+@docs animateToCmd
+@docs animateToCmdWithConfig
+
+
+# Task-based API (Advanced)
+
+@docs animateToTask
+@docs animateToTaskWithConfig
+
+-}
 
 import Browser.Dom as Dom
 import Ease
@@ -43,6 +79,29 @@ type alias Config =
     }
 
 
+{-| Axis configuration for animation movement direction.
+
+Use this to control whether your animation moves horizontally or vertically:
+
+  - `Y` - Vertical scrolling (most common, default for page scrolling)
+  - `X` - Horizontal scrolling (for sideways carousels or horizontal content)
+
+Examples:
+
+    -- Vertical scrolling to an element (default behavior)
+    animateToCmdWithConfig
+        { defaultConfig | axis = Y }
+        "my-section"
+
+    -- Horizontal scrolling within a carousel container
+    animateToCmdWithConfig
+        { defaultConfig
+            | axis = X
+            , container = containerElement "carousel-container"
+        }
+        "slide-3"
+
+-}
 type Axis
     = X
     | Y
@@ -84,9 +143,9 @@ defaultConfig =
 
 {-| Set the container to scroll within to a specific DOM element by ID.
 
-    import SmoothMoveTask exposing (setContainer, animateToWithConfig, defaultConfig)
+    import SmoothMoveTask exposing (setContainer, animateToCmdWithConfig, defaultConfig)
 
-    animateToWithConfig (setContainer "article-list" defaultConfig) "article-42"
+    animateToCmdWithConfig NoOp (setContainer "article-list" defaultConfig) "article-42"
 
 -}
 setContainer : String -> Config -> Config
@@ -96,9 +155,9 @@ setContainer elementId config =
 
 {-| Set the container to scroll within to the document body (default behavior).
 
-    import SmoothMoveTask exposing (setDocumentBody, animateToWithConfig, defaultConfig)
+    import SmoothMoveTask exposing (setDocumentBody, animateToCmdWithConfig, defaultConfig)
 
-    animateToWithConfig (setDocumentBody defaultConfig) "article-42"
+    animateToCmdWithConfig NoOp (setDocumentBody defaultConfig) "article-42"
 
 -}
 setDocumentBody : Config -> Config
@@ -109,38 +168,14 @@ setDocumentBody config =
 {-| Create a container reference for use with record update syntax.
 Provides an alternative coding style for developers who prefer this approach.
 
-    import SmoothMoveTask exposing (containerElement, animateToWithConfig, defaultConfig)
+    import SmoothMoveTask exposing (containerElement, animateToCmdWithConfig, defaultConfig)
 
-    animateToWithConfig { defaultConfig | container = containerElement "article-list" } "article-42"
+    animateToCmdWithConfig NoOp { defaultConfig | container = containerElement "article-list" } "article-42"
 
 -}
 containerElement : String -> Container
 containerElement elementId =
     InnerNode elementId
-
-
-{-| Simple scrolling to an element. Returns a Cmd that produces no meaningful messages.
-
-    ScrollTo elementId ->
-        ( model, animateTo elementId )
-
--}
-animateTo : String -> Cmd ()
-animateTo elementId =
-    animateToTaskWithConfig defaultConfig elementId
-        |> Task.attempt (always ())
-
-
-{-| Simple scrolling with configuration. Returns a Cmd that produces no meaningful messages.
-
-    ScrollTo elementId ->
-        ( model, animateToWithConfig { defaultConfig | offset = 100 } elementId )
-
--}
-animateToWithConfig : Config -> String -> Cmd ()
-animateToWithConfig config elementId =
-    animateToTaskWithConfig config elementId
-        |> Task.attempt (always ())
 
 
 {-| Cmd-based scrolling with custom completion message.
