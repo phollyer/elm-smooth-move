@@ -15,7 +15,7 @@ FEATURES:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
+import Element exposing (Element, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, padding, paragraph, maximum, alignLeft, link)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -24,6 +24,8 @@ import Html
 import Html.Attributes
 import SmoothMoveState
 import Ease
+import Common.UI as UI
+import Common.Colors as Colors
 
 
 -- MAIN
@@ -143,26 +145,10 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveState Multiple ElmUI Example"
-    , body = 
-        [ Html.node "style" [] [ Html.text responsiveCSS ]
-        , layout
-            [ Background.gradient
-                { angle = 0
-                , steps = 
-                    [ rgb255 248 250 252
-                    , rgb255 226 232 240
-                    ]
-                }
-            , paddingXY 40 20
-            , htmlAttribute (Html.Attributes.class "responsive-layout")
-            ]
-            (viewContent model)
-        ]
-    }
+    UI.createDocument "SmoothMoveState Multiple ElmUI Example" UI.Basic (viewContent model)
 
 
-viewContent : Model -> Element Msg
+viewContent : Model -> List (Element Msg)
 viewContent model =
     let
         positionA = SmoothMoveState.getPosition "element-a" model.animationState
@@ -180,14 +166,26 @@ viewContent model =
         
         isMoving = SmoothMoveState.isAnimating model.animationState
     in
-    column
-        [ width fill
-        , spacing 40
-        , centerX
-        , htmlAttribute (Html.Attributes.class "responsive-container")
+    [ -- Back Button
+      UI.backButton
+    , UI.pageHeader "SmoothMoveState Multiple Example"
+    , UI.techInfo 
+        [ paragraph []
+            [ text "This example demonstrates the SmoothMoveState module handling "
+            , el [ Font.semiBold ] (text "multiple independent animations")
+            , text " with comprehensive state management. It showcases "
+            , el [ Font.semiBold ] (text "simplified coordination")
+            , text " of complex multi-element animations while preserving individual element positioning data."
+            ]
+        , paragraph []
+            [ text "Perfect for choreographed animations, UI transitions, and formation-based layouts with "
+            , el [ Font.semiBold ] (text "reduced complexity")
+            , text " compared to managing individual subscription states."
+            ]
         ]
-        [ -- Back Button
-          link
+    , -- Status display section will be added below
+      column [ spacing 20, centerX ]
+        [ link
             [ alignLeft
             , padding 12
             , Background.gradient
@@ -502,6 +500,7 @@ viewContent model =
                 )
             )
         ]
+    ]
 
 
 responsiveCSS : String

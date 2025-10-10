@@ -16,7 +16,7 @@ FEATURES:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, maximum, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
+import Element exposing (Element, column, el, maximum, layout, paddingXY, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -24,6 +24,10 @@ import Element.Input as Input
 import Html
 import Html.Attributes
 import SmoothMoveCSS
+
+-- Common UI imports
+import Common.UI as UI
+import Common.Colors as Colors
 
 
 -- MAIN
@@ -137,26 +141,13 @@ subscriptions _ =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveCSS Multiple ElmUI Example"
-    , body = 
-        [ Html.node "style" [] [ Html.text responsiveCSS ]
-        , layout
-            [ Background.gradient
-                { angle = 0
-                , steps = 
-                    [ rgb255 248 250 252
-                    , rgb255 226 232 240
-                    ]
-                }
-            , paddingXY 40 20
-            , htmlAttribute (Html.Attributes.class "responsive-layout")
-            ]
-            (viewContent model)
-        ]
-    }
+    UI.createDocument 
+        "SmoothMoveCSS Multiple ElmUI Example"
+        UI.Basic
+        (viewContent model)
 
 
-viewContent : Model -> Element Msg
+viewContent : Model -> List (Element Msg)
 viewContent model =
     let
         positionA = SmoothMoveCSS.getPosition "element-a" model.animations
@@ -179,440 +170,236 @@ viewContent model =
         cssStylesE = SmoothMoveCSS.cssTransitionStyle "element-e" model.animations
         cssStylesF = SmoothMoveCSS.cssTransitionStyle "element-f" model.animations
     in
-    column
-        [ width fill
-        , spacing 40
+    [ UI.backButton
+    , UI.pageHeader "SmoothMoveCSS Multiple Example"
+    , UI.techInfo 
+        [ paragraph
+            [ Font.size 16
+            , Font.color Colors.textMedium
+            , width fill
+            ]
+            [ text "This example demonstrates the SmoothMoveCSS module coordinating "
+            , el [ Font.semiBold ] (text "multiple CSS transitions")
+            , text " simultaneously. Each element uses native browser optimization with "
+            , el [ Font.semiBold ] (text "hardware acceleration")
+            , text ", eliminating animation frame subscriptions while maintaining smooth formation control."
+            ]
+        
+        , paragraph
+            [ Font.size 16
+            , Font.color Colors.textMedium
+            , width fill
+            ]
+            [ text "Perfect for complex multi-element choreography where "
+            , el [ Font.semiBold ] (text "battery efficiency")
+            , text " and native performance are critical requirements."
+            ]
+        ]
+
+    , -- Element status and positions (6 elements in 2 rows)
+      column
+        [ spacing 20
         , centerX
-        , htmlAttribute (Html.Attributes.class "responsive-container")
         ]
-        [ -- Back Button
-          link
-            [ alignLeft
-            , padding 12
-            , Background.gradient
-                { angle = 0
-                , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                }
-            , Font.color (rgb255 255 255 255)  
-            , Font.semiBold
-            , Border.rounded 8
+        [ row
+            [ spacing 25
+            , centerX
             ]
-            { url = "../../elmui-examples.html"
-            , label = text "← Back to Examples"
+            [ column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.primary ] (text "A")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.success ] (text "B")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.purple ] (text "C")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
+                ]
+            ]
+
+        , row
+            [ spacing 25
+            , centerX
+            ]
+            [ column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.warning ] (text "D")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.warningDark ] (text "E")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.successDark ] (text "F")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
+                ]
+            ]
+        ]
+
+    , -- Control buttons
+      row
+        [ spacing 15
+        , centerX
+        ]
+        [ UI.actionButton UI.Primary ScatterElements "Scatter"
+        , UI.actionButton UI.Success CircleFormation "Circle Formation"
+        , UI.actionButton UI.Purple ResetPositions "Reset"
+        ]
+
+    , -- Animation area with moving elements
+      el
+        [ width (fill |> maximum 500)
+        , height (px 400)
+        , centerX
+        , Background.color Colors.backgroundWhite
+        , Border.rounded 12
+        , Border.shadow
+            { offset = (0, 4)
+            , size = 0
+            , blur = 8
+            , color = Element.rgba 0 0 0 0.1
             }
-
-        , -- Header
-          el
-            [ Font.size 32
-            , Font.semiBold
-            , Font.color (rgb255 30 41 59)
-            , centerX
-            , htmlAttribute (Html.Attributes.class "responsive-header")
-            ]
-            (text "SmoothMoveCSS Multiple Example")
-
-        , -- Technical information
-          column
-            [ spacing 16
-            , width (maximum 1200 fill)
-            , centerX
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveCSS module coordinating "
-                , el [ Font.semiBold ] (text "multiple CSS transitions")
-                , text " simultaneously. Each element uses native browser optimization with "
-                , el [ Font.semiBold ] (text "hardware acceleration")
-                , text ", eliminating animation frame subscriptions while maintaining smooth formation control."
-                ]
-
-            , paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for complex multi-element choreography where "
-                , el [ Font.semiBold ] (text "battery efficiency")
-                , text " and native performance are critical requirements."
-                ]
-            ]
-
-        , -- Element status and positions (6 elements in 2 rows)
-          column
-            [ spacing 20
-            , centerX
-            ]
-            [ row
-                [ spacing 25
-                , centerX
-                ]
-                [ column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 59 130 246) ] (text "A")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
-                    ]
-                ]
-
-            , row
-                [ spacing 25
-                , centerX
-                ]
-                [ column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
-                    ]
-                ]
-            ]
-
-        , -- Control buttons
-          row
-            [ spacing 15
-            , centerX
-            ]
-            [ Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 59 130 246
-                        , rgb255 37 99 235
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just ScatterElements
-                , label = text "Scatter"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 16 185 129
-                        , rgb255 5 150 105
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just CircleFormation
-                , label = text "Circle Formation"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 168 85 247
-                        , rgb255 147 51 234
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just ResetPositions
-                , label = text "Reset"
-                }
-            ]
-
-        , -- Animation area with moving elements
-          el
-            [ width (fill |> maximum 500)
-            , height (px 400)
-            , centerX
-            , Background.color (rgb255 255 255 255)
-            , Border.rounded 12
-            , Border.shadow
-                { offset = (0, 4)
-                , size = 0
-                , blur = 8
-                , color = Element.rgba 0 0 0 0.1
-                }
-            , htmlAttribute (Html.Attributes.style "position" "relative")
-            , htmlAttribute (Html.Attributes.style "overflow" "hidden")
-            , htmlAttribute (Html.Attributes.class "responsive-animation-container")
-            ]
-            (Element.html
-                (Html.div
-                    [ Html.Attributes.style "position" "relative"
-                    , Html.Attributes.style "width" "100%"
-                    , Html.Attributes.style "height" "100%"
-                    ]
-                    [ -- Element A (Blue) - CSS transition managed
-                      Html.div
-                        [ Html.Attributes.id "element-a"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #3B82F6, #2563EB)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionA.x ++ "px, " ++ String.fromFloat positionA.y ++ "px)")
-                        , Html.Attributes.style "transition" cssStylesA
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "A" ]
-
-                    , -- Element B (Green) - CSS transition managed
-                      Html.div
-                        [ Html.Attributes.id "element-b"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #10B981, #059669)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionB.x ++ "px, " ++ String.fromFloat positionB.y ++ "px)")
-                        , Html.Attributes.style "transition" cssStylesB
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "B" ]
-
-                    , -- Element C (Purple) - CSS transition managed
-                      Html.div
-                        [ Html.Attributes.id "element-c"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #A855F7, #9333EA)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionC.x ++ "px, " ++ String.fromFloat positionC.y ++ "px)")
-                        , Html.Attributes.style "transition" cssStylesC
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "C" ]
-
-                    , -- Element D (Orange) - CSS transition managed
-                      Html.div
-                        [ Html.Attributes.id "element-d"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #F97316, #EA580C)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionD.x ++ "px, " ++ String.fromFloat positionD.y ++ "px)")
-                        , Html.Attributes.style "transition" cssStylesD
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "D" ]
-
-                    , -- Element E (Red) - CSS transition managed
-                      Html.div
-                        [ Html.Attributes.id "element-e"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #EF4444, #DC2626)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionE.x ++ "px, " ++ String.fromFloat positionE.y ++ "px)")
-                        , Html.Attributes.style "transition" cssStylesE
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "E" ]
-
-                    , -- Element F (Pink) - CSS transition managed
-                      Html.div
-                        [ Html.Attributes.id "element-f"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #EC4899, #DB2777)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionF.x ++ "px, " ++ String.fromFloat positionF.y ++ "px)")
-                        , Html.Attributes.style "transition" cssStylesF
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "F" ]
-                    ]
-                )
-            )
+        , htmlAttribute (Html.Attributes.style "position" "relative")
+        , htmlAttribute (Html.Attributes.style "overflow" "hidden")
         ]
+        (Element.html
+            (Html.div
+                [ Html.Attributes.style "position" "relative"
+                , Html.Attributes.style "width" "100%"
+                , Html.Attributes.style "height" "100%"
+                ]
+                [ -- Element A (Blue) - CSS transition managed
+                  Html.div
+                    [ Html.Attributes.id "element-a"
+                    , Html.Attributes.style "position" "absolute"
+                    , Html.Attributes.style "width" "50px"
+                    , Html.Attributes.style "height" "50px"
+                    , Html.Attributes.style "background" "linear-gradient(135deg, #3B82F6, #2563EB)"
+                    , Html.Attributes.style "border-radius" "12px"
+                    , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionA.x ++ "px, " ++ String.fromFloat positionA.y ++ "px)")
+                    , Html.Attributes.style "transition" cssStylesA
+                    , Html.Attributes.style "display" "flex"
+                    , Html.Attributes.style "align-items" "center"
+                    , Html.Attributes.style "justify-content" "center"
+                    , Html.Attributes.style "color" "white"
+                    , Html.Attributes.style "font-weight" "600"
+                    , Html.Attributes.style "font-size" "16px"
+                    ]
+                    [ Html.text "A" ]
 
+                , -- Element B (Green) - CSS transition managed
+                  Html.div
+                    [ Html.Attributes.id "element-b"
+                    , Html.Attributes.style "position" "absolute"
+                    , Html.Attributes.style "width" "50px"
+                    , Html.Attributes.style "height" "50px"
+                    , Html.Attributes.style "background" "linear-gradient(135deg, #10B981, #059669)"
+                    , Html.Attributes.style "border-radius" "12px"
+                    , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionB.x ++ "px, " ++ String.fromFloat positionB.y ++ "px)")
+                    , Html.Attributes.style "transition" cssStylesB
+                    , Html.Attributes.style "display" "flex"
+                    , Html.Attributes.style "align-items" "center"
+                    , Html.Attributes.style "justify-content" "center"
+                    , Html.Attributes.style "color" "white"
+                    , Html.Attributes.style "font-weight" "600"
+                    , Html.Attributes.style "font-size" "16px"
+                    ]
+                    [ Html.text "B" ]
 
-responsiveCSS : String
-responsiveCSS =
-    """
-    <style>
-    .responsive-layout {
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    
-    .responsive-container {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-    }
-    
-    .responsive-header {
-        font-size: 32px;
-        line-height: 1.2;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-tech-info {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons > * {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    .responsive-paragraph {
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-    
-    .responsive-animation-container {
-        max-width: 100%;
-        min-width: 300px;
-    }
-    
-    /* Tablet breakpoint */
-    @media (max-width: 768px) {
-        .responsive-layout {
-            padding: 16px;
-        }
-        
-        .responsive-header {
-            font-size: 24px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-tech-info {
-            padding: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 24px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 16px;
-        }
-        
-        .responsive-animation-container {
-            height: 300px !important;
-        }
-    }
-    
-    /* Mobile breakpoint */
-    @media (max-width: 480px) {
-        .responsive-layout {
-            padding: 12px;
-        }
-        
-        .responsive-header {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-tech-info {
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 20px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 14px;
-        }
-        
-        .responsive-animation-container {
-            height: 250px !important;
-            min-width: 280px;
-        }
-    }
-    </style>
-    """
+                , -- Element C (Purple) - CSS transition managed
+                  Html.div
+                    [ Html.Attributes.id "element-c"
+                    , Html.Attributes.style "position" "absolute"
+                    , Html.Attributes.style "width" "50px"
+                    , Html.Attributes.style "height" "50px"
+                    , Html.Attributes.style "background" "linear-gradient(135deg, #A855F7, #9333EA)"
+                    , Html.Attributes.style "border-radius" "12px"
+                    , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionC.x ++ "px, " ++ String.fromFloat positionC.y ++ "px)")
+                    , Html.Attributes.style "transition" cssStylesC
+                    , Html.Attributes.style "display" "flex"
+                    , Html.Attributes.style "align-items" "center"
+                    , Html.Attributes.style "justify-content" "center"
+                    , Html.Attributes.style "color" "white"
+                    , Html.Attributes.style "font-weight" "600"
+                    , Html.Attributes.style "font-size" "16px"
+                    ]
+                    [ Html.text "C" ]
+
+                , -- Element D (Orange) - CSS transition managed
+                  Html.div
+                    [ Html.Attributes.id "element-d"
+                    , Html.Attributes.style "position" "absolute"
+                    , Html.Attributes.style "width" "50px"
+                    , Html.Attributes.style "height" "50px"
+                    , Html.Attributes.style "background" "linear-gradient(135deg, #F97316, #EA580C)"
+                    , Html.Attributes.style "border-radius" "12px"
+                    , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionD.x ++ "px, " ++ String.fromFloat positionD.y ++ "px)")
+                    , Html.Attributes.style "transition" cssStylesD
+                    , Html.Attributes.style "display" "flex"
+                    , Html.Attributes.style "align-items" "center"
+                    , Html.Attributes.style "justify-content" "center"
+                    , Html.Attributes.style "color" "white"
+                    , Html.Attributes.style "font-weight" "600"
+                    , Html.Attributes.style "font-size" "16px"
+                    ]
+                    [ Html.text "D" ]
+
+                , -- Element E (Red) - CSS transition managed
+                  Html.div
+                    [ Html.Attributes.id "element-e"
+                    , Html.Attributes.style "position" "absolute"
+                    , Html.Attributes.style "width" "50px"
+                    , Html.Attributes.style "height" "50px"
+                    , Html.Attributes.style "background" "linear-gradient(135deg, #EF4444, #DC2626)"
+                    , Html.Attributes.style "border-radius" "12px"
+                    , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionE.x ++ "px, " ++ String.fromFloat positionE.y ++ "px)")
+                    , Html.Attributes.style "transition" cssStylesE
+                    , Html.Attributes.style "display" "flex"
+                    , Html.Attributes.style "align-items" "center"
+                    , Html.Attributes.style "justify-content" "center"
+                    , Html.Attributes.style "color" "white"
+                    , Html.Attributes.style "font-weight" "600"
+                    , Html.Attributes.style "font-size" "16px"
+                    ]
+                    [ Html.text "E" ]
+
+                , -- Element F (Pink) - CSS transition managed
+                  Html.div
+                    [ Html.Attributes.id "element-f"
+                    , Html.Attributes.style "position" "absolute"
+                    , Html.Attributes.style "width" "50px"
+                    , Html.Attributes.style "height" "50px"
+                    , Html.Attributes.style "background" "linear-gradient(135deg, #EC4899, #DB2777)"
+                    , Html.Attributes.style "border-radius" "12px"
+                    , Html.Attributes.style "transform" ("translate(" ++ String.fromFloat positionF.x ++ "px, " ++ String.fromFloat positionF.y ++ "px)")
+                    , Html.Attributes.style "transition" cssStylesF
+                    , Html.Attributes.style "display" "flex"
+                    , Html.Attributes.style "align-items" "center"
+                    , Html.Attributes.style "justify-content" "center"
+                    , Html.Attributes.style "color" "white"
+                    , Html.Attributes.style "font-weight" "600"
+                    , Html.Attributes.style "font-size" "16px"
+                    ]
+                    [ Html.text "F" ]
+                ]
+            )
+        )
+    ]

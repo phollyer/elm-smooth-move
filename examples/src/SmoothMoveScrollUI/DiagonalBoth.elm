@@ -11,6 +11,9 @@ import Html
 import Html.Attributes
 import SmoothMoveScroll exposing (animateToCmdWithConfig, defaultConfig, Axis(..))
 import Task
+import Common.UI as UI
+import Common.Colors as Colors
+import Common.Styles as Styles
 
 
 -- MAIN
@@ -130,112 +133,41 @@ subscriptions _ =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveScroll Diagonal Both Axis - ElmUI Example"
-    , body = 
-        [ Html.node "style" [] [ Html.text diagonalCSS ]
-        , layout
-            [ Background.gradient
-                { angle = 0
-                , steps = 
-                    [ rgb255 248 250 252
-                    , rgb255 226 232 240
-                    ]
-                }
-            , paddingXY 40 20
-            , width (px 2000)
-            , htmlAttribute (Html.Attributes.class "diagonal-layout responsive-layout")
-            ]
-            (viewContent model)
-        ]
-    }
+    UI.createDocument "SmoothMoveScroll Diagonal Both Axis - ElmUI Example" UI.Diagonal (viewContent model)
 
 
-viewContent : Model -> Element Msg
+viewContent : Model -> List (Element Msg)
 viewContent model =
-    column
-        [ width (px 2000)
-        , spacing 40
-        , centerX
-        , htmlAttribute (Html.Attributes.class "responsive-container")
-        ]
-        [ -- Header Section
-          column
-            [ width fill
-            , spacing 20
-            , centerX
-            ]
-            [ -- Back Button
-              link
-                [ alignLeft
-                , padding 12
-                , Background.gradient
-                    { angle = 0
-                    , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                    }
-                , Font.color (rgb255 255 255 255)  
-                , Font.semiBold
-                , Border.rounded 8
-                ]
-                { url = "../../elmui-examples.html"
-                , label = text "← Back to Examples"
-                }
+        [ -- Back Button
+          UI.backButton
 
-            , -- Title
-              el
-                [ Font.size 32
-                , Font.semiBold
-                , Font.color (rgb255 30 41 59)
-                , centerX
-                , htmlAttribute (Html.Attributes.class "responsive-header")
-                ]
-                (text "Diagonal Both Axis Scrolling")
+        , -- Title
+          UI.pageHeader "Diagonal Both Axis Scrolling"
 
-            , -- Description
-              column
-                [ spacing 16
-                , width (maximum 1200 fill)
-                , centerX
-                , paddingXY 32 24
-                , Background.color (rgb255 248 250 252)
-                , Border.rounded 8
-                , Border.solid
-                , Border.width 1
-                , Border.color (rgb255 226 232 240)
-                , htmlAttribute (Html.Attributes.class "responsive-tech-info")
+        , -- Technical Info
+          UI.techInfo
+            [ UI.techParagraph
+                [ text "This example demonstrates "
+                , UI.highlight "diagonal scrolling"
+                , text " using "
+                , UI.highlight "{ axis = Both }"
+                , text ". Click any corner or center button to see smooth diagonal movement that combines X and Y axis scrolling."
                 ]
-                [ paragraph
-                    [ Font.size 16
-                    , Font.color (rgb255 71 85 105)
-                    , width fill
-                    ]
-                    [ text "This example demonstrates "
-                    , el [ Font.semiBold ] (text "diagonal scrolling")
-                    , text " using "
-                    , el [ Font.semiBold ] (text "{ axis = Both }")
-                    , text ". Click any corner or center button to see smooth diagonal movement that combines X and Y axis scrolling."
-                    ]
 
-                , paragraph
-                    [ Font.size 16
-                    , Font.color (rgb255 71 85 105)
-                    , width fill
-                    ]
-                    [ text "Perfect for layouts with both horizontal and vertical navigation, creating natural diagonal paths between any two points on the page."
-                    ]
+            , UI.techParagraph
+                [ text "Perfect for layouts with both horizontal and vertical navigation, creating natural diagonal paths between any two points on the page."
                 ]
             ]
 
-        , -- Simple Navigation Buttons
+        , -- Navigation Buttons
           column
             [ spacing 20
-            , centerX
-            , htmlAttribute (Html.Attributes.class "responsive-buttons")
             , centerX
             ]
             [ el
                 [ Font.size 18
                 , Font.semiBold
-                , Font.color (rgb255 71 85 105)
+                , Font.color Colors.textMedium
                 , centerX
                 ]
                 (text "Navigate Diagonally:")
@@ -243,61 +175,13 @@ viewContent model =
             , row
                 [ spacing 16
                 , centerX
+                , htmlAttribute (Html.Attributes.class "responsive-buttons")
                 ]
-                [ Input.button
-                    [ Background.gradient { angle = 0, steps = [ rgb255 59 130 246, rgb255 37 99 235 ] }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just ScrollToTopLeft
-                    , label = text "↖ Top Left"
-                    }
-
-                , Input.button
-                    [ Background.gradient { angle = 0, steps = [ rgb255 16 185 129, rgb255 5 150 105 ] }
-                    , Font.color (rgb255 255 255 255)  
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just ScrollToTopRight
-                    , label = text "↗ Top Right"
-                    }
-
-                , Input.button
-                    [ Background.gradient { angle = 0, steps = [ rgb255 168 85 247, rgb255 139 92 246 ] }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just ScrollToCenter
-                    , label = text "🎯 Center"
-                    }
-
-                , Input.button
-                    [ Background.gradient { angle = 0, steps = [ rgb255 245 101 101, rgb255 220 38 38 ] }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just ScrollToBottomLeft
-                    , label = text "↙ Bottom Left"
-                    }
-
-                , Input.button
-                    [ Background.gradient { angle = 0, steps = [ rgb255 251 146 60, rgb255 249 115 22 ] }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just ScrollToBottomRight
-                    , label = text "↘ Bottom Right"
-                    }
+                [ UI.actionButton UI.Primary ScrollToTopLeft "↖ Top Left"
+                , UI.actionButton UI.Success ScrollToTopRight "↗ Top Right" 
+                , UI.actionButton UI.Purple ScrollToCenter "🎯 Center"
+                , UI.actionButton UI.Warning ScrollToBottomLeft "↙ Bottom Left"
+                , UI.actionButton UI.Warning ScrollToBottomRight "↘ Bottom Right"
                 ]
             ]
 
@@ -415,108 +299,3 @@ viewCorner targetId title color contentLines =
         ]
 
 
-diagonalCSS : String
-diagonalCSS =
-    """
-    body {
-        overflow: auto !important;
-    }
-
-    .diagonal-layout {
-        min-height: 150vh;
-        min-width: 200vw;
-    }
-
-    .simple-grid {
-        padding-bottom: 300px;
-        padding-right: 300px;
-    }
-
-    /* Mobile-first responsive design matching Basic example */
-    @media (max-width: 768px) {
-        .responsive-layout {
-            padding: 20px 16px !important;
-        }
-        
-        .responsive-container {
-            gap: 20px !important;
-        }
-        
-        .responsive-header {
-            font-size: 24px !important;
-            text-align: center;
-            padding: 0 16px;
-        }
-        
-        .responsive-tech-info {
-            padding: 16px 20px !important;
-            margin: 0 16px;
-        }
-        
-        .responsive-buttons {
-            gap: 16px !important;
-            padding: 0 16px;
-        }
-        
-        .responsive-buttons button {
-            width: 100%;
-            min-height: 44px;
-            padding: 12px 20px !important;
-        }
-        
-        .responsive-paragraph {
-            padding: 20px 16px !important;
-            margin: 0 16px;
-        }
-        
-        .responsive-paragraph h1,
-        .responsive-paragraph h2,
-        .responsive-paragraph h3 {
-            font-size: 20px !important;
-        }
-        
-        .diagonal-layout {
-            padding: 10px 15px;
-            min-width: 250vw;
-        }
-        
-        .simple-grid {
-            padding-bottom: 200px;  
-            padding-right: 200px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .responsive-layout {
-            padding: 16px 12px !important;
-        }
-        
-        .responsive-header {
-            font-size: 20px !important;
-        }
-        
-        .responsive-tech-info {
-            padding: 12px 16px !important;
-            margin: 0 12px;
-        }
-        
-        .responsive-paragraph {
-            padding: 16px 12px !important;
-            margin: 0 12px;
-        }
-        
-        .responsive-buttons {
-            padding: 0 12px;
-        }
-        
-        .diagonal-layout {
-            padding: 10px;
-            min-width: 300vw;
-        }
-        
-        .simple-grid {
-            padding-bottom: 150px;
-            padding-right: 150px;
-        }
-    }
-    """

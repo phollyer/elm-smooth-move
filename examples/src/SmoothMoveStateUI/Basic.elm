@@ -21,14 +21,14 @@ USAGE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
+import Element exposing (Element, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
-import Html
 import Html.Attributes
 import SmoothMoveState
+import Common.UI as UI
+import Common.Colors as Colors
 
 
 -- MAIN
@@ -115,294 +115,79 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveState Basic ElmUI Example"
-    , body = 
-        [ Html.node "style" [] [ Html.text responsiveCSS ]
-        , layout
-            [ Background.gradient
-                { angle = 0
-                , steps = 
-                    [ rgb255 248 250 252
-                    , rgb255 226 232 240
-                    ]
-                }
-            , paddingXY 40 20
-            , htmlAttribute (Html.Attributes.class "responsive-layout")
-            ]
-            (viewContent model)
-        ]
-    }
+    UI.createDocument "SmoothMoveState Basic ElmUI Example" UI.Basic (viewContent model)
 
 
-viewContent : Model -> Element Msg
+viewContent : Model -> List (Element Msg)
 viewContent model =
     let
         position = SmoothMoveState.getPosition "moving-box" model.animationState
                   |> Maybe.withDefault { x = 0, y = 0 }
         isMoving = SmoothMoveState.isAnimating model.animationState
     in
-    column
-        [ width fill
-        , spacing 40
+    [ UI.backButton
+    , UI.pageHeader "SmoothMoveState Basic Example"
+    , UI.techInfo
+        [ paragraph []
+            [ text "This example demonstrates the SmoothMoveState module, which provides a "
+            , el [ Font.semiBold ] (text "convenience wrapper")
+            , text " around the subscription-based animation system. It offers "
+            , el [ Font.semiBold ] (text "simplified state management")
+            , text " with helper functions while maintaining frame-rate independent positioning and smooth element transitions."
+            ]
+        , paragraph []
+            [ text "Perfect for developers who want the power of subscription-based animations with "
+            , el [ Font.semiBold ] (text "reduced boilerplate")
+            , text " and easier integration into existing Elm applications."
+            ]
+        ]
+
+    , -- Position display
+      el
+        [ Font.size 14
+        , Font.color Colors.textMedium
         , centerX
-        , htmlAttribute (Html.Attributes.class "responsive-container")
         ]
-        [ -- Back Button
-          link
-            [ alignLeft
-            , padding 12
-            , Background.gradient
-                { angle = 0
-                , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                }
-            , Font.color (rgb255 255 255 255)  
-            , Font.semiBold
-            , Border.rounded 8
-            ]
-            { url = "../../elmui-examples.html"
-            , label = text "← Back to Examples"
+        (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
+
+    , -- Buttons for predefined moves
+      column
+        [ spacing 20
+        , centerX
+        ]
+        [ UI.actionButton UI.Primary MoveToCorner "Move to (100, 100)"
+        , UI.actionButton UI.Success MoveToCenter "Move to (300, 200)"
+        , UI.actionButton UI.Purple StopAnimation "Return to Origin"
+        ]
+
+    , -- Animation area with moving box
+      el
+        [ width (px 500)
+        , height (px 400)
+        , Background.color Colors.backgroundWhite
+        , Border.rounded 12
+        , Border.shadow
+            { offset = (0, 4)
+            , size = 0
+            , blur = 8
+            , color = Element.rgba 0 0 0 0.1
             }
-
-        , -- Header
-          el
-            [ Font.size 32
-            , Font.semiBold
-            , Font.color (rgb255 30 41 59)
-            , centerX
-            , htmlAttribute (Html.Attributes.class "responsive-header")
-            ]
-            (text "SmoothMoveState Basic Example")
-
-        , -- Technical information
-          column
-            [ spacing 16
-            , width (maximum 1200 fill)
-            , centerX
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
-            ]
-            [ paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveState module, which provides a "
-                , el [ Font.semiBold ] (text "convenience wrapper")
-                , text " around the subscription-based animation system. It offers "
-                , el [ Font.semiBold ] (text "simplified state management")
-                , text " with helper functions while maintaining frame-rate independent positioning and smooth element transitions."
-                ]
-
-            , paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for developers who want the power of subscription-based animations with "
-                , el [ Font.semiBold ] (text "reduced boilerplate")
-                , text " and easier integration into existing Elm applications."
-                ]
-            ]
-
-        , -- Position display
-          el
-            [ Font.size 14
-            , Font.color (rgb255 107 114 128)
-            , centerX
-            ]
-            (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
-
-        , -- Buttons for predefined moves
-          column
-            [ spacing 20
-            , centerX
-            ]
-            [ Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 59 130 246
-                        , rgb255 37 99 235
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 24 12
-                , Border.rounded 8
-                , centerX
-                ]
-                { onPress = Just MoveToCorner
-                , label = text "Move to (100, 100)"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 16 185 129
-                        , rgb255 5 150 105
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 24 12
-                , Border.rounded 8
-                , centerX
-                ]
-                { onPress = Just MoveToCenter
-                , label = text "Move to (300, 200)"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 168 85 247
-                        , rgb255 147 51 234
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 24 12
-                , Border.rounded 8
-                , centerX
-                ]
-                { onPress = Just StopAnimation
-                , label = text "Return to Origin"
-                }
-            ]
-
-        , -- Animation area with moving box
-          el
-            [ width (px 500)
-            , height (px 400)
-            , Background.color (rgb255 255 255 255)
-            , Border.rounded 12
-            , Border.shadow
-                { offset = (0, 4)
-                , size = 0
-                , blur = 8
-                , color = Element.rgba 0 0 0 0.1
-                }
-            , centerX
-            , htmlAttribute (Html.Attributes.style "position" "relative")
-            , htmlAttribute (Html.Attributes.style "overflow" "hidden")
-            ]
-            (el
-                [ width (px 50)
-                , height (px 50)
-                , Background.color (rgb255 59 130 246)
-                , Border.rounded 8
-                , htmlAttribute (Html.Attributes.id "moving-box")
-                , htmlAttribute (Html.Attributes.style "position" "absolute")
-                , htmlAttribute (Html.Attributes.style "transform" (SmoothMoveState.transform position.x position.y))
-                , htmlAttribute (Html.Attributes.style "transition" "none")
-                ]
-                (text "")
-            )
+        , centerX
+        , htmlAttribute (Html.Attributes.style "position" "relative")
+        , htmlAttribute (Html.Attributes.style "overflow" "hidden")
         ]
+        (el
+            [ width (px 50)
+            , height (px 50)
+            , Background.color Colors.primary
+            , Border.rounded 8
+            , htmlAttribute (Html.Attributes.id "moving-box")
+            , htmlAttribute (Html.Attributes.style "position" "absolute")
+            , htmlAttribute (Html.Attributes.style "transform" (SmoothMoveState.transform position.x position.y))
+            , htmlAttribute (Html.Attributes.style "transition" "none")
+            ]
+            (text "")
+        )
+    ]
 
 
-responsiveCSS : String
-responsiveCSS =
-    """
-    <style>
-    .responsive-layout {
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    
-    .responsive-container {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-    }
-    
-    .responsive-header {
-        font-size: 32px;
-        line-height: 1.2;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-tech-info {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons > * {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    .responsive-paragraph {
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-    
-    /* Tablet breakpoint */
-    @media (max-width: 768px) {
-        .responsive-layout {
-            padding: 16px;
-        }
-        
-        .responsive-header {
-            font-size: 24px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-tech-info {
-            padding: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 24px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 16px;
-        }
-    }
-    
-    /* Mobile breakpoint */
-    @media (max-width: 480px) {
-        .responsive-layout {
-            padding: 12px;
-        }
-        
-        .responsive-header {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-tech-info {
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 20px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 14px;
-        }
-    }
-    </style>
-    """

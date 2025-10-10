@@ -26,6 +26,10 @@ import Html.Attributes
 import Json.Decode as Decode
 import SmoothMovePorts
 
+-- Common UI imports
+import Common.UI as UI
+import Common.Colors as Colors
+
 
 -- PORTS
 
@@ -216,26 +220,13 @@ subscriptions _ =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMovePorts Multiple ElmUI Example"
-    , body = 
-        [ Html.node "style" [] [ Html.text responsiveCSS ]
-        , layout
-            [ Background.gradient
-                { angle = 0
-                , steps = 
-                    [ rgb255 248 250 252
-                    , rgb255 226 232 240
-                    ]
-                }
-            , paddingXY 40 20
-            , htmlAttribute (Html.Attributes.class "responsive-layout")
-            ]
-            (viewContent model)
-        ]
-    }
+    UI.createDocument 
+        "SmoothMovePorts Multiple ElmUI Example"
+        UI.Basic
+        (viewContent model)
 
 
-viewContent : Model -> Element Msg
+viewContent : Model -> List (Element Msg)
 viewContent model =
     let
         positionA = SmoothMovePorts.getPosition "element-a" model.animations
@@ -253,214 +244,121 @@ viewContent model =
 
         isAnimating = SmoothMovePorts.isAnimating model.animations
     in
-    column
-        [ width fill
-        , spacing 40
-        , centerX
-        , htmlAttribute (Html.Attributes.class "responsive-container")
+    [ UI.backButton
+    , UI.pageHeader "SmoothMovePorts Multiple Example"
+    , UI.techInfo
+        [ paragraph
+            [ Font.size 16
+            , Font.color Colors.textMedium
+            , width fill
+            ]
+            [ text "This example demonstrates the SmoothMovePorts module orchestrating "
+            , el [ Font.semiBold ] (text "multiple elements simultaneously")
+            , text " via the Web Animations API. Each element receives "
+            , el [ Font.semiBold ] (text "real-time position feedback")
+            , text " through JavaScript ports, enabling advanced animation coordination and platform-specific optimizations."
+            ]
+
+        , paragraph
+            [ Font.size 16
+            , Font.color Colors.textMedium
+            , width fill
+            ]
+            [ text "Perfect for complex choreographed animations requiring "
+            , el [ Font.semiBold ] (text "native performance")
+            , text " and advanced timing controls. "
+            , el [ Font.color Colors.warning, Font.semiBold ] (text "⚠️ Requires smooth-move-ports.js")
+            , text " to be loaded for full functionality."
+            ]
         ]
-        [ -- Back button
-          link
-            [ alignLeft
-            , padding 12
-            , Background.gradient
-                { angle = 0
-                , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                }
-            , Font.color (rgb255 255 255 255)  
-            , Font.semiBold
-            , Border.rounded 8
-            , htmlAttribute (Html.Attributes.id "top")
+
+    , -- Element status and positions (6 elements in 2 rows)
+      column
+        [ spacing 20
+        , centerX
+        ]
+        [ row
+            [ spacing 25
+            , centerX
             ]
-            { url = "../../elmui-examples.html"
-            , label = text "← Back to Examples"
+            [ column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.primary ] (text "A")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.success ] (text "B")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.purple ] (text "C")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
+                ]
+            ]
+
+        , row
+            [ spacing 25
+            , centerX
+            ]
+            [ column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.warning ] (text "D")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.warningDark ] (text "E")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.successDark ] (text "F")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
+                ]
+            ]
+        ]
+
+    , -- Control buttons
+      column
+        [ spacing 15
+        , centerX
+        ]
+        [ row
+            [ spacing 15 ]
+            [ UI.actionButton UI.Primary Scatter "Scatter"
+            , UI.actionButton UI.Success Circle "Circle Formation"
+            , UI.actionButton UI.Purple Reset "Reset"
+            ]
+        ]
+
+    , -- Animation area with moving elements
+      el
+        [ width (fill |> maximum 500)
+        , height (px 400)
+        , centerX
+        , Background.color Colors.backgroundWhite
+        , Border.rounded 12
+        , Border.shadow
+            { offset = (0, 4)
+            , size = 0
+            , blur = 8
+            , color = Element.rgba 0 0 0 0.1
             }
-        
-        , -- Header
-          el
-            [ Font.size 32
-            , Font.semiBold
-            , Font.color (rgb255 30 41 59)
-            , centerX
-            , htmlAttribute (Html.Attributes.class "responsive-header")
-            ]
-            (text "SmoothMovePorts Multiple Example")
-
-        , -- Technical information
-          column
-            [ spacing 16
-            , width (maximum 1200 fill)
-            , centerX
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
-            ]
-            [ paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMovePorts module orchestrating "
-                , el [ Font.semiBold ] (text "multiple elements simultaneously")
-                , text " via the Web Animations API. Each element receives "
-                , el [ Font.semiBold ] (text "real-time position feedback")
-                , text " through JavaScript ports, enabling advanced animation coordination and platform-specific optimizations."
-                ]
-
-            , paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for complex choreographed animations requiring "
-                , el [ Font.semiBold ] (text "native performance")
-                , text " and advanced timing controls. "
-                , el [ Font.color (rgb255 239 68 68), Font.semiBold ] (text "⚠️ Requires smooth-move-ports.js")
-                , text " to be loaded for full functionality."
-                ]
-            ]
-
-        , -- Element status and positions (6 elements in 2 rows)
-          column
-            [ spacing 20
-            , centerX
-            ]
-            [ row
-                [ spacing 25
-                , centerX
-                ]
-                [ column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 59 130 246) ] (text "A")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
-                    ]
-                ]
-
-            , row
-                [ spacing 25
-                , centerX
-                ]
-                [ column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
-                    ]
-                ]
-            ]
-
-        , -- Control buttons
-          column
-            [ spacing 15
-            , centerX
-            ]
-            [ row
-                [ spacing 15 ]
-                [ Input.button
-                    [ Background.gradient
-                        { angle = 0
-                        , steps = 
-                            [ rgb255 59 130 246
-                            , rgb255 37 99 235
-                            ]
-                        }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just Scatter
-                    , label = text "Scatter"
-                    }
-
-                , Input.button
-                    [ Background.gradient
-                        { angle = 0
-                        , steps = 
-                            [ rgb255 16 185 129
-                            , rgb255 5 150 105
-                            ]
-                        }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just Circle
-                    , label = text "Circle Formation"
-                    }
-
-                , Input.button
-                    [ Background.gradient
-                        { angle = 0
-                        , steps = 
-                            [ rgb255 168 85 247
-                            , rgb255 147 51 234
-                            ]
-                        }
-                    , Font.color (rgb255 255 255 255)
-                    , Font.medium
-                    , paddingXY 20 12
-                    , Border.rounded 8
-                    ]
-                    { onPress = Just Reset
-                    , label = text "Reset"
-                    }
-                ]
-
-
-            ]
-
-        , -- Animation area with moving elements
-          el
-            [ width (fill |> maximum 500)
-            , height (px 400)
-            , centerX
-            , Background.color (rgb255 255 255 255)
-            , Border.rounded 12
-            , Border.shadow
-                { offset = (0, 4)
-                , size = 0
-                , blur = 8
-                , color = Element.rgba 0 0 0 0.1
-                }
-            , htmlAttribute (Html.Attributes.style "position" "relative")
-            , htmlAttribute (Html.Attributes.style "overflow" "hidden")
-            , htmlAttribute (Html.Attributes.class "responsive-animation-container")
-            ]
+        , htmlAttribute (Html.Attributes.style "position" "relative")
+        , htmlAttribute (Html.Attributes.style "overflow" "hidden")
+        ]
             (Element.html
                 (Html.div
                     [ Html.Attributes.style "position" "relative"
@@ -583,118 +481,4 @@ viewContent model =
                     ]
                 )
             )
-        ]
-
-
-responsiveCSS : String
-responsiveCSS =
-    """
-    <style>
-    .responsive-layout {
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    
-    .responsive-container {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-    }
-    
-    .responsive-header {
-        font-size: 32px;
-        line-height: 1.2;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-tech-info {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons > * {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    .responsive-paragraph {
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-    
-    .responsive-animation-container {
-        max-width: 100%;
-        min-width: 300px;
-    }
-    
-    /* Tablet breakpoint */
-    @media (max-width: 768px) {
-        .responsive-layout {
-            padding: 16px;
-        }
-        
-        .responsive-header {
-            font-size: 24px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-tech-info {
-            padding: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 24px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 16px;
-        }
-        
-        .responsive-animation-container {
-            height: 300px !important;
-        }
-    }
-    
-    /* Mobile breakpoint */
-    @media (max-width: 480px) {
-        .responsive-layout {
-            padding: 12px;
-        }
-        
-        .responsive-header {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-tech-info {
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 20px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 14px;
-        }
-        
-        .responsive-animation-container {
-            height: 250px !important;
-            min-width: 280px;
-        }
-    }
-    </style>
-    """
+    ]

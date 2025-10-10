@@ -18,14 +18,15 @@ ARCHITECTURE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
+import Element exposing (Element, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, padding, paragraph, maximum)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
 import Html
 import Html.Attributes
 import SmoothMoveSub exposing (transform, animateTo, isAnimating, getPosition, setInitialPosition)
+import Common.UI as UI
+import Common.Colors as Colors
 
 
 -- MAIN
@@ -148,26 +149,10 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveSub Multiple ElmUI Example"
-    , body = 
-        [ Html.node "style" [] [ Html.text responsiveCSS ]
-        , layout
-            [ Background.gradient
-                { angle = 0
-                , steps = 
-                    [ rgb255 248 250 252
-                    , rgb255 226 232 240
-                    ]
-                }
-            , paddingXY 40 20
-            , htmlAttribute (Html.Attributes.class "responsive-layout")
-            ]
-            (viewContent model)
-        ]
-    }
+    UI.createDocument "SmoothMoveSub Multiple ElmUI Example" UI.Basic (viewContent model)
 
 
-viewContent : Model -> Element Msg
+viewContent : Model -> List (Element Msg)
 viewContent model =
     let
         positionA = getPosition "element-a" model.smoothMove |> Maybe.withDefault { x = 150, y = 100 }
@@ -180,206 +165,109 @@ viewContent model =
         -- isAnimating only takes the model, checks if any element is animating
         isMoving = isAnimating model.smoothMove
     in
-    column
-        [ width fill
-        , spacing 40
-        , centerX
-        , htmlAttribute (Html.Attributes.class "responsive-container")
+    [ UI.backButton
+    , UI.pageHeader "SmoothMoveSub Multiple Example"
+
+    , UI.techInfo
+        [ paragraph []
+            [ text "This example demonstrates the SmoothMoveSub module coordinating "
+            , el [ Font.semiBold ] (text "multiple elements simultaneously")
+            , text " with subscription-based animations. Each element receives "
+            , el [ Font.semiBold ] (text "frame-rate independent updates")
+            , text ", ensuring smooth formation control and synchronized movement patterns across different device capabilities."
+            ]
+        , paragraph []
+            [ text "Perfect for complex choreographed animations where "
+            , el [ Font.semiBold ] (text "precise timing synchronization")
+            , text " and real-time positioning control are essential requirements."
+            ]
         ]
-        [ -- Back Button
-          link
-            [ alignLeft
-            , padding 12
-            , Background.gradient
-                { angle = 0
-                , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                }
-            , Font.color (rgb255 255 255 255)  
-            , Font.semiBold
-            , Border.rounded 8
+
+    , -- Element status and positions (6 elements in 2 rows)
+      column
+        [ spacing 20
+        , centerX
+        ]
+        [ row
+            [ spacing 25
+            , centerX
             ]
-            { url = "../../elmui-examples.html"
-            , label = text "← Back to Examples"
+            [ column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.primary ] (text "A")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.success ] (text "B")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.purple ] (text "C")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
+                ]
+            ]
+
+        , row
+            [ spacing 25
+            , centerX
+            ]
+            [ column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.warning ] (text "D")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.warning ] (text "E")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
+                ]
+
+            , column
+                [ spacing 6 ]
+                [ el [ Font.size 14, Font.medium, Font.color Colors.success ] (text "F")
+                , el [ Font.size 10, Font.color Colors.textMedium ]
+                    (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
+                ]
+            ]
+        ]
+
+    , -- Control buttons
+      row
+        [ spacing 15
+        , centerX
+        ]
+        [ UI.actionButton UI.Primary ScatterElements "Scatter"
+        , UI.actionButton UI.Success CircleFormation "Circle Formation"
+        , UI.actionButton UI.Purple ResetPositions "Reset"
+        ]
+
+    , -- Animation area with moving elements
+      el
+        [ width (fill |> maximum 500)
+        , height (px 400)
+        , centerX
+        , Background.color Colors.backgroundWhite
+        , Border.rounded 12
+        , Border.shadow
+            { offset = (0, 4)
+            , size = 0
+            , blur = 8
+            , color = Element.rgba 0 0 0 0.1
             }
-
-        , -- Header
-          el
-            [ Font.size 32
-            , Font.semiBold
-            , Font.color (rgb255 30 41 59)
-            , centerX
-            , htmlAttribute (Html.Attributes.class "responsive-header")
-            ]
-            (text "SmoothMoveSub Multiple Example")
-
-        , -- Technical information
-          column
-            [ spacing 16
-            , width (maximum 1200 fill)
-            , centerX
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , Border.rounded 8
-            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveSub module coordinating "
-                , el [ Font.semiBold ] (text "multiple elements simultaneously")
-                , text " with subscription-based animations. Each element receives "
-                , el [ Font.semiBold ] (text "frame-rate independent updates")
-                , text ", ensuring smooth formation control and synchronized movement patterns across different device capabilities."
-                ]
-
-            , paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for complex choreographed animations where "
-                , el [ Font.semiBold ] (text "precise timing synchronization")
-                , text " and real-time positioning control are essential requirements."
-                ]
-            ]
-
-        , -- Element status and positions (6 elements in 2 rows)
-          column
-            [ spacing 20
-            , centerX
-            ]
-            [ row
-                [ spacing 25
-                , centerX
-                ]
-                [ column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 59 130 246) ] (text "A")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
-                    ]
-                ]
-
-            , row
-                [ spacing 25
-                , centerX
-                ]
-                [ column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 245 101 101) ] (text "D")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
-                    ]
-
-                , column
-                    [ spacing 6 ]
-                    [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
-                    , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
-                        (text ("(" ++ String.fromInt (round positionF.x) ++ "," ++ String.fromInt (round positionF.y) ++ ")"))
-                    ]
-                ]
-            ]
-
-        , -- Control buttons
-          row
-            [ spacing 15
-            , centerX
-            ]
-            [ Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 59 130 246
-                        , rgb255 37 99 235
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just ScatterElements
-                , label = text "Scatter"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 16 185 129
-                        , rgb255 5 150 105
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just CircleFormation
-                , label = text "Circle Formation"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 168 85 247
-                        , rgb255 147 51 234
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just ResetPositions
-                , label = text "Reset"
-                }
-            ]
-
-        , -- Animation area with moving elements
-          el
-            [ width (fill |> maximum 500)
-            , height (px 400)
-            , centerX
-            , Background.color (rgb255 255 255 255)
-            , Border.rounded 12
-            , Border.shadow
-                { offset = (0, 4)
-                , size = 0
-                , blur = 8
-                , color = Element.rgba 0 0 0 0.1
-                }
-            , htmlAttribute (Html.Attributes.style "position" "relative")
-            , htmlAttribute (Html.Attributes.style "overflow" "hidden")
-            , htmlAttribute (Html.Attributes.class "responsive-animation-container")
-            ]
+        , htmlAttribute (Html.Attributes.style "position" "relative")
+        , htmlAttribute (Html.Attributes.style "overflow" "hidden")
+        , htmlAttribute (Html.Attributes.class "responsive-animation-container")
+        ]
             (Element.html
                 (Html.div
                     [ Html.Attributes.style "position" "relative"
@@ -502,121 +390,4 @@ viewContent model =
                     ]
                 )
             )
-        ]
-
-
--- RESPONSIVE CSS
-
-
-responsiveCSS : String
-responsiveCSS =
-    """
-    <style>
-    .responsive-layout {
-        min-height: 100vh;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    
-    .responsive-container {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-    }
-    
-    .responsive-header {
-        font-size: 32px;
-        line-height: 1.2;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-tech-info {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-    
-    .responsive-buttons > * {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    .responsive-paragraph {
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-    
-    .responsive-animation-container {
-        max-width: 100%;
-        min-width: 300px;
-    }
-    
-    /* Tablet breakpoint */
-    @media (max-width: 768px) {
-        .responsive-layout {
-            padding: 16px;
-        }
-        
-        .responsive-header {
-            font-size: 24px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-tech-info {
-            padding: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 24px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 16px;
-        }
-        
-        .responsive-animation-container {
-            height: 300px !important;
-        }
-    }
-    
-    /* Mobile breakpoint */
-    @media (max-width: 480px) {
-        .responsive-layout {
-            padding: 12px;
-        }
-        
-        .responsive-header {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-tech-info {
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .responsive-buttons {
-            margin-bottom: 20px;
-        }
-        
-        .responsive-paragraph {
-            margin-bottom: 14px;
-        }
-        
-        .responsive-animation-container {
-            height: 250px !important;
-            min-width: 280px;
-        }
-    }
-    </style>
-    """
+    ]

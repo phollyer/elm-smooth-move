@@ -10,6 +10,9 @@ import Element.Input as Input
 import Html
 import Html.Attributes
 import SmoothMoveScroll exposing (animateToCmdWithConfig, containerElement, defaultConfig, setContainer)
+import Common.UI as UI
+import Common.Colors as Colors
+import Common.Styles as Styles
 
 
 
@@ -78,195 +81,49 @@ update msg model =
 
 view : Model -> Document Msg
 view model =
-    { title = "SmoothMoveScroll - Container Scrolling (ElmUI)"
-    , body =
-        [ Html.node "style" [] [ Html.text responsiveCSS ]
-        , Element.layout
-            [ Font.family
-                [ Font.external
-                    { name = "Inter"
-                    , url = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-                    }
-                , Font.sansSerif
-                ]
-            , Background.color (rgb255 248 250 252)
-            , width fill
-            , height fill
-            , htmlAttribute (Html.Attributes.class "responsive-layout")
-            ]
-            (Element.column
-                [ width fill
-                , height fill
-                , spacing 0
-                ]
-                [ -- Back button
-                  link
-                            [ alignLeft
-                            ,padding 12
-                            , Background.gradient
-                                { angle = 0
-                                , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                                }
-                            , Font.color (rgb255 255 255 255)
-                            , Font.semiBold
-                            , Border.rounded 8
-                            , htmlAttribute (Html.Attributes.id "top")
-                            ]
-                            { url = "../../elmui-examples.html"
-                            , label = text "← Back to Examples"
-                            }
-                        
-                    )
-                , -- Main content centered
-                  Element.column
-                    [ width (fill |> maximum 1200)
-                    , height fill
-                    , paddingXY 40 20
-                    , spacing 30
-                    , centerX
-                    , htmlAttribute (Html.Attributes.class "main-content responsive-container")
+    UI.createDocument "SmoothMoveScroll - Container Scrolling (ElmUI)" UI.Container (viewContent model)
+                
+
+viewContent : Model -> List (Element Msg)
+viewContent model =
+    [ UI.backButton
+                , UI.pageHeader "SmoothMoveScroll - Container Example"
+
+                , UI.techInfo
+                    [ UI.techParagraph
+                        [ text "This example demonstrates the SmoothMoveScroll module handling "
+                        , UI.highlight "container-specific scrolling"
+                        , text " with boundary detection and viewport calculations. It provides "
+                        , UI.highlight "precise element positioning"
+                        , text " within scrollable containers while respecting container bounds and scroll limits."
+                        ]
+                    , UI.techParagraph
+                        [ text "Perfect for applications with "
+                        , UI.highlight "nested scrollable content"
+                        , text " requiring smooth navigation within constrained viewport areas and complex layout hierarchies."
+                        ]
                     ]
-                        [ el
-                            [ Font.size 32
-                            , Font.bold
-                            , Font.color (rgb255 30 41 59)
-                            , centerX
-                            , htmlAttribute (Html.Attributes.class "responsive-header")
-                            ]
-                            (text "SmoothMoveScroll - Container Example")
 
-                        -- Technical information
-                        , column
-                            [ spacing 16
-                            , width (maximum 1200 fill)
-                            , centerX
-                            , paddingXY 32 24
-                            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
-                            , Background.color (rgb255 248 250 252)
-                            , Border.rounded 8
-                            , Border.solid
-                            , Border.width 1
-                            , Border.color (rgb255 226 232 240)
-                            ]
-                            [ paragraph
-                                [ Font.size 16
-                                , Font.color (rgb255 71 85 105)
-                                , width fill
-                                , htmlAttribute (Html.Attributes.class "responsive-paragraph")
-                                ]
-                                [ text "This example demonstrates the SmoothMoveScroll module handling "
-                                , el [ Font.semiBold ] (text "container-specific scrolling")
-                                , text " with boundary detection and viewport calculations. It provides "
-                                , el [ Font.semiBold ] (text "precise element positioning")
-                                , text " within scrollable containers while respecting container bounds and scroll limits."
-                                ]
-                            , paragraph
-                                [ Font.size 16
-                                , Font.color (rgb255 71 85 105)
-                                , width fill
-                                , htmlAttribute (Html.Attributes.class "responsive-paragraph")
-                                ]
-                                [ text "Perfect for applications with "
-                                , el [ Font.semiBold ] (text "nested scrollable content")
-                                , text " requiring smooth navigation within constrained viewport areas and complex layout hierarchies."
-                                ]
-                            ]
+                , row
+                    [ centerX
+                    , spacing 20
+                    , htmlAttribute (Html.Attributes.class "responsive-buttons")
+                    ]
+                    [ UI.actionButton UI.Primary ScrollToTop "Scroll to Top"
+                    , UI.actionButton UI.Success ScrollToMiddle "Scroll to Middle"
+                    , UI.actionButton UI.Purple ScrollToBottom "Scroll to Bottom"
+                    ]
 
-                        -- Control buttons
-                        , row
-                            [ centerX
-                            , htmlAttribute (Html.Attributes.class "responsive-buttons")
-                            ]
-                            [ Input.button
-                                [ Background.gradient
-                                    { angle = 135
-                                    , steps =
-                                        [ rgb255 116 185 255
-                                        , rgb255 9 132 227
-                                        ]
-                                    }
-                                , Font.color (rgb255 255 255 255)
-                                , Font.semiBold
-                                , paddingXY 30 15
-                                , Border.rounded 8
-                                , htmlAttribute (Html.Attributes.class "button-responsive")
-                                , mouseOver
-                                    [ moveUp 2
-                                    , Border.shadow
-                                        { offset = ( 0, 4 )
-                                        , size = 0
-                                        , blur = 15
-                                        , color = rgba255 116 185 255 0.4
-                                        }
-                                    ]
-                                ]
-                                { onPress = Just ScrollToTop
-                                , label = text "Scroll to Top"
-                                }
-                            , Input.button
-                                [ Background.gradient
-                                    { angle = 135
-                                    , steps =
-                                        [ rgb255 0 184 148
-                                        , rgb255 0 160 133
-                                        ]
-                                    }
-                                , Font.color (rgb255 255 255 255)
-                                , Font.semiBold
-                                , paddingXY 30 15
-                                , Border.rounded 8
-                                , htmlAttribute (Html.Attributes.class "button-responsive")
-                                , mouseOver
-                                    [ moveUp 2
-                                    , Border.shadow
-                                        { offset = ( 0, 4 )
-                                        , size = 0
-                                        , blur = 15
-                                        , color = rgba255 0 184 148 0.4
-                                        }
-                                    ]
-                                ]
-                                { onPress = Just ScrollToMiddle
-                                , label = text "Scroll to Middle"
-                                }
-                            , Input.button
-                                [ Background.gradient
-                                    { angle = 135
-                                    , steps =
-                                        [ rgb255 253 121 168
-                                        , rgb255 232 67 147
-                                        ]
-                                    }
-                                , Font.color (rgb255 255 255 255)
-                                , Font.semiBold
-                                , paddingXY 30 15
-                                , Border.rounded 8
-                                , htmlAttribute (Html.Attributes.class "button-responsive")
-                                , mouseOver
-                                    [ moveUp 2
-                                    , Border.shadow
-                                        { offset = ( 0, 4 )
-                                        , size = 0
-                                        , blur = 15
-                                        , color = rgba255 253 121 168 0.4
-                                        }
-                                    ]
-                                ]
-                                { onPress = Just ScrollToBottom
-                                , label = text "Scroll to Bottom"
-                                }
-                            ]
-
-                        -- The scrollable container
-                        , el [ width fill, htmlAttribute (Html.Attributes.class "scroll-container-wrapper") ] <|
+                , -- The scrollable container
+                  el [ width fill, htmlAttribute (Html.Attributes.class "scroll-container-wrapper") ] <|
                             el
                                 [ htmlAttribute (Html.Attributes.id "scroll-container")
                                 , width fill
                                 , height (px 600)
                                 , Border.width 2
-                                , Border.color (rgb255 222 226 230)
+                                , Border.color Colors.borderMedium
                                 , Border.rounded 12
-                                , Background.color (rgb255 255 255 255)
+                                , Background.color Colors.backgroundWhite
                                 , Border.shadow
                                     { offset = ( 0, 4 )
                                     , size = 0
@@ -288,11 +145,11 @@ view model =
                                         , Background.gradient
                                             { angle = 180
                                             , steps =
-                                                [ rgb255 255 255 255
-                                                , rgb255 240 249 255
+                                                [ Colors.backgroundWhite
+                                                , Colors.primaryLight
                                                 ]
                                             }
-                                        , Border.color (rgb255 59 130 246)
+                                        , Border.color Colors.primary
                                         , Border.width 2
                                         , Border.rounded 12
                                         , padding 25
@@ -303,13 +160,13 @@ view model =
                                             [ el
                                                 [ Font.size 24
                                                 , Font.bold
-                                                , Font.color (rgb255 30 64 175)
+                                                 , Font.color Colors.primary
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-title")
                                                 ]
                                                 (text "🔝 Top of Container")
                                             , paragraph
                                                 [ Font.size 16
-                                                , Font.color (rgb255 30 58 138)
+                                                 , Font.color Colors.primary
                                                 , spacing 6
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
@@ -317,7 +174,7 @@ view model =
                                                 [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
                                             , paragraph
                                                 [ Font.size 16
-                                                , Font.color (rgb255 30 58 138)
+                                                 , Font.color Colors.primary
                                                 , spacing 6
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
@@ -338,11 +195,11 @@ view model =
                                         , Background.gradient
                                             { angle = 180
                                             , steps =
-                                                [ rgb255 240 253 250
-                                                , rgb255 209 250 229
+                                                 [ Colors.backgroundWhite
+                                                 , Colors.primaryLight
                                                 ]
                                             }
-                                        , Border.color (rgb255 0 184 148)
+                                        , Border.color Colors.success
                                         , Border.width 2
                                         , Border.rounded 12
                                         , padding 25
@@ -353,21 +210,21 @@ view model =
                                             [ el
                                                 [ Font.size 24
                                                 , Font.bold
-                                                , Font.color (rgb255 6 95 70)
+                                                , Font.color Colors.successDark
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-title")
                                                 ]
                                                 (text "🎯 Content Block 4 - Middle Target")
                                             , paragraph
                                                 [ Font.size 16
-                                                , Font.color (rgb255 6 95 70)
+                                                , Font.color Colors.successDark
                                                 , spacing 6
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
                                                 ]
                                                 [ text "This is the middle target of our scrollable content - Content block 4 demonstrates the progression through the gradient with ElmUI styling." ]
-                                            , paragraph
+                                             , paragraph
                                                 [ Font.size 16
-                                                , Font.color (rgb255 6 95 70)
+                                                , Font.color Colors.successDark
                                                 , spacing 6
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
@@ -392,14 +249,14 @@ view model =
                                     , el
                                         [ htmlAttribute (Html.Attributes.id "bottom-element")
                                         , width fill
-                                        , Background.gradient
-                                            { angle = 180
-                                            , steps =
-                                                [ rgb255 254 242 242
-                                                , rgb255 239 68 68
-                                                ]
-                                            }
-                                        , Border.color (rgb255 220 38 38)
+                                         , Background.gradient
+                                             { angle = 180
+                                             , steps =
+                                                 [ Colors.backgroundWhite
+                                                 , Colors.warning
+                                                 ]
+                                             }
+                                         , Border.color Colors.warningDark
                                         , Border.width 2
                                         , Border.rounded 12
                                         , padding 25
@@ -410,13 +267,13 @@ view model =
                                             [ el
                                                 [ Font.size 24
                                                 , Font.bold
-                                                , Font.color (rgb255 153 27 27)
+                                                 , Font.color Colors.warningDark
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-title")
                                                 ]
                                                 (text "🔻 Bottom of Container")
                                             , paragraph
                                                 [ Font.size 16
-                                                , Font.color (rgb255 153 27 27)
+                                                 , Font.color Colors.warningDark
                                                 , spacing 6
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
@@ -424,7 +281,7 @@ view model =
                                                 [ text "This is the bottom of the scrollable container content. Notice the dark background created with ElmUI gradients." ]
                                             , paragraph
                                                 [ Font.size 16
-                                                , Font.color (rgb255 153 27 27)
+                                                 , Font.color Colors.warningDark
                                                 , spacing 6
                                                 , width fill
                                                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
@@ -442,11 +299,7 @@ view model =
                                         )
                                     ]
                                 )
-                        ]
                 ]
-            )
-        ]
-    }
 
 
 
@@ -460,11 +313,11 @@ contentBlock num description =
         , Background.gradient
             { angle = 180
             , steps =
-                [ rgb255 255 255 255
-                , rgb255 243 244 246
+                [ Colors.backgroundWhite
+                , Colors.backgroundLight
                 ]
             }
-        , Border.color (rgb255 209 213 219)
+        , Border.color Colors.borderMedium
         , Border.width 1
         , Border.rounded 8
         , padding 20
@@ -478,13 +331,13 @@ contentBlock num description =
             [ el
                 [ Font.size 20
                 , Font.semiBold
-                , Font.color (rgb255 55 65 81)
+                , Font.color Colors.textDark
                 , htmlAttribute (Html.Attributes.class "responsive-content-title")
                 ]
                 (text ("Content Block " ++ String.fromInt num))
             , paragraph
                 [ Font.size 16
-                , Font.color (rgb255 75 85 99)
+                , Font.color Colors.textMedium
                 , spacing 6
                 , width fill
                 , htmlAttribute (Html.Attributes.class "responsive-content-description")
@@ -512,13 +365,13 @@ bulletPoint text_ =
         ]
         [ el
             [ Font.size 16
-            , Font.color (rgb255 139 69 19)
+            , Font.color Colors.warning
             , alignTop
             ]
             (text "•")
         , paragraph
             [ Font.size 16
-            , Font.color (rgb255 107 114 128)
+            , Font.color Colors.textMedium
             , width fill
             ]
             [ text text_ ]
