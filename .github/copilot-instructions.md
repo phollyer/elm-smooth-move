@@ -69,6 +69,7 @@ moveToWithOptions { defaultConfig | speed = 500, axis = Both } "element-id" 0 0 
   - `SmoothMoveState/` - State-based examples (Basic.elm, Multiple.elm)  
   - `SmoothMoveCSS/` - CSS-based examples (Basic.elm, Multiple.elm)
   - `SmoothMovePorts/` - Ports-based examples (Basic.elm, Multiple.elm, README.md, smooth-move-ports.js)
+  - `Common/` - Reusable functions for duplicated code in the examples.
 - **Compilation**: `elm make examples/src/SmoothMoveScroll/Basic.elm`
 - **Development**: `elm reactor` from `examples/` directory
 
@@ -110,6 +111,7 @@ src/
 └── SmoothMovePorts.elm       - Ports-based Web Animations API
 
 examples/src/
+├── Common/               - Reusable functions for duplicated code in the examples.
 ├── SmoothMoveScroll/           - Task examples (Basic.elm, Container.elm)
 ├── SmoothMoveSub/            - Subscription examples (Basic.elm, Multiple.elm)
 ├── SmoothMoveState/          - State examples (Basic.elm, Multiple.elm)
