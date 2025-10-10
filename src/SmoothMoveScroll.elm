@@ -52,7 +52,7 @@ Key features:
 
 import Browser.Dom as Dom
 import Ease
-import Internal.SmoothScroll exposing (animationSteps)
+import Internal.SmoothScroll exposing (animationSteps, animationStepsWithFrames)
 import Task exposing (Task)
 
 
@@ -62,16 +62,18 @@ This module provides both simple Cmd-based functions (recommended for most users
 and advanced Task-based functions (for composition and custom error handling).
 
   - speed: Animation speed divider (lower = faster, higher = slower)
-  - offset: Vertical offset in pixels from the target position
+  - offsetX: Horizontal offset in pixels from the target position
+  - offsetY: Vertical offset in pixels from the target position
   - easing: Easing function from [elm-community/easing-functions](https://package.elm-lang.org/packages/elm-community/easing-functions/latest/)
-  - axis: Movement axis (Y for scrolling, X for horizontal)
+  - axis: Movement axis (Y for scrolling, X for horizontal, Both for diagonal)
   - container: Which element to scroll within (document body or container)
   - scrollBar: Whether to show scrollbar during animation
 
 -}
 type alias Config =
     { speed : Int
-    , offset : Int
+    , offsetX : Int
+    , offsetY : Int
     , easing : Ease.Easing
     , axis : Axis
     , container : Container
@@ -129,7 +131,8 @@ type Container
     defaultConfig : Config
     defaultConfig =
         { speed = 200
-        , offset = 12
+        , offsetX = 0
+        , offsetY = 12
         , easing = Ease.outQuint
         , container = DocumentBody
         , axis = Y
@@ -140,7 +143,8 @@ type Container
 defaultConfig : Config
 defaultConfig =
     { speed = 200
-    , offset = 12
+    , offsetX = 0
+    , offsetY = 12
     , easing = Ease.outQuint
     , container = DocumentBody
     , axis = Y
@@ -249,13 +253,13 @@ animateToTaskWithConfig config id =
                 ( targetX, targetY ) =
                     case container of
                         Nothing ->
-                            ( element.x - toFloat config.offset
-                            , element.y - toFloat config.offset
+                            ( element.x - toFloat config.offsetX
+                            , element.y - toFloat config.offsetY
                             )
 
                         Just containerInfo ->
-                            ( viewport.x + element.x - toFloat config.offset - containerInfo.element.x
-                            , viewport.y + element.y - toFloat config.offset - containerInfo.element.y
+                            ( viewport.x + element.x - toFloat config.offsetX - containerInfo.element.x
+                            , viewport.y + element.y - toFloat config.offsetY - containerInfo.element.y
                             )
 
                 ( clampedX, clampedY ) =
@@ -283,11 +287,26 @@ animateToTaskWithConfig config id =
 
                                 Both ->
                                     let
+                                        -- Calculate the maximum distance to determine frame count
+                                        xDistance =
+                                            abs (viewport.x - clampedX)
+
+                                        yDistance =
+                                            abs (viewport.y - clampedY)
+
+                                        maxDistance =
+                                            max xDistance yDistance
+
+                                        -- Use the same frame count for both axes to ensure synchronization
+                                        frames =
+                                            Basics.max 1 (round maxDistance // config.speed)
+
+                                        -- Generate synchronized steps
                                         xSteps =
-                                            animationSteps config.speed config.easing viewport.x clampedX
+                                            animationStepsWithFrames frames config.easing viewport.x clampedX
 
                                         ySteps =
-                                            animationSteps config.speed config.easing viewport.y clampedY
+                                            animationStepsWithFrames frames config.easing viewport.y clampedY
                                     in
                                     List.map2 Dom.setViewport xSteps ySteps
                                         |> Task.sequence
@@ -306,11 +325,26 @@ animateToTaskWithConfig config id =
 
                                 Both ->
                                     let
+                                        -- Calculate the maximum distance to determine frame count
+                                        xDistance =
+                                            abs (viewport.x - clampedX)
+
+                                        yDistance =
+                                            abs (viewport.y - clampedY)
+
+                                        maxDistance =
+                                            max xDistance yDistance
+
+                                        -- Use the same frame count for both axes to ensure synchronization
+                                        frames =
+                                            Basics.max 1 (round maxDistance // config.speed)
+
+                                        -- Generate synchronized steps
                                         xSteps =
-                                            animationSteps config.speed config.easing viewport.x clampedX
+                                            animationStepsWithFrames frames config.easing viewport.x clampedX
 
                                         ySteps =
-                                            animationSteps config.speed config.easing viewport.y clampedY
+                                            animationStepsWithFrames frames config.easing viewport.y clampedY
                                     in
                                     List.map2 (Dom.setViewportOf containerNodeId) xSteps ySteps
                                         |> Task.sequence

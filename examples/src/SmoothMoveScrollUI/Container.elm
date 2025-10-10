@@ -100,13 +100,9 @@ view model =
                 , spacing 0
                 ]
                 [ -- Back button
-                  el
-                    [ width fill
-                    , paddingXY 40 20
-                    ]
-                    (el [ alignLeft ]
-                        (link
-                            [ padding 12
+                  link
+                            [ alignLeft
+                            ,padding 12
                             , Background.gradient
                                 { angle = 0
                                 , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
@@ -119,7 +115,7 @@ view model =
                             { url = "../../elmui-examples.html"
                             , label = text "← Back to Examples"
                             }
-                        )
+                        
                     )
                 , -- Main content centered
                   Element.column

@@ -1,4 +1,4 @@
-module Internal.SmoothScroll exposing (animationSteps)
+module Internal.SmoothScroll exposing (animationSteps, animationStepsWithFrames)
 
 import Ease
 
@@ -26,6 +26,35 @@ animationSteps speed easing start stop =
                 (+)
     in
     if speed <= 0 || start == stop then
+        []
+
+    else
+        List.map (\weight -> operator start (weight * diff)) weights
+
+
+{-| Generate animation steps with a specific frame count for synchronized animations.
+This ensures both X and Y animations have the same number of steps for smooth diagonal movement.
+-}
+animationStepsWithFrames : Int -> Ease.Easing -> Float -> Float -> List Float
+animationStepsWithFrames frames easing start stop =
+    let
+        diff =
+            abs <| start - stop
+
+        framesFloat =
+            toFloat frames
+
+        weights =
+            List.map (\i -> easing (toFloat i / framesFloat)) (List.range 0 frames)
+
+        operator =
+            if start > stop then
+                (-)
+
+            else
+                (+)
+    in
+    if frames <= 0 || start == stop then
         []
 
     else

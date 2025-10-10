@@ -37,6 +37,9 @@ elm make src/SmoothMovePorts/Multiple.elm --output=src/SmoothMovePorts/multiple.
 echo "🎨 Building ElmUI examples..."
 elm make src/SmoothMoveScrollUI/Basic.elm --output=src/SmoothMoveScrollUI/basic.js
 elm make src/SmoothMoveScrollUI/Container.elm --output=src/SmoothMoveScrollUI/container.js
+elm make src/SmoothMoveScrollUI/HorizontalBasic.elm --output=src/SmoothMoveScrollUI/horizontalbasic.js
+elm make src/SmoothMoveScrollUI/HorizontalContainer.elm --output=src/SmoothMoveScrollUI/horizontalcontainer.js
+elm make src/SmoothMoveScrollUI/DiagonalBoth.elm --output=src/SmoothMoveScrollUI/diagonalboth.js
 elm make src/SmoothMoveSubUI/Basic.elm --output=src/SmoothMoveSubUI/basic.js
 elm make src/SmoothMoveSubUI/Multiple.elm --output=src/SmoothMoveSubUI/multiple.js
 elm make src/SmoothMoveStateUI/Basic.elm --output=src/SmoothMoveStateUI/basic.js

@@ -1,17 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>SmoothMoveScrollUI.HorizontalBasic</title>
-  <style>body { padding: 0; margin: 0; }</style>
-</head>
-
-<body>
-
-<pre id="elm"></pre>
-
-<script>
-try {
 (function(scope){
 'use strict';
 
@@ -11974,9 +11960,9 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$viewSection = F6(
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(600)),
+					$mdgriffith$elm_ui$Element$px(300)),
 					$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(400)),
+					$mdgriffith$elm_ui$Element$px(300)),
 					$mdgriffith$elm_ui$Element$spacing(20),
 					$mdgriffith$elm_ui$Element$htmlAttribute(
 					$elm$html$Html$Attributes$id(sectionId)),
@@ -12352,7 +12338,6 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$view = function (model) {
 									A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240)
 								])
 						}),
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 						$mdgriffith$elm_ui$Element$htmlAttribute(
 						$elm$html$Html$Attributes$class('horizontal-layout responsive-layout'))
@@ -12366,21 +12351,3 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$main = $elm$browser$Brows
 	{init: $author$project$SmoothMoveScrollUI$HorizontalBasic$init, subscriptions: $author$project$SmoothMoveScrollUI$HorizontalBasic$subscriptions, update: $author$project$SmoothMoveScrollUI$HorizontalBasic$update, view: $author$project$SmoothMoveScrollUI$HorizontalBasic$view});
 _Platform_export({'SmoothMoveScrollUI':{'HorizontalBasic':{'init':$author$project$SmoothMoveScrollUI$HorizontalBasic$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));
-
-  var app = Elm.SmoothMoveScrollUI.HorizontalBasic.init({ node: document.getElementById("elm") });
-}
-catch (e)
-{
-  // display initialization errors (e.g. bad flags, infinite recursion)
-  var header = document.createElement("h1");
-  header.style.fontFamily = "monospace";
-  header.innerText = "Initialization Error";
-  var pre = document.getElementById("elm");
-  document.body.insertBefore(header, pre);
-  pre.innerText = e;
-  throw e;
-}
-</script>
-
-</body>
-</html>
