@@ -4,7 +4,179 @@ module Common.Styles exposing
     , diagonalCSS
     , containerCSS
     , horizontalContainerCSS
+    , buttonGroupCSS
+    , responsiveContentCSS
     )
+
+
+-- BUTTON GROUP CSS (shared across all layouts)
+
+
+buttonGroupCSS : String
+buttonGroupCSS =
+    """
+    /* Example links - matching elmui-examples.html reference implementation */
+    .example-links {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .example-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 8px;
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-align: center;
+        min-width: 44px;
+        min-height: 44px;
+        cursor: pointer;
+        border: none;
+        font-family: inherit;
+    }
+
+    @media (min-width: 480px) {
+        .example-links {
+            gap: 8px;
+            margin: 24px 0;
+        }
+
+        .example-link {
+            font-size: 13px;
+            padding: 10px 12px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .example-links {
+            gap: 10px;
+            margin: 32px 0;
+        }
+
+        .example-link {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            min-width: auto;
+            min-height: auto;
+        }
+    }
+
+    .example-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+    }
+
+    /* Backward compatibility for old button-group class */
+    .button-group {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    @media (min-width: 480px) {
+        .button-group {
+            gap: 8px;
+            margin: 24px 0;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .button-group {
+            gap: 10px;
+            margin: 32px 0;
+        }
+    }
+    """
+
+
+-- RESPONSIVE CONTENT CSS (shared content styling)
+
+
+responsiveContentCSS : String
+responsiveContentCSS =
+    """
+    /* Responsive content block styling */
+    .responsive-content-block {
+        padding: 20px !important;
+    }
+
+    .responsive-content-title {
+        font-size: inherit !important;
+    }
+
+    .responsive-content-description {
+        font-size: inherit !important;
+        line-height: 1.5 !important;
+    }
+
+    .responsive-bullet-list {
+        font-size: inherit !important;
+    }
+
+    .responsive-bullet-point {
+        font-size: inherit !important;
+        line-height: 1.4 !important;
+        margin-bottom: 6px !important;
+    }
+
+    @media (max-width: 768px) {
+        .responsive-content-block {
+            padding: 16px !important;
+        }
+        
+        .responsive-content-title {
+            font-size: 18px !important;
+        }
+        
+        .responsive-content-description {
+            font-size: 14px !important;
+        }
+        
+        .responsive-bullet-list {
+            font-size: 14px !important;
+        }
+        
+        .responsive-bullet-point {
+            font-size: 14px !important;
+            margin-bottom: 8px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .responsive-content-block {
+            padding: 12px !important;
+        }
+        
+        .responsive-content-title {
+            font-size: 16px !important;
+        }
+        
+        .responsive-content-description {
+            font-size: 13px !important;
+        }
+        
+        .responsive-bullet-list {
+            font-size: 13px !important;
+        }
+        
+        .responsive-bullet-point {
+            font-size: 13px !important;
+            margin-bottom: 8px !important;
+        }
+    }
+    """
 
 
 -- RESPONSIVE CSS
@@ -261,165 +433,15 @@ containerCSS =
         background: #A0AEC0;
     }
 
-    /* Responsive content block styling */
-    .responsive-content-block {
-        padding: 20px !important;
-    }
-
-    .responsive-content-title {
-        font-size: inherit !important;
-    }
-
-    .responsive-content-description {
-        font-size: inherit !important;
-        line-height: 1.5 !important;
-    }
-
-    .responsive-bullet-list {
-        font-size: inherit !important;
-    }
-
-    .responsive-bullet-point {
-        font-size: inherit !important;
-        line-height: 1.4 !important;
-        margin-bottom: 6px !important;
-    }
-
-    /* Example links - matching elmui-examples.html reference implementation */
-    .example-links {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: 20px 0;
-    }
-
-    .example-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 8px;
-        background: linear-gradient(135deg, #4299e1, #3182ce);
-        color: white;
-        text-decoration: none;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 500;
-        transition: transform 0.2s, box-shadow 0.2s;
-        text-align: center;
-        min-width: 44px;
-        min-height: 44px;
-        cursor: pointer;
-        border: none;
-        font-family: inherit;
-    }
-
-    @media (min-width: 480px) {
-        .example-links {
-            gap: 8px;
-            margin: 24px 0;
-        }
-
-        .example-link {
-            font-size: 13px;
-            padding: 10px 12px;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .example-links {
-            gap: 10px;
-            margin: 32px 0;
-        }
-
-        .example-link {
-            display: inline-block;
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            min-width: auto;
-            min-height: auto;
-        }
-    }
-
-    .example-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
-    }
-
-    /* Backward compatibility for old button-group class */
-    .button-group {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: 20px 0;
-    }
-
-    @media (min-width: 480px) {
-        .button-group {
-            gap: 8px;
-            margin: 24px 0;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .button-group {
-            gap: 10px;
-            margin: 32px 0;
-        }
-    }
-
     @media (max-width: 768px) {
         .container-layout {
             padding: 16px;
-        }
-        
-        .responsive-content-block {
-            padding: 16px !important;
-        }
-        
-        .responsive-content-title {
-            font-size: 18px !important;
-        }
-        
-        .responsive-content-description {
-            font-size: 14px !important;
-        }
-        
-        .responsive-bullet-list {
-            font-size: 14px !important;
-        }
-        
-        .responsive-bullet-point {
-            font-size: 14px !important;
-            margin-bottom: 8px !important;
         }
     }
 
     @media (max-width: 480px) {
         .container-layout {
             padding: 12px;
-        }
-        
-        .responsive-content-block {
-            padding: 12px !important;
-        }
-        
-        .responsive-content-title {
-            font-size: 16px !important;
-        }
-        
-        .responsive-content-description {
-            font-size: 13px !important;
-        }
-        
-        .responsive-bullet-list {
-            font-size: 13px !important;
-        }
-        
-        .responsive-bullet-point {
-            font-size: 13px !important;
-            margin-bottom: 8px !important;
         }
     }
     """

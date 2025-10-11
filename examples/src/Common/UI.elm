@@ -39,21 +39,25 @@ createDocument title layoutType content =
 
 getLayoutCSS : LayoutType -> String
 getLayoutCSS layoutType =
+    let
+        -- Base CSS that all layouts need
+        baseCSS = Styles.responsiveCSS ++ "\n" ++ Styles.buttonGroupCSS ++ "\n" ++ Styles.responsiveContentCSS
+    in
     case layoutType of
         Basic ->
-            Styles.responsiveCSS
+            baseCSS
         
         Horizontal ->
-            Styles.responsiveCSS ++ "\n" ++ Styles.horizontalCSS
+            baseCSS ++ "\n" ++ Styles.horizontalCSS
         
         Diagonal ->
-            Styles.responsiveCSS ++ "\n" ++ Styles.diagonalCSS
+            baseCSS ++ "\n" ++ Styles.diagonalCSS
         
         Container ->
-            Styles.responsiveCSS ++ "\n" ++ Styles.containerCSS
+            baseCSS ++ "\n" ++ Styles.containerCSS
         
         HorizontalContainer ->
-            Styles.responsiveCSS ++ "\n" ++ Styles.horizontalContainerCSS
+            baseCSS ++ "\n" ++ Styles.horizontalContainerCSS
 
 
 getLayoutAttributes : LayoutType -> List (Element.Attribute msg)
