@@ -305,60 +305,10 @@ viewContent model =
             ]
 
         , -- Control buttons
-          row
-            [ spacing 15
-            , centerX
-            ]
-            [ Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 59 130 246
-                        , rgb255 37 99 235
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just ScatterElements
-                , label = text "Scatter"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 16 185 129
-                        , rgb255 5 150 105
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just CircleFormation
-                , label = text "Circle Formation"
-                }
-
-            , Input.button
-                [ Background.gradient
-                    { angle = 0
-                    , steps = 
-                        [ rgb255 168 85 247
-                        , rgb255 147 51 234
-                        ]
-                    }
-                , Font.color (rgb255 255 255 255)
-                , Font.medium
-                , paddingXY 20 12
-                , Border.rounded 8
-                ]
-                { onPress = Just ResetPositions
-                , label = text "Reset"
-                }
+          UI.htmlActionButtons
+            [ ( UI.Primary, ScatterElements, "Scatter" )
+            , ( UI.Success, CircleFormation, "Circle Formation" )
+            , ( UI.Purple, ResetPositions, "Reset" )
             ]
 
         , -- Animation area with moving elements

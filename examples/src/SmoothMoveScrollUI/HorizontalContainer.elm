@@ -121,30 +121,21 @@ viewContent model =
         [ spacing 16
         , centerX
         ]
-        [ row
-            [ spacing 12
-            , centerX
-            , htmlAttribute (Html.Attributes.class "nav-buttons-row")
-            ]
+        [ UI.htmlActionButtons
             (List.range 1 8
                 |> List.map (\i ->
-                    Input.button
-                        [ Background.gradient
-                            { angle = 0
-                            , steps = 
-                                [ UI.getCardColor i
-                                , UI.darkenColor (UI.getCardColor i)
-                                ]
-                            }
-                        , Font.color Colors.backgroundWhite
-                        , Font.medium
-                        , paddingXY 16 8
-                        , Border.rounded 6
-                        , Font.size 14
-                        ]
-                        { onPress = Just (ScrollToCard i)
-                        , label = text ("Card " ++ String.fromInt i)
-                        }
+                    ( case i of
+                        1 -> UI.Primary
+                        2 -> UI.Success
+                        3 -> UI.Purple
+                        4 -> UI.Warning
+                        5 -> UI.Primary
+                        6 -> UI.Success
+                        7 -> UI.Purple
+                        _ -> UI.Warning
+                    , ScrollToCard i
+                    , "Card " ++ String.fromInt i
+                    )
                 )
             )
 
