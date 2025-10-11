@@ -173,9 +173,7 @@ viewContent model =
                 (text "Navigate Diagonally:")
 
             , row
-                [ spacing 16
-                , centerX
-                , htmlAttribute (Html.Attributes.class "responsive-buttons")
+                [ htmlAttribute (Html.Attributes.class "button-group")
                 ]
                 [ UI.actionButton UI.Primary ScrollToTopLeft "↖ Top Left"
                 , UI.actionButton UI.Success ScrollToTopRight "↗ Top Right" 

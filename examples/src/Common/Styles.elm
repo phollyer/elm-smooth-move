@@ -285,6 +285,38 @@ containerCSS =
         margin-bottom: 6px !important;
     }
 
+    /* Button group with flex wrapping - overrides ElmUI row behavior */
+    .button-group {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 6px !important;
+        margin: 20px 0 !important;
+        width: 100% !important;
+    }
+
+    /* Override ElmUI's default row spacing behavior */
+    .button-group > * {
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    @media (min-width: 480px) {
+        .button-group {
+            gap: 8px !important;
+            margin: 24px 0 !important;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .button-group {
+            gap: 10px !important;
+            margin: 32px 0 !important;
+        }
+    }
+
     @media (max-width: 768px) {
         .container-layout {
             padding: 16px;
