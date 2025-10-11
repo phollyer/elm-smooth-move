@@ -1,27 +1,33 @@
 port module SmoothMovePortsUI.Basic exposing (main)
 
-{-| 
-SmoothMovePorts Basic Example using ElmUI - Web Animations API integration via JavaScript
+{-| SmoothMovePorts Basic Example using ElmUI - Web Animations API integration via JavaScript
 
 This approach uses Elm ports to communicate with JavaScript's Web Animations API,
 providing access to advanced animation features and platform-specific optimizations.
 
-BENEFITS:  
-- ✅ Access to Web Animations API features
-- ✅ Platform-specific optimizations via JavaScript
-- ✅ Complex animation composition capabilities
-- ✅ Fine-grained animation control and timing
-- ✅ Support for advanced easing functions
-- ✅ Real-time position feedback via ports
+BENEFITS:
+
+  - ✅ Access to Web Animations API features
+  - ✅ Platform-specific optimizations via JavaScript
+  - ✅ Complex animation composition capabilities
+  - ✅ Fine-grained animation control and timing
+  - ✅ Support for advanced easing functions
+  - ✅ Real-time position feedback via ports
 
 REQUIREMENTS:
-- Requires companion JavaScript file (smooth-move-ports.js)
-- Needs port definitions for Elm-JavaScript communication
-- Web Animations API support (modern browsers)
+
+  - Requires companion JavaScript file (smooth-move-ports.js)
+  - Needs port definitions for Elm-JavaScript communication
+  - Web Animations API support (modern browsers)
+
 -}
 
+-- Common UI imports
+
 import Browser exposing (Document)
-import Element exposing (Element, column, el, maximum, layout, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, link, alignLeft, padding, paragraph)
+import Common.Colors as Colors
+import Common.UI as UI
+import Element exposing (Element, alignLeft, centerX, column, el, fill, height, htmlAttribute, layout, link, maximum, padding, paddingXY, paragraph, px, rgb255, row, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -31,17 +37,19 @@ import Html.Attributes
 import Json.Decode as Decode
 import SmoothMovePorts
 
--- Common UI imports
-import Common.UI as UI
-import Common.Colors as Colors
 
 
 -- PORTS
 
 
 port animateElement : String -> Cmd msg
+
+
 port stopElementAnimation : String -> Cmd msg
+
+
 port positionUpdates : (Decode.Value -> msg) -> Sub msg
+
 
 
 -- TYPES
@@ -66,6 +74,7 @@ positionDecoder =
         (Decode.field "isAnimating" Decode.bool)
 
 
+
 -- MAIN
 
 
@@ -79,12 +88,14 @@ main =
         }
 
 
+
 -- MODEL
 
 
 type alias Model =
     { animations : SmoothMovePorts.Model
     }
+
 
 
 -- INIT
@@ -101,6 +112,7 @@ init _ =
     ( { animations = initialAnimations }
     , Cmd.none
     )
+
 
 
 -- UPDATE
@@ -162,6 +174,7 @@ update msg model =
                     ( model, Cmd.none )
 
 
+
 -- SUBSCRIPTIONS
 
 
@@ -170,12 +183,13 @@ subscriptions _ =
     positionUpdates PositionUpdateMsg
 
 
+
 -- VIEW
 
 
 view : Model -> Document Msg
 view model =
-    UI.createDocument 
+    UI.createDocument
         "SmoothMovePorts Basic ElmUI Example"
         UI.Basic
         (viewContent model)
@@ -184,13 +198,16 @@ view model =
 viewContent : Model -> List (Element Msg)
 viewContent model =
     let
-        position = SmoothMovePorts.getPosition "moving-box" model.animations
-                  |> Maybe.withDefault { x = 0, y = 0 }
-        isAnimating = SmoothMovePorts.isAnimating model.animations
+        position =
+            SmoothMovePorts.getPosition "moving-box" model.animations
+                |> Maybe.withDefault { x = 0, y = 0 }
+
+        isAnimating =
+            SmoothMovePorts.isAnimating model.animations
     in
     [ UI.backButton
     , UI.pageHeader "SmoothMovePorts Basic Example"
-    , UI.techInfo 
+    , UI.techInfo
         [ paragraph
             [ Font.size 16
             , Font.color Colors.textMedium
@@ -202,7 +219,6 @@ viewContent model =
             , el [ Font.semiBold ] (text "platform-specific optimizations")
             , text " and advanced animation features not available through pure Elm."
             ]
-
         , paragraph
             [ Font.size 16
             , Font.color Colors.textMedium
@@ -213,7 +229,6 @@ viewContent model =
             , text " and advanced timing controls beyond what CSS transitions can provide."
             ]
         ]
-
     , -- Position display
       el
         [ Font.size 14
@@ -221,14 +236,12 @@ viewContent model =
         , centerX
         ]
         (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
-
     , -- Buttons for predefined moves
       UI.htmlActionButtons
         [ ( UI.Primary, MoveToCorner, "Move to (100, 100)" )
         , ( UI.Success, MoveToCenter, "Move to (300, 200)" )
         , ( UI.Purple, StopAnimation, "Return to Origin" )
         ]
-
     , -- Animation area with moving box
       el
         [ width (fill |> maximum 500)
@@ -236,7 +249,7 @@ viewContent model =
         , Background.color Colors.backgroundWhite
         , Border.rounded 12
         , Border.shadow
-            { offset = (0, 4)
+            { offset = ( 0, 4 )
             , size = 0
             , blur = 8
             , color = Element.rgba 0 0 0 0.1
@@ -258,4 +271,3 @@ viewContent model =
             (text "")
         )
     ]
-

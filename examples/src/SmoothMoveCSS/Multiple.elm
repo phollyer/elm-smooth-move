@@ -75,8 +75,8 @@ update msg model =
                 -- Create a circular formation using custom slow config for dramatic effect
                 slowConfig =
                     { axis = SmoothMoveCSS.Both
-                    , duration = 1500  -- 1.5 seconds
-                    , easing = "cubic-bezier(0.68, -0.55, 0.265, 1.55)"  -- Bouncy easing
+                    , duration = 1500 -- 1.5 seconds
+                    , easing = "cubic-bezier(0.68, -0.55, 0.265, 1.55)" -- Bouncy easing
                     }
 
                 centerX =

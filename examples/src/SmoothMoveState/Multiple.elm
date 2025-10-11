@@ -1,11 +1,11 @@
 module SmoothMoveState.Multiple exposing (main)
 
 import Browser
+import Ease
 import Html exposing (Html, button, div, h1, text)
 import Html.Attributes exposing (style)
 import Html.Events exposing (onClick)
 import SmoothMoveState
-import Ease
 
 
 type alias Model =
@@ -71,7 +71,7 @@ update msg model =
             let
                 defaultCfg =
                     SmoothMoveState.defaultConfig
-                
+
                 config =
                     { defaultCfg | easing = Ease.outElastic, speed = 300.0 }
 

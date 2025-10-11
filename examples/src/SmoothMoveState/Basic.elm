@@ -101,7 +101,7 @@ view model =
                 , style "background-color" "#4CAF50"
                 , style "border-radius" "8px"
                 , style "transform" (SmoothMoveState.transformElement "box" model.animationState)
-                , style "transition" "none"  -- Disable CSS transitions
+                , style "transition" "none" -- Disable CSS transitions
                 ]
                 [ text "📦" ]
             ]

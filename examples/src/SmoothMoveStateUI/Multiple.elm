@@ -1,21 +1,25 @@
 module SmoothMoveStateUI.Multiple exposing (main)
 
-{-| 
-SmoothMoveState Multiple Example using ElmUI - Multiple elements with state-based animation management.
+{-| SmoothMoveState Multiple Example using ElmUI - Multiple elements with state-based animation management.
 
 This demonstrates how SmoothMoveState can handle multiple elements simultaneously
 with convenient state management functions.
 
 FEATURES:
-- ✅ Multiple independent animations
-- ✅ Predefined formation patterns (scatter, circle, reset)
-- ✅ Single state management for all elements
-- ✅ Built-in easing and animation control
-- ✅ Clean state-based API
+
+  - ✅ Multiple independent animations
+  - ✅ Predefined formation patterns (scatter, circle, reset)
+  - ✅ Single state management for all elements
+  - ✅ Built-in easing and animation control
+  - ✅ Clean state-based API
+
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, row, padding, paragraph, maximum, alignLeft, link)
+import Common.Colors as Colors
+import Common.UI as UI
+import Ease
+import Element exposing (Element, alignLeft, centerX, column, el, fill, height, htmlAttribute, link, maximum, padding, paddingXY, paragraph, px, rgb255, row, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -23,9 +27,7 @@ import Element.Input as Input
 import Html
 import Html.Attributes
 import SmoothMoveState
-import Ease
-import Common.UI as UI
-import Common.Colors as Colors
+
 
 
 -- MAIN
@@ -41,12 +43,14 @@ main =
         }
 
 
+
 -- MODEL
 
 
 type alias Model =
     { animationState : SmoothMoveState.State
     }
+
 
 
 -- INIT
@@ -68,6 +72,7 @@ init _ =
     ( { animationState = initialState }
     , Cmd.none
     )
+
 
 
 -- UPDATE
@@ -116,20 +121,34 @@ update msg model =
 
         CircleFormation ->
             let
-                centerX = 225
-                centerY = 180
-                radius = 90
+                centerX =
+                    225
+
+                centerY =
+                    180
+
+                radius =
+                    90
+
                 -- 6 elements evenly spaced around circle (60 degrees apart)
                 newState =
                     model.animationState
-                        |> SmoothMoveState.animateTo "element-a" (centerX + radius) centerY  -- 0°
-                        |> SmoothMoveState.animateTo "element-b" (centerX + radius * 0.5) (centerY + radius * 0.866)  -- 60°
-                        |> SmoothMoveState.animateTo "element-c" (centerX - radius * 0.5) (centerY + radius * 0.866)  -- 120°
-                        |> SmoothMoveState.animateTo "element-d" (centerX - radius) centerY  -- 180°
-                        |> SmoothMoveState.animateTo "element-e" (centerX - radius * 0.5) (centerY - radius * 0.866)  -- 240°
-                        |> SmoothMoveState.animateTo "element-f" (centerX + radius * 0.5) (centerY - radius * 0.866)  -- 300°
+                        |> SmoothMoveState.animateTo "element-a" (centerX + radius) centerY
+                        -- 0°
+                        |> SmoothMoveState.animateTo "element-b" (centerX + radius * 0.5) (centerY + radius * 0.866)
+                        -- 60°
+                        |> SmoothMoveState.animateTo "element-c" (centerX - radius * 0.5) (centerY + radius * 0.866)
+                        -- 120°
+                        |> SmoothMoveState.animateTo "element-d" (centerX - radius) centerY
+                        -- 180°
+                        |> SmoothMoveState.animateTo "element-e" (centerX - radius * 0.5) (centerY - radius * 0.866)
+                        -- 240°
+                        |> SmoothMoveState.animateTo "element-f" (centerX + radius * 0.5) (centerY - radius * 0.866)
+
+                -- 300°
             in
             ( { model | animationState = newState }, Cmd.none )
+
 
 
 -- SUBSCRIPTIONS
@@ -138,6 +157,7 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     SmoothMoveState.subscriptions model.animationState AnimationFrame
+
 
 
 -- VIEW
@@ -151,25 +171,37 @@ view model =
 viewContent : Model -> List (Element Msg)
 viewContent model =
     let
-        positionA = SmoothMoveState.getPosition "element-a" model.animationState
-                   |> Maybe.withDefault { x = 150, y = 100 }
-        positionB = SmoothMoveState.getPosition "element-b" model.animationState
-                   |> Maybe.withDefault { x = 200, y = 150 }
-        positionC = SmoothMoveState.getPosition "element-c" model.animationState
-                   |> Maybe.withDefault { x = 100, y = 200 }
-        positionD = SmoothMoveState.getPosition "element-d" model.animationState
-                   |> Maybe.withDefault { x = 250, y = 200 }
-        positionE = SmoothMoveState.getPosition "element-e" model.animationState
-                   |> Maybe.withDefault { x = 300, y = 100 }
-        positionF = SmoothMoveState.getPosition "element-f" model.animationState
-                   |> Maybe.withDefault { x = 180, y = 50 }
-        
-        isMoving = SmoothMoveState.isAnimating model.animationState
+        positionA =
+            SmoothMoveState.getPosition "element-a" model.animationState
+                |> Maybe.withDefault { x = 150, y = 100 }
+
+        positionB =
+            SmoothMoveState.getPosition "element-b" model.animationState
+                |> Maybe.withDefault { x = 200, y = 150 }
+
+        positionC =
+            SmoothMoveState.getPosition "element-c" model.animationState
+                |> Maybe.withDefault { x = 100, y = 200 }
+
+        positionD =
+            SmoothMoveState.getPosition "element-d" model.animationState
+                |> Maybe.withDefault { x = 250, y = 200 }
+
+        positionE =
+            SmoothMoveState.getPosition "element-e" model.animationState
+                |> Maybe.withDefault { x = 300, y = 100 }
+
+        positionF =
+            SmoothMoveState.getPosition "element-f" model.animationState
+                |> Maybe.withDefault { x = 180, y = 50 }
+
+        isMoving =
+            SmoothMoveState.isAnimating model.animationState
     in
     [ -- Back Button
       UI.backButton
     , UI.pageHeader "SmoothMoveState Multiple Example"
-    , UI.techInfo 
+    , UI.techInfo
         [ paragraph []
             [ text "This example demonstrates the SmoothMoveState module handling "
             , el [ Font.semiBold ] (text "multiple independent animations")
@@ -185,7 +217,7 @@ viewContent model =
         ]
     , -- Status display section will be added below
       column [ spacing 20, centerX, width fill ]
-        [    -- Element status and positions (6 elements in 2 rows)
+        [ -- Element status and positions (6 elements in 2 rows)
           column
             [ spacing 20
             , centerX
@@ -200,14 +232,12 @@ viewContent model =
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionA.x) ++ "," ++ String.fromInt (round positionA.y) ++ ")"))
                     ]
-
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 16 185 129) ] (text "B")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionB.x) ++ "," ++ String.fromInt (round positionB.y) ++ ")"))
                     ]
-
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 168 85 247) ] (text "C")
@@ -215,7 +245,6 @@ viewContent model =
                         (text ("(" ++ String.fromInt (round positionC.x) ++ "," ++ String.fromInt (round positionC.y) ++ ")"))
                     ]
                 ]
-
             , row
                 [ spacing 25
                 , centerX
@@ -226,14 +255,12 @@ viewContent model =
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionD.x) ++ "," ++ String.fromInt (round positionD.y) ++ ")"))
                     ]
-
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 251 146 60) ] (text "E")
                     , el [ Font.size 10, Font.color (rgb255 107 114 128) ]
                         (text ("(" ++ String.fromInt (round positionE.x) ++ "," ++ String.fromInt (round positionE.y) ++ ")"))
                     ]
-
                 , column
                     [ spacing 6 ]
                     [ el [ Font.size 14, Font.medium, Font.color (rgb255 34 197 94) ] (text "F")
@@ -242,160 +269,153 @@ viewContent model =
                     ]
                 ]
             ]
-
         , -- Control buttons
           UI.htmlActionButtons
             [ ( UI.Primary, ScatterElements, "Scatter" )
             , ( UI.Success, CircleFormation, "Circle Formation" )
             , ( UI.Purple, ResetPositions, "Reset" )
             ]
-
         , -- Animation area with moving elements
-          el 
-            [width <|
+          el
+            [ width <|
                 maximum 500 fill
             , height <|
                 px 400
             , paddingXY 5 0
             ]
-            <|
+          <|
             el
-            [ width fill
-            , height fill
-            , centerX
-            , Background.color (rgb255 255 255 255)
-            , Border.rounded 12
-            , Border.shadow
-                { offset = (0, 4)
-                , size = 0
-                , blur = 8
-                , color = Element.rgba 0 0 0 0.1
-                }
-            , htmlAttribute (Html.Attributes.style "position" "relative")
-            , htmlAttribute (Html.Attributes.style "overflow" "hidden")
-            ]
-            (Element.html
-                (Html.div
-                    [ Html.Attributes.style "position" "relative"
-                    , Html.Attributes.style "width" "100%"
-                    , Html.Attributes.style "height" "100%"
-                    ]
-                    [ -- Element A (Blue)
-                      Html.div
-                        [ Html.Attributes.id "element-a"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #3B82F6, #2563EB)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" (SmoothMoveState.transform positionA.x positionA.y)
-                        , Html.Attributes.style "transition" "none"
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
+                [ width fill
+                , height fill
+                , centerX
+                , Background.color (rgb255 255 255 255)
+                , Border.rounded 12
+                , Border.shadow
+                    { offset = ( 0, 4 )
+                    , size = 0
+                    , blur = 8
+                    , color = Element.rgba 0 0 0 0.1
+                    }
+                , htmlAttribute (Html.Attributes.style "position" "relative")
+                , htmlAttribute (Html.Attributes.style "overflow" "hidden")
+                ]
+                (Element.html
+                    (Html.div
+                        [ Html.Attributes.style "position" "relative"
+                        , Html.Attributes.style "width" "100%"
+                        , Html.Attributes.style "height" "100%"
                         ]
-                        [ Html.text "A" ]
-
-                    , -- Element B (Green)
-                      Html.div
-                        [ Html.Attributes.id "element-b"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #10B981, #059669)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" (SmoothMoveState.transform positionB.x positionB.y)
-                        , Html.Attributes.style "transition" "none"
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
+                        [ -- Element A (Blue)
+                          Html.div
+                            [ Html.Attributes.id "element-a"
+                            , Html.Attributes.style "position" "absolute"
+                            , Html.Attributes.style "width" "50px"
+                            , Html.Attributes.style "height" "50px"
+                            , Html.Attributes.style "background" "linear-gradient(135deg, #3B82F6, #2563EB)"
+                            , Html.Attributes.style "border-radius" "12px"
+                            , Html.Attributes.style "transform" (SmoothMoveState.transform positionA.x positionA.y)
+                            , Html.Attributes.style "transition" "none"
+                            , Html.Attributes.style "display" "flex"
+                            , Html.Attributes.style "align-items" "center"
+                            , Html.Attributes.style "justify-content" "center"
+                            , Html.Attributes.style "color" "white"
+                            , Html.Attributes.style "font-weight" "600"
+                            , Html.Attributes.style "font-size" "16px"
+                            ]
+                            [ Html.text "A" ]
+                        , -- Element B (Green)
+                          Html.div
+                            [ Html.Attributes.id "element-b"
+                            , Html.Attributes.style "position" "absolute"
+                            , Html.Attributes.style "width" "50px"
+                            , Html.Attributes.style "height" "50px"
+                            , Html.Attributes.style "background" "linear-gradient(135deg, #10B981, #059669)"
+                            , Html.Attributes.style "border-radius" "12px"
+                            , Html.Attributes.style "transform" (SmoothMoveState.transform positionB.x positionB.y)
+                            , Html.Attributes.style "transition" "none"
+                            , Html.Attributes.style "display" "flex"
+                            , Html.Attributes.style "align-items" "center"
+                            , Html.Attributes.style "justify-content" "center"
+                            , Html.Attributes.style "color" "white"
+                            , Html.Attributes.style "font-weight" "600"
+                            , Html.Attributes.style "font-size" "16px"
+                            ]
+                            [ Html.text "B" ]
+                        , -- Element C (Purple)
+                          Html.div
+                            [ Html.Attributes.id "element-c"
+                            , Html.Attributes.style "position" "absolute"
+                            , Html.Attributes.style "width" "50px"
+                            , Html.Attributes.style "height" "50px"
+                            , Html.Attributes.style "background" "linear-gradient(135deg, #A855F7, #9333EA)"
+                            , Html.Attributes.style "border-radius" "12px"
+                            , Html.Attributes.style "transform" (SmoothMoveState.transform positionC.x positionC.y)
+                            , Html.Attributes.style "transition" "none"
+                            , Html.Attributes.style "display" "flex"
+                            , Html.Attributes.style "align-items" "center"
+                            , Html.Attributes.style "justify-content" "center"
+                            , Html.Attributes.style "color" "white"
+                            , Html.Attributes.style "font-weight" "600"
+                            , Html.Attributes.style "font-size" "16px"
+                            ]
+                            [ Html.text "C" ]
+                        , -- Element D (Orange)
+                          Html.div
+                            [ Html.Attributes.id "element-d"
+                            , Html.Attributes.style "position" "absolute"
+                            , Html.Attributes.style "width" "50px"
+                            , Html.Attributes.style "height" "50px"
+                            , Html.Attributes.style "background" "linear-gradient(135deg, #F97316, #EA580C)"
+                            , Html.Attributes.style "border-radius" "12px"
+                            , Html.Attributes.style "transform" (SmoothMoveState.transform positionD.x positionD.y)
+                            , Html.Attributes.style "transition" "none"
+                            , Html.Attributes.style "display" "flex"
+                            , Html.Attributes.style "align-items" "center"
+                            , Html.Attributes.style "justify-content" "center"
+                            , Html.Attributes.style "color" "white"
+                            , Html.Attributes.style "font-weight" "600"
+                            , Html.Attributes.style "font-size" "16px"
+                            ]
+                            [ Html.text "D" ]
+                        , -- Element E (Red)
+                          Html.div
+                            [ Html.Attributes.id "element-e"
+                            , Html.Attributes.style "position" "absolute"
+                            , Html.Attributes.style "width" "50px"
+                            , Html.Attributes.style "height" "50px"
+                            , Html.Attributes.style "background" "linear-gradient(135deg, #EF4444, #DC2626)"
+                            , Html.Attributes.style "border-radius" "12px"
+                            , Html.Attributes.style "transform" (SmoothMoveState.transform positionE.x positionE.y)
+                            , Html.Attributes.style "transition" "none"
+                            , Html.Attributes.style "display" "flex"
+                            , Html.Attributes.style "align-items" "center"
+                            , Html.Attributes.style "justify-content" "center"
+                            , Html.Attributes.style "color" "white"
+                            , Html.Attributes.style "font-weight" "600"
+                            , Html.Attributes.style "font-size" "16px"
+                            ]
+                            [ Html.text "E" ]
+                        , -- Element F (Pink)
+                          Html.div
+                            [ Html.Attributes.id "element-f"
+                            , Html.Attributes.style "position" "absolute"
+                            , Html.Attributes.style "width" "50px"
+                            , Html.Attributes.style "height" "50px"
+                            , Html.Attributes.style "background" "linear-gradient(135deg, #EC4899, #DB2777)"
+                            , Html.Attributes.style "border-radius" "12px"
+                            , Html.Attributes.style "transform" (SmoothMoveState.transform positionF.x positionF.y)
+                            , Html.Attributes.style "transition" "none"
+                            , Html.Attributes.style "display" "flex"
+                            , Html.Attributes.style "align-items" "center"
+                            , Html.Attributes.style "justify-content" "center"
+                            , Html.Attributes.style "color" "white"
+                            , Html.Attributes.style "font-weight" "600"
+                            , Html.Attributes.style "font-size" "16px"
+                            ]
+                            [ Html.text "F" ]
                         ]
-                        [ Html.text "B" ]
-
-                    , -- Element C (Purple)
-                      Html.div
-                        [ Html.Attributes.id "element-c"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #A855F7, #9333EA)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" (SmoothMoveState.transform positionC.x positionC.y)
-                        , Html.Attributes.style "transition" "none"
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "C" ]
-
-                    , -- Element D (Orange)
-                      Html.div
-                        [ Html.Attributes.id "element-d"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #F97316, #EA580C)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" (SmoothMoveState.transform positionD.x positionD.y)
-                        , Html.Attributes.style "transition" "none"
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "D" ]
-
-                    , -- Element E (Red)
-                      Html.div
-                        [ Html.Attributes.id "element-e"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #EF4444, #DC2626)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" (SmoothMoveState.transform positionE.x positionE.y)
-                        , Html.Attributes.style "transition" "none"
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "E" ]
-
-                    , -- Element F (Pink)
-                      Html.div
-                        [ Html.Attributes.id "element-f"
-                        , Html.Attributes.style "position" "absolute"
-                        , Html.Attributes.style "width" "50px"
-                        , Html.Attributes.style "height" "50px"
-                        , Html.Attributes.style "background" "linear-gradient(135deg, #EC4899, #DB2777)"
-                        , Html.Attributes.style "border-radius" "12px"
-                        , Html.Attributes.style "transform" (SmoothMoveState.transform positionF.x positionF.y)
-                        , Html.Attributes.style "transition" "none"
-                        , Html.Attributes.style "display" "flex"
-                        , Html.Attributes.style "align-items" "center"
-                        , Html.Attributes.style "justify-content" "center"
-                        , Html.Attributes.style "color" "white"
-                        , Html.Attributes.style "font-weight" "600"
-                        , Html.Attributes.style "font-size" "16px"
-                        ]
-                        [ Html.text "F" ]
-                    ]
+                    )
                 )
-            )
         ]
     ]
 

@@ -1,16 +1,17 @@
 module Common.UI exposing (..)
 
 import Browser exposing (Document)
-import Html
-import Element exposing (Element, layout, link, paragraph, el, column, text, alignLeft, centerX, padding, paddingXY, spacing, width, fill, maximum, htmlAttribute, height, rgb255)
+import Common.Colors as Colors
+import Common.Styles as Styles
+import Element exposing (Element, alignLeft, centerX, column, el, fill, height, htmlAttribute, layout, link, maximum, padding, paddingXY, paragraph, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Html
 import Html.Attributes
 import Html.Events
-import Common.Colors as Colors
-import Common.Styles as Styles
+
 
 
 -- LAYOUT TYPES
@@ -24,13 +25,14 @@ type LayoutType
     | HorizontalContainer
 
 
+
 -- DOCUMENT HELPERS
 
 
 createDocument : String -> LayoutType -> List (Element msg) -> Document msg
 createDocument title layoutType content =
     { title = title
-    , body = 
+    , body =
         [ Html.node "style" [] [ Html.text (getLayoutCSS layoutType) ]
         , layout (getLayoutAttributes layoutType) (mainContent content)
         ]
@@ -41,21 +43,22 @@ getLayoutCSS : LayoutType -> String
 getLayoutCSS layoutType =
     let
         -- Base CSS that all layouts need
-        baseCSS = Styles.responsiveCSS ++ "\n" ++ Styles.buttonGroupCSS ++ "\n" ++ Styles.responsiveContentCSS
+        baseCSS =
+            Styles.responsiveCSS ++ "\n" ++ Styles.buttonGroupCSS ++ "\n" ++ Styles.responsiveContentCSS
     in
     case layoutType of
         Basic ->
             baseCSS
-        
+
         Horizontal ->
             baseCSS ++ "\n" ++ Styles.horizontalCSS
-        
+
         Diagonal ->
             baseCSS ++ "\n" ++ Styles.diagonalCSS
-        
+
         Container ->
             baseCSS ++ "\n" ++ Styles.containerCSS
-        
+
         HorizontalContainer ->
             baseCSS ++ "\n" ++ Styles.horizontalContainerCSS
 
@@ -66,38 +69,39 @@ getLayoutAttributes layoutType =
         baseAttributes =
             [ Background.gradient
                 { angle = 0
-                , steps = 
+                , steps =
                     [ Colors.backgroundLight
                     , Colors.backgroundMedium
                     ]
                 }
             , paddingXY 40 20
             ]
-        
-        specificAttributes = 
+
+        specificAttributes =
             case layoutType of
                 Basic ->
                     [ htmlAttribute (Html.Attributes.class "responsive-layout") ]
-                
+
                 Horizontal ->
                     [ width fill
                     , height fill
                     , htmlAttribute (Html.Attributes.class "horizontal-layout responsive-layout")
                     ]
-                
+
                 Diagonal ->
                     [ width fill
                     , height fill
                     , htmlAttribute (Html.Attributes.class "diagonal-layout responsive-layout")
                     ]
-                
+
                 Container ->
                     [ htmlAttribute (Html.Attributes.class "container-layout responsive-layout") ]
-                
+
                 HorizontalContainer ->
                     [ htmlAttribute (Html.Attributes.class "container-layout responsive-layout") ]
     in
     baseAttributes ++ specificAttributes
+
 
 
 -- BACK BUTTON
@@ -122,6 +126,7 @@ backButton =
         }
 
 
+
 -- PAGE HEADER
 
 
@@ -133,7 +138,8 @@ pageHeader title =
         , centerX
         , htmlAttribute (Html.Attributes.class "responsive-header")
         ]
-        [text title]
+        [ text title ]
+
 
 
 -- TECHNICAL INFO CONTAINER
@@ -156,6 +162,7 @@ techInfo content =
         content
 
 
+
 -- STANDARD PARAGRAPH
 
 
@@ -169,12 +176,14 @@ techParagraph content =
         content
 
 
+
 -- HIGHLIGHTED TEXT
 
 
 highlight : String -> Element msg
 highlight text =
     el [ Font.semiBold ] (Element.text text)
+
 
 
 -- MAIN CONTENT CONTAINER
@@ -191,6 +200,7 @@ mainContent content =
         content
 
 
+
 -- BUTTON CONTAINER
 
 
@@ -204,12 +214,13 @@ buttonContainer buttons =
         buttons
 
 
+
 -- ACTION BUTTON
 
 
 type ButtonStyle
     = Primary
-    | Success 
+    | Success
     | Purple
     | Warning
 
@@ -217,12 +228,19 @@ type ButtonStyle
 actionButton : ButtonStyle -> msg -> String -> Element msg
 actionButton style onPress label =
     let
-        (startColor, endColor) = 
+        ( startColor, endColor ) =
             case style of
-                Primary -> (Colors.primary, Element.rgb255 37 99 235)
-                Success -> (Colors.success, Colors.successDark)
-                Purple -> (Colors.purple, Colors.purpleDark)
-                Warning -> (Colors.warning, Colors.warningDark)
+                Primary ->
+                    ( Colors.primary, Element.rgb255 37 99 235 )
+
+                Success ->
+                    ( Colors.success, Colors.successDark )
+
+                Purple ->
+                    ( Colors.purple, Colors.purpleDark )
+
+                Warning ->
+                    ( Colors.warning, Colors.warningDark )
     in
     Input.button
         [ Background.gradient
@@ -240,6 +258,7 @@ actionButton style onPress label =
         }
 
 
+
 -- CONTENT SECTION
 
 
@@ -254,7 +273,7 @@ contentSection sectionId title content maybeButton =
         , paddingXY 32 24
         , Border.rounded 12
         , Border.shadow
-            { offset = (0, 4)
+            { offset = ( 0, 4 )
             , size = 0
             , blur = 8
             , color = Element.rgba 0 0 0 0.1
@@ -266,7 +285,6 @@ contentSection sectionId title content maybeButton =
             , Font.color Colors.textDark
             ]
             (text title)
-
          , Element.paragraph
             [ spacing 16
             , Font.size 16
@@ -274,12 +292,16 @@ contentSection sectionId title content maybeButton =
             , width (maximum 1200 fill)
             ]
             (List.map (\line -> text line) content)
-         ] ++ 
-         (case maybeButton of
-            Just button -> [button]
-            Nothing -> []
-         )
+         ]
+            ++ (case maybeButton of
+                    Just button ->
+                        [ button ]
+
+                    Nothing ->
+                        []
+               )
         )
+
 
 
 -- SMALL ACTION BUTTON (for continue buttons)
@@ -288,26 +310,47 @@ contentSection sectionId title content maybeButton =
 smallActionButton : ButtonStyle -> msg -> String -> Element msg
 smallActionButton style onPress label =
     let
-        buttonColor = 
+        buttonColor =
             case style of
-                Primary -> Colors.primary
-                Success -> Colors.success
-                Purple -> Colors.purple
-                Warning -> Colors.warning
-        
+                Primary ->
+                    Colors.primary
+
+                Success ->
+                    Colors.success
+
+                Purple ->
+                    Colors.purple
+
+                Warning ->
+                    Colors.warning
+
         backgroundColor =
             case style of
-                Primary -> Element.rgb255 239 246 255
-                Success -> Element.rgb255 240 253 244
-                Purple -> Element.rgb255 250 245 255
-                Warning -> Element.rgb255 255 251 235
-                
+                Primary ->
+                    Element.rgb255 239 246 255
+
+                Success ->
+                    Element.rgb255 240 253 244
+
+                Purple ->
+                    Element.rgb255 250 245 255
+
+                Warning ->
+                    Element.rgb255 255 251 235
+
         borderColor =
             case style of
-                Primary -> Element.rgb255 191 219 254
-                Success -> Element.rgb255 209 250 229
-                Purple -> Element.rgb255 233 213 255
-                Warning -> Element.rgb255 254 240 138
+                Primary ->
+                    Element.rgb255 191 219 254
+
+                Success ->
+                    Element.rgb255 209 250 229
+
+                Purple ->
+                    Element.rgb255 233 213 255
+
+                Warning ->
+                    Element.rgb255 254 240 138
     in
     Input.button
         [ Font.size 14
@@ -324,31 +367,60 @@ smallActionButton style onPress label =
         }
 
 
+
 -- CARD COLORS FOR HORIZONTAL CONTAINER
 
 
 getCardColor : Int -> Element.Color
 getCardColor cardNum =
     case modBy 8 cardNum + 1 of
-        1 -> Colors.primary        -- Blue
-        2 -> Colors.success        -- Green
-        3 -> Colors.purple         -- Purple
-        4 -> Colors.warning        -- Red/Orange
-        5 -> Colors.warning        -- Orange
-        6 -> Colors.primaryLight   -- Sky Blue
-        7 -> Colors.purple         -- Violet
-        _ -> Colors.success        -- Emerald
+        1 ->
+            Colors.primary
+
+        -- Blue
+        2 ->
+            Colors.success
+
+        -- Green
+        3 ->
+            Colors.purple
+
+        -- Purple
+        4 ->
+            Colors.warning
+
+        -- Red/Orange
+        5 ->
+            Colors.warning
+
+        -- Orange
+        6 ->
+            Colors.primaryLight
+
+        -- Sky Blue
+        7 ->
+            Colors.purple
+
+        -- Violet
+        _ ->
+            Colors.success
+
+
+
+-- Emerald
 
 
 darkenColor : Element.Color -> Element.Color
 darkenColor color =
     let
-        rgb = Element.toRgb color
+        rgb =
+            Element.toRgb color
     in
-    rgb255 
+    rgb255
         (round (rgb.red * 255 * 0.8))
         (round (rgb.green * 255 * 0.8))
         (round (rgb.blue * 255 * 0.8))
+
 
 
 -- HTML-BASED BUTTON GROUPS
@@ -367,18 +439,26 @@ htmlActionButtons buttons =
                 , Html.Attributes.style "background" (getButtonGradient style)
                 ]
                 [ Html.text label ]
-        
+
         getButtonGradient style =
             case style of
-                Primary -> "linear-gradient(135deg, #4299e1, #3182ce)"
-                Success -> "linear-gradient(135deg, #48bb78, #38a169)"  
-                Purple -> "linear-gradient(135deg, #9f7aea, #805ad5)"
-                Warning -> "linear-gradient(135deg, #ed8936, #dd6b20)"
+                Primary ->
+                    "linear-gradient(135deg, #4299e1, #3182ce)"
+
+                Success ->
+                    "linear-gradient(135deg, #48bb78, #38a169)"
+
+                Purple ->
+                    "linear-gradient(135deg, #9f7aea, #805ad5)"
+
+                Warning ->
+                    "linear-gradient(135deg, #ed8936, #dd6b20)"
     in
     el
-        [centerX]
-        <|Element.html
-        (Html.div
-            [ Html.Attributes.class "example-links" ]
-            (List.map createButton buttons)
-        )
+        [ centerX ]
+    <|
+        Element.html
+            (Html.div
+                [ Html.Attributes.class "example-links" ]
+                (List.map createButton buttons)
+            )

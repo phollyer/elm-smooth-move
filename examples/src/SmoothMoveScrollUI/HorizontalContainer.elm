@@ -1,15 +1,16 @@
 module SmoothMoveScrollUI.HorizontalContainer exposing (main)
 
 import Browser exposing (Document)
-import Element exposing (Element, row, column, el, paddingXY, paddingEach, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, padding, paragraph, scrollbarX, clipX)
+import Common.Colors as Colors
+import Common.UI as UI
+import Element exposing (Element, centerX, clipX, column, el, fill, height, htmlAttribute, padding, paddingEach, paddingXY, paragraph, px, rgb255, row, scrollbarX, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html.Attributes
-import SmoothMoveScroll exposing (animateToCmdWithConfig, containerElement, defaultConfig, Axis(..))
-import Common.UI as UI
-import Common.Colors as Colors
+import SmoothMoveScroll exposing (Axis(..), animateToCmdWithConfig, containerElement, defaultConfig)
+
 
 
 -- MAIN
@@ -25,6 +26,7 @@ main =
         }
 
 
+
 -- MODEL
 
 
@@ -35,6 +37,7 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( {}, Cmd.none )
+
 
 
 -- UPDATE
@@ -54,25 +57,26 @@ update msg model =
 
         ScrollToCard cardNum ->
             ( model
-            , animateToCmdWithConfig NoOp 
-                { defaultConfig 
-                | speed = 25
-                , axis = X 
-                , container = containerElement "horizontal-scroll-container"
-                } 
+            , animateToCmdWithConfig NoOp
+                { defaultConfig
+                    | speed = 25
+                    , axis = X
+                    , container = containerElement "horizontal-scroll-container"
+                }
                 ("card-" ++ String.fromInt cardNum)
             )
 
         ScrollToStart ->
             ( model
-            , animateToCmdWithConfig NoOp 
-                { defaultConfig 
-                | speed = 25
-                , axis = X 
-                , container = containerElement "horizontal-scroll-container"
-                } 
+            , animateToCmdWithConfig NoOp
+                { defaultConfig
+                    | speed = 25
+                    , axis = X
+                    , container = containerElement "horizontal-scroll-container"
+                }
                 "card-1"
             )
+
 
 
 -- SUBSCRIPTIONS
@@ -81,6 +85,7 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none
+
 
 
 -- VIEW
@@ -101,7 +106,7 @@ viewContent model =
         ]
         [ UI.backButton
         , UI.pageHeader "Horizontal Container Scrolling"
-        , UI.techInfo 
+        , UI.techInfo
             [ paragraph []
                 [ text "This example demonstrates "
                 , el [ Font.semiBold ] (text "horizontal container scrolling")
@@ -115,7 +120,6 @@ viewContent model =
                 ]
             ]
         ]
-
     , -- Navigation Buttons
       column
         [ spacing 16
@@ -123,25 +127,39 @@ viewContent model =
         ]
         [ UI.htmlActionButtons
             (List.range 1 8
-                |> List.map (\i ->
-                    ( case i of
-                        1 -> UI.Primary
-                        2 -> UI.Success
-                        3 -> UI.Purple
-                        4 -> UI.Warning
-                        5 -> UI.Primary
-                        6 -> UI.Success
-                        7 -> UI.Purple
-                        _ -> UI.Warning
-                    , ScrollToCard i
-                    , "Card " ++ String.fromInt i
-                    )
-                )
-            )
+                |> List.map
+                    (\i ->
+                        ( case i of
+                            1 ->
+                                UI.Primary
 
+                            2 ->
+                                UI.Success
+
+                            3 ->
+                                UI.Purple
+
+                            4 ->
+                                UI.Warning
+
+                            5 ->
+                                UI.Primary
+
+                            6 ->
+                                UI.Success
+
+                            7 ->
+                                UI.Purple
+
+                            _ ->
+                                UI.Warning
+                        , ScrollToCard i
+                        , "Card " ++ String.fromInt i
+                        )
+                    )
+            )
         , UI.actionButton UI.Primary ScrollToStart "← Back to Start"
         ]
-
     , -- Horizontal Scroll Container
       el
         [ width fill
@@ -149,7 +167,7 @@ viewContent model =
         , Background.color Colors.backgroundWhite
         , Border.rounded 12
         , Border.shadow
-            { offset = (0, 4)
+            { offset = ( 0, 4 )
             , size = 0
             , blur = 8
             , color = Element.rgba 0 0 0 0.15
@@ -182,7 +200,7 @@ viewCard cardNum =
         , paddingXY 24 20
         , Border.rounded 12
         , Border.shadow
-            { offset = (0, 2)
+            { offset = ( 0, 2 )
             , size = 0
             , blur = 4
             , color = Element.rgba 0 0 0 0.1
@@ -196,7 +214,6 @@ viewCard cardNum =
             , centerX
             ]
             (text ("Card " ++ String.fromInt cardNum))
-
         , -- Card Content
           column
             [ spacing 12
@@ -208,10 +225,9 @@ viewCard cardNum =
                 , Font.color Colors.backgroundWhite
                 , width fill
                 ]
-                [ text ("This is card number " ++ String.fromInt cardNum ++ ". ") 
+                [ text ("This is card number " ++ String.fromInt cardNum ++ ". ")
                 , text "Each card demonstrates horizontal scrolling within a constrained container element."
                 ]
-
             , paragraph
                 [ Font.size 14
                 , Font.color Colors.backgroundWhite
@@ -219,9 +235,8 @@ viewCard cardNum =
                 ]
                 [ text "The X axis scrolling smoothly navigates between cards using precise positioning calculations."
                 ]
-
             , -- Navigation buttons within card
-            row
+              row
                 [ spacing 8
                 , centerX
                 ]
@@ -239,9 +254,9 @@ viewCard cardNum =
                         { onPress = Just (ScrollToCard (cardNum - 1))
                         , label = text "← Prev"
                         }
+
                   else
                     el [] (text "")
-
                 , if cardNum < 10 then
                     Input.button
                         [ Font.size 12
@@ -256,9 +271,9 @@ viewCard cardNum =
                         { onPress = Just (ScrollToCard (cardNum + 1))
                         , label = text "Next →"
                         }
+
                   else
                     el [] (text "")
                 ]
             ]
         ]
-

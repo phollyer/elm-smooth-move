@@ -1,6 +1,7 @@
 module Common.Colors exposing (..)
 
-import Element exposing (rgb255, Color)
+import Element exposing (Color, rgb255)
+
 
 
 -- BRAND COLORS
@@ -56,6 +57,7 @@ orange =
     rgb255 251 146 60
 
 
+
 -- TEXT COLORS
 
 
@@ -74,6 +76,7 @@ textLight =
     rgb255 148 163 184
 
 
+
 -- BACKGROUND COLORS
 
 
@@ -90,6 +93,7 @@ backgroundMedium =
 backgroundWhite : Color
 backgroundWhite =
     rgb255 255 255 255
+
 
 
 -- BORDER COLORS

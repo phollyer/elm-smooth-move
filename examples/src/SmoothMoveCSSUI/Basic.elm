@@ -1,34 +1,37 @@
 module SmoothMoveCSSUI.Basic exposing (main)
 
-{-| 
-SmoothMoveCSS Basic Example using ElmUI - Native browser CSS transitions for optimal performance
+{-| SmoothMoveCSS Basic Example using ElmUI - Native browser CSS transitions for optimal performance
 
 This approach uses browser-native CSS transitions for hardware acceleration and battery efficiency.
 Perfect for simple transitions where you want maximum performance with minimal JavaScript overhead.
 
 BENEFITS:
-- ✅ Hardware acceleration via native CSS transitions
-- ✅ Battery efficient (browser optimizes automatically)
-- ✅ Simple API - just apply CSS styles directly
-- ✅ No animation frame subscriptions needed
-- ✅ Smooth 60fps animations with browser optimization
-- ✅ Automatic performance scaling based on device capabilities
+
+  - ✅ Hardware acceleration via native CSS transitions
+  - ✅ Battery efficient (browser optimizes automatically)
+  - ✅ Simple API - just apply CSS styles directly
+  - ✅ No animation frame subscriptions needed
+  - ✅ Smooth 60fps animations with browser optimization
+  - ✅ Automatic performance scaling based on device capabilities
 
 USAGE:
-- Call SmoothMoveCSS.animateTo to get transition styles
-- Apply the returned CSS directly to elements
-- Browser handles all animation timing and optimization
+
+  - Call SmoothMoveCSS.animateTo to get transition styles
+  - Apply the returned CSS directly to elements
+  - Browser handles all animation timing and optimization
+
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, padding, paragraph)
+import Common.Colors as Colors
+import Common.UI as UI
+import Element exposing (Element, centerX, column, el, fill, height, htmlAttribute, maximum, padding, paddingXY, paragraph, px, rgb255, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Html.Attributes
 import SmoothMoveCSS
-import Common.UI as UI
-import Common.Colors as Colors
+
 
 
 -- MAIN
@@ -44,12 +47,14 @@ main =
         }
 
 
+
 -- MODEL
 
 
 type alias Model =
     { animations : SmoothMoveCSS.Model
     }
+
 
 
 -- INIT
@@ -66,6 +71,7 @@ init _ =
     ( { animations = initialAnimations }
     , Cmd.none
     )
+
 
 
 -- UPDATE
@@ -96,14 +102,17 @@ update msg model =
             )
 
 
+
 -- SUBSCRIPTIONS
 
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.none  -- No subscriptions needed for CSS transitions!
+    Sub.none
 
 
+
+-- No subscriptions needed for CSS transitions!
 -- VIEW
 
 
@@ -115,13 +124,15 @@ view model =
 viewContent : Model -> List (Element Msg)
 viewContent model =
     let
-        position = SmoothMoveCSS.getPosition "moving-box" model.animations
-                  |> Maybe.withDefault { x = 0, y = 0 }
-        cssStyles = SmoothMoveCSS.cssTransitionStyle "moving-box" model.animations
+        position =
+            SmoothMoveCSS.getPosition "moving-box" model.animations
+                |> Maybe.withDefault { x = 0, y = 0 }
+
+        cssStyles =
+            SmoothMoveCSS.cssTransitionStyle "moving-box" model.animations
     in
     [ UI.backButton
     , UI.pageHeader "SmoothMoveCSS Basic Example"
-
     , UI.techInfo
         [ paragraph []
             [ text "This example demonstrates the SmoothMoveCSS module, which leverages "
@@ -136,7 +147,6 @@ viewContent model =
             , text " provides the best user experience."
             ]
         ]
-
     , -- Position display
       el
         [ Font.size 14
@@ -144,22 +154,20 @@ viewContent model =
         , centerX
         ]
         (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
-
     , -- Buttons for predefined moves
       UI.htmlActionButtons
         [ ( UI.Primary, MoveToCorner, "Move to (100, 100)" )
         , ( UI.Success, MoveToCenter, "Move to (300, 200)" )
         , ( UI.Purple, StopAnimation, "Return to Origin" )
         ]
-
     , -- Animation area with moving box
       el
-        [ width (px 500)
+        [ width (fill |> maximum 500)
         , height (px 400)
         , Background.color Colors.backgroundWhite
         , Border.rounded 12
         , Border.shadow
-            { offset = (0, 4)
+            { offset = ( 0, 4 )
             , size = 0
             , blur = 8
             , color = Element.rgba 0 0 0 0.1
@@ -175,6 +183,7 @@ viewContent model =
             , Border.rounded 8
             , htmlAttribute (Html.Attributes.id "moving-box")
             , htmlAttribute (Html.Attributes.style "position" "absolute")
+
             -- Apply CSS transition styles directly - browser handles the animation!
             , htmlAttribute (Html.Attributes.style "transform" ("translate(" ++ String.fromFloat position.x ++ "px, " ++ String.fromFloat position.y ++ "px)"))
             , htmlAttribute (Html.Attributes.style "transition" cssStyles)

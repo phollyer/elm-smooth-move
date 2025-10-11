@@ -1,13 +1,12 @@
-module Common.Styles exposing 
-    ( responsiveCSS
-    , horizontalCSS
-    , diagonalCSS
+module Common.Styles exposing
+    ( buttonGroupCSS
     , containerCSS
+    , diagonalCSS
+    , horizontalCSS
     , horizontalContainerCSS
-    , buttonGroupCSS
+    , responsiveCSS
     , responsiveContentCSS
     )
-
 
 -- BUTTON GROUP CSS (shared across all layouts)
 
@@ -101,6 +100,7 @@ buttonGroupCSS =
     """
 
 
+
 -- RESPONSIVE CONTENT CSS (shared content styling)
 
 
@@ -177,6 +177,7 @@ responsiveContentCSS =
         }
     }
     """
+
 
 
 -- RESPONSIVE CSS
@@ -262,6 +263,7 @@ responsiveCSS =
     """
 
 
+
 -- HORIZONTAL LAYOUT CSS
 
 
@@ -324,6 +326,7 @@ horizontalCSS =
         }
     }
     """
+
 
 
 -- DIAGONAL LAYOUT CSS
@@ -396,6 +399,7 @@ diagonalCSS =
     """
 
 
+
 -- CONTAINER LAYOUT CSS
 
 
@@ -452,6 +456,7 @@ containerCSS =
         }
     }
     """
+
 
 
 -- HORIZONTAL CONTAINER LAYOUT CSS

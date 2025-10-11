@@ -1,34 +1,36 @@
 module SmoothMoveSub.Basic exposing (main)
 
-{-| 
-This example demonstrate        AnimationFrame deltaMs ->
-            let
-                updatedSmoothMove =
-                    SmoothMoveSub.step deltaMs model.smoothMovee fully managed approach - no position tracking needed!
+{-| This example demonstrate AnimationFrame deltaMs ->
+let
+updatedSmoothMove =
+SmoothMoveSub.step deltaMs model.smoothMovee fully managed approach - no position tracking needed!
 
 BENEFITS:
-- ✅ No need to track AnimationState in your model
-- ✅ No need to track element positions in your model  
-- ✅ No need to handle animation completion manually
-- ✅ No need to pass Position data around in messages
-- ✅ Library manages ALL state automatically
-- ✅ Simple animateTo and subscriptions calls
-- ✅ Get positions with transform when needed
+
+  - ✅ No need to track AnimationState in your model
+  - ✅ No need to track element positions in your model
+  - ✅ No need to handle animation completion manually
+  - ✅ No need to pass Position data around in messages
+  - ✅ Library manages ALL state automatically
+  - ✅ Simple animateTo and subscriptions calls
+  - ✅ Get positions with transform when needed
 
 DEVELOPER EXPERIENCE:
-- Keep only a SmoothMoveSub.Model in your model
-- Call animateTo to begin animations (automatic current position)
-- Subscribe with SmoothMoveSub.subscriptions for smooth updates (just deltaMs!)
-- Use transform for CSS transforms with getPosition!
-- Use getPosition when you need the actual position values
-- Library handles everything else automatically!
+
+  - Keep only a SmoothMoveSub.Model in your model
+  - Call animateTo to begin animations (automatic current position)
+  - Subscribe with SmoothMoveSub.subscriptions for smooth updates (just deltaMs!)
+  - Use transform for CSS transforms with getPosition!
+  - Use getPosition when you need the actual position values
+  - Library handles everything else automatically!
+
 -}
 
 import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveSub exposing (defaultConfig, transform, isAnimating, getPosition, animateTo, setInitialPosition)
+import SmoothMoveSub exposing (animateTo, defaultConfig, getPosition, isAnimating, setInitialPosition, transform)
 
 
 main =
@@ -63,7 +65,10 @@ init _ =
     , Cmd.none
     )
 
-elementId = "moving-element"
+
+elementId =
+    "moving-element"
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -105,8 +110,25 @@ view model =
             [ div [ style "text-align" "center", style "margin-bottom" "40px" ]
                 [ h1 [ style "font-size" "32px", style "font-weight" "600", style "color" "#1e293b", style "margin" "0 0 20px 0" ] [ text "SmoothMoveSub Basic Example" ]
                 , p [ style "font-size" "18px", style "color" "#475569", style "margin" "0 0 20px 0" ] [ text "HTML Version - Use buttons to move the blue box" ]
-                , p [ style "font-size" "16px", style "color" (if isAnimating model.smoothMove then "#10b981" else "#475569"), style "margin" "0 0 10px 0" ] 
-                    [ text (if isAnimating model.smoothMove then "Animating..." else "Ready") ]
+                , p
+                    [ style "font-size" "16px"
+                    , style "color"
+                        (if isAnimating model.smoothMove then
+                            "#10b981"
+
+                         else
+                            "#475569"
+                        )
+                    , style "margin" "0 0 10px 0"
+                    ]
+                    [ text
+                        (if isAnimating model.smoothMove then
+                            "Animating..."
+
+                         else
+                            "Ready"
+                        )
+                    ]
                 , p [ style "font-size" "14px", style "color" "#6b7280", style "margin" "0" ]
                     [ text ("Position: (" ++ String.fromFloat currentPos.x ++ ", " ++ String.fromFloat currentPos.y ++ ")") ]
                 ]

@@ -8,14 +8,22 @@ import Json.Decode as Decode
 import SmoothMovePorts
 
 
+
 -- PORTS --
 
+
 port animateElement : String -> Cmd msg
+
+
 port stopElementAnimation : String -> Cmd msg
+
+
 port positionUpdates : (Decode.Value -> msg) -> Sub msg
 
 
+
 -- MODEL --
+
 
 type alias Model =
     { animations : SmoothMovePorts.Model
@@ -43,7 +51,9 @@ init _ =
     )
 
 
+
 -- UPDATE --
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -99,7 +109,9 @@ update msg model =
                     ( model, Cmd.none )
 
 
+
 -- DECODERS --
+
 
 type alias PositionUpdate =
     { elementId : String
@@ -118,7 +130,9 @@ positionDecoder =
         (Decode.field "isAnimating" Decode.bool)
 
 
+
 -- VIEW --
+
 
 view : Model -> Html Msg
 view model =
@@ -154,7 +168,7 @@ view model =
             , style "background-color" "#f9f9f9"
             ]
             [ div
-                [ Html.Attributes.id "box"  -- IMPORTANT: The element needs this ID for JavaScript
+                [ Html.Attributes.id "box" -- IMPORTANT: The element needs this ID for JavaScript
                 , style "position" "absolute"
                 , style "width" "50px"
                 , style "height" "50px"
@@ -184,14 +198,18 @@ view model =
         ]
 
 
+
 -- SUBSCRIPTIONS --
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     positionUpdates PositionUpdateMsg
 
 
+
 -- MAIN --
+
 
 main : Program () Model Msg
 main =

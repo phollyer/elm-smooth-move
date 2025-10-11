@@ -4,7 +4,7 @@ import Browser exposing (Document)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import SmoothMoveScroll exposing (setContainer, animateToCmdWithConfig, defaultConfig)
+import SmoothMoveScroll exposing (animateToCmdWithConfig, defaultConfig, setContainer)
 
 
 main =
@@ -54,37 +54,30 @@ update msg model =
             )
 
 
-
-
-
 view : Model -> Document Msg
 view model =
     { title = "SmoothMoveScroll - Container Scrolling"
     , body =
         [ -- Navigation
           a [ href "../../index.html", class "back-button" ] [ text "← Back to Dashboard" ]
-        
         , -- Main content
           div [ class "main-content" ]
             [ h1 [] [ text "Container Scrolling Example" ]
             , p [] [ text "This demonstrates smooth scrolling within a scrollable container (not the document itself)." ]
-            
             , -- Control buttons
-            div [ class "controls" ]
+              div [ class "controls" ]
                 [ button [ onClick ScrollToTop, class "control-btn top-btn" ] [ text "Scroll to Top" ]
                 , button [ onClick ScrollToMiddle, class "control-btn middle-btn" ] [ text "Scroll to Middle" ]
                 , button [ onClick ScrollToBottom, class "control-btn bottom-btn" ] [ text "Scroll to Bottom" ]
                 ]
-            
             , -- The scrollable container
-            div [ id "scroll-container", class "scroll-container" ]
+              div [ id "scroll-container", class "scroll-container" ]
                 [ div [ class "scroll-content" ]
                     [ div [ id "top-element", class "content-block top-block" ]
                         [ h2 [] [ text "� Top of Container" ]
                         , p [] [ text "This is the top of the scrollable container content. The background gradient helps visualize scroll position." ]
                         , p [] [ text "Click 'Scroll to Top' to smoothly scroll to this position." ]
                         ]
-                    
                     , contentBlock 1 "This is content block 1. Each block has enough content to make scrolling meaningful."
                     , contentBlock 2 "Content block 2 continues the gradient transition from white to dark."
                     , contentBlock 3 "Content block 3 shows the middle section of our scrollable content."
@@ -102,7 +95,6 @@ view model =
                     , contentBlock 6 "Content block 6 shows we're getting closer to the bottom."
                     , contentBlock 7 "Content block 7 is near the end with darker background colors."
                     , contentBlock 8 "Content block 8 is almost at the bottom of the scrollable content."
-                    
                     , div [ id "bottom-element", class "content-block bottom-block" ]
                         [ h2 [] [ text "🔻 Bottom of Container" ]
                         , p [] [ text "This is the bottom of the scrollable container content. Notice the dark background." ]
@@ -112,9 +104,8 @@ view model =
                     ]
                 ]
             ]
-        
         , -- Styles
-        node "style" [] [ text css ]
+          node "style" [] [ text css ]
         ]
     }
 
@@ -132,12 +123,9 @@ contentBlock num description =
         ]
 
 
-
-
-
-
 css : String
-css = """
+css =
+    """
 body {
     margin: 0;
     padding: 0;

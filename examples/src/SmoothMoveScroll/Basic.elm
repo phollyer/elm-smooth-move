@@ -49,19 +49,19 @@ view model =
     { title = "SmoothMoveScroll Document Example"
     , body =
         [ a [ href "index.html", style "position" "fixed", style "top" "10px", style "left" "10px", style "background" "#666", style "color" "white", style "padding" "10px 15px", style "text-decoration" "none", style "border-radius" "5px", style "font-size" "14px", style "z-index" "1000" ] [ text "← Back" ]
-        ] ++
-        [ div [ style "padding-top" "60px" ]
-            [ p
-                [ id "p-one"
-                , onClick (SmoothScroll "p-two")
-                ]
-                [ text "p one" ]
-            , p
-                [ id "p-two"
-                , style "margin-top" "2500px"
-                , onClick (SmoothScroll "p-one")
-                ]
-                [ text "p two" ]
-            ]
         ]
+            ++ [ div [ style "padding-top" "60px" ]
+                    [ p
+                        [ id "p-one"
+                        , onClick (SmoothScroll "p-two")
+                        ]
+                        [ text "p one" ]
+                    , p
+                        [ id "p-two"
+                        , style "margin-top" "2500px"
+                        , onClick (SmoothScroll "p-one")
+                        ]
+                        [ text "p two" ]
+                    ]
+               ]
     }

@@ -3,20 +3,28 @@ port module SmoothMovePorts.Multiple exposing (main)
 import Browser
 import Dict
 import Html exposing (Html, button, div, h1, h2, text)
-import Html.Attributes exposing (style, id)
+import Html.Attributes exposing (id, style)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode
 import SmoothMovePorts
 
 
+
 -- PORTS --
 
+
 port animateElement : String -> Cmd msg
+
+
 port stopElementAnimation : String -> Cmd msg
+
+
 port positionUpdates : (Decode.Value -> msg) -> Sub msg
 
 
+
 -- MODEL --
+
 
 type alias Model =
     { animations : SmoothMovePorts.Model
@@ -48,7 +56,9 @@ init _ =
     )
 
 
+
 -- UPDATE --
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -57,13 +67,14 @@ update msg model =
             let
                 -- Animate multiple boxes to different corners using batch animation
                 animationSpecs =
-                    [ { elementId = "box1", targetX = 50, targetY = 50, config = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" }}
-                    , { elementId = "box2", targetX = 450, targetY = 50, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "cubic-bezier(0.68, -0.55, 0.265, 1.55)" }}
-                    , { elementId = "box3", targetX = 450, targetY = 350, config = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-out" }}
-                    , { elementId = "box4", targetX = 50, targetY = 350, config = { axis = SmoothMovePorts.Both, duration = 700, easing = "ease-in-out" }}
+                    [ { elementId = "box1", targetX = 50, targetY = 50, config = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" } }
+                    , { elementId = "box2", targetX = 450, targetY = 50, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "cubic-bezier(0.68, -0.55, 0.265, 1.55)" } }
+                    , { elementId = "box3", targetX = 450, targetY = 350, config = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-out" } }
+                    , { elementId = "box4", targetX = 50, targetY = 350, config = { axis = SmoothMovePorts.Both, duration = 700, easing = "ease-in-out" } }
                     ]
 
-                ( newAnimations, cmd ) = SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
+                ( newAnimations, cmd ) =
+                    SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
             in
             ( { model | animations = newAnimations }, cmd )
 
@@ -71,13 +82,14 @@ update msg model =
             let
                 -- Simple 2x2 grid using batch animation - much cleaner!
                 animationSpecs =
-                    [ { elementId = "box1", targetX = 237, targetY = 137, config = { axis = SmoothMovePorts.Both, duration = 500, easing = "ease-out" }}
-                    , { elementId = "box2", targetX = 317, targetY = 137, config = { axis = SmoothMovePorts.Both, duration = 750, easing = "ease-out" }}
-                    , { elementId = "box3", targetX = 237, targetY = 217, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-out" }}
-                    , { elementId = "box4", targetX = 317, targetY = 217, config = { axis = SmoothMovePorts.Both, duration = 900, easing = "ease-out" }}
+                    [ { elementId = "box1", targetX = 237, targetY = 137, config = { axis = SmoothMovePorts.Both, duration = 500, easing = "ease-out" } }
+                    , { elementId = "box2", targetX = 317, targetY = 137, config = { axis = SmoothMovePorts.Both, duration = 750, easing = "ease-out" } }
+                    , { elementId = "box3", targetX = 237, targetY = 217, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-out" } }
+                    , { elementId = "box4", targetX = 317, targetY = 217, config = { axis = SmoothMovePorts.Both, duration = 900, easing = "ease-out" } }
                     ]
 
-                ( newAnimations, cmd ) = SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
+                ( newAnimations, cmd ) =
+                    SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
             in
             ( { model | animations = newAnimations }, cmd )
 
@@ -85,19 +97,21 @@ update msg model =
             let
                 -- Sequential animation with staggered delays using different durations
                 animationSpecs =
-                    [ { elementId = "box1", targetX = 100, targetY = 100, config = { axis = SmoothMovePorts.Both, duration = 400, easing = "ease-in-out" }}
-                    , { elementId = "box2", targetX = 200, targetY = 150, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-in-out" }}
-                    , { elementId = "box3", targetX = 300, targetY = 200, config = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" }}
-                    , { elementId = "box4", targetX = 400, targetY = 250, config = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-in-out" }}
+                    [ { elementId = "box1", targetX = 100, targetY = 100, config = { axis = SmoothMovePorts.Both, duration = 400, easing = "ease-in-out" } }
+                    , { elementId = "box2", targetX = 200, targetY = 150, config = { axis = SmoothMovePorts.Both, duration = 600, easing = "ease-in-out" } }
+                    , { elementId = "box3", targetX = 300, targetY = 200, config = { axis = SmoothMovePorts.Both, duration = 800, easing = "ease-in-out" } }
+                    , { elementId = "box4", targetX = 400, targetY = 250, config = { axis = SmoothMovePorts.Both, duration = 1000, easing = "ease-in-out" } }
                     ]
 
-                ( newAnimations, cmd ) = SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
+                ( newAnimations, cmd ) =
+                    SmoothMovePorts.animateBatchWithPort animateElement animationSpecs model.animations
             in
             ( { model | animations = newAnimations }, cmd )
 
         StopAll ->
             let
-                ( newAnimations, cmd ) = SmoothMovePorts.stopBatchWithPort stopElementAnimation [ "box1", "box2", "box3", "box4" ] model.animations
+                ( newAnimations, cmd ) =
+                    SmoothMovePorts.stopBatchWithPort stopElementAnimation [ "box1", "box2", "box3", "box4" ] model.animations
             in
             ( { model | animations = newAnimations }, cmd )
 
@@ -106,18 +120,22 @@ update msg model =
             ( model, Cmd.none )
 
         AnimationCompleteMsg _ ->
-            -- For simplicity, not handling animation completion in this example  
+            -- For simplicity, not handling animation completion in this example
             ( model, Cmd.none )
 
 
+
 -- SUBSCRIPTIONS --
+
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     positionUpdates PositionUpdateMsg
 
 
+
 -- VIEW --
+
 
 view : Model -> Html Msg
 view model =
@@ -127,7 +145,6 @@ view model =
         ]
         [ h1 [] [ text "SmoothMovePorts - Multiple Animations" ]
         , h2 [] [ text "JavaScript Web Animations API Integration" ]
-        
         , div
             [ style "margin" "20px 0" ]
             [ button
@@ -141,7 +158,6 @@ view model =
                 , style "cursor" "pointer"
                 ]
                 [ text "Animate to Corners" ]
-            
             , button
                 [ onClick AnimateToCenter
                 , style "margin-right" "10px"
@@ -153,7 +169,6 @@ view model =
                 , style "cursor" "pointer"
                 ]
                 [ text "Animate to Center" ]
-            
             , button
                 [ onClick AnimateInSequence
                 , style "margin-right" "10px"
@@ -165,7 +180,6 @@ view model =
                 , style "cursor" "pointer"
                 ]
                 [ text "Sequential Animation" ]
-            
             , button
                 [ onClick StopAll
                 , style "padding" "10px 15px"
@@ -177,7 +191,6 @@ view model =
                 ]
                 [ text "Stop All" ]
             ]
-        
         , div
             [ style "position" "relative"
             , style "width" "600px"
@@ -189,84 +202,90 @@ view model =
             [ -- Center guidelines (temporary for debugging)
               div
                 [ style "position" "absolute"
-                , style "left" "299px"  -- Vertical center line
+                , style "left" "299px" -- Vertical center line
                 , style "top" "0"
                 , style "width" "2px"
                 , style "height" "100%"
                 , style "background-color" "rgba(255, 0, 0, 0.3)"
                 , style "pointer-events" "none"
-                ] []
+                ]
+                []
             , div
                 [ style "position" "absolute"
                 , style "left" "0"
-                , style "top" "199px"  -- Horizontal center line
+                , style "top" "199px" -- Horizontal center line
                 , style "width" "100%"
                 , style "height" "2px"
                 , style "background-color" "rgba(255, 0, 0, 0.3)"
                 , style "pointer-events" "none"
-                ] []
-            
+                ]
+                []
+
             -- Grid target area (where the 2x2 should be centered)
             , div
                 [ style "position" "absolute"
-                , style "left" "220px"  -- Grid start X
-                , style "top" "120px"   -- Grid start Y
+                , style "left" "220px" -- Grid start X
+                , style "top" "120px" -- Grid start Y
                 , style "width" "160px" -- Grid total width (50+60+50)
                 , style "height" "160px" -- Grid total height (50+60+50)
                 , style "border" "2px dashed rgba(0, 0, 255, 0.5)"
                 , style "background-color" "rgba(0, 0, 255, 0.1)"
                 , style "pointer-events" "none"
-                ] []
-            
+                ]
+                []
+
             -- Individual box target positions (centered within each 80x80 quadrant)
             , div
                 [ style "position" "absolute"
-                , style "left" "235px"  -- box1 target: 220 + (80-50)/2 = 235
-                , style "top" "135px"   -- 120 + (80-50)/2 = 135
+                , style "left" "235px" -- box1 target: 220 + (80-50)/2 = 235
+                , style "top" "135px" -- 120 + (80-50)/2 = 135
                 , style "width" "50px"
                 , style "height" "50px"
                 , style "border" "1px solid rgba(255, 0, 0, 0.7)"
                 , style "background-color" "rgba(255, 0, 0, 0.1)"
                 , style "pointer-events" "none"
-                ] []
+                ]
+                []
             , div
                 [ style "position" "absolute"
-                , style "left" "315px"  -- box2 target: 220 + 80 + (80-50)/2 = 315
+                , style "left" "315px" -- box2 target: 220 + 80 + (80-50)/2 = 315
                 , style "top" "135px"
                 , style "width" "50px"
                 , style "height" "50px"
                 , style "border" "1px solid rgba(0, 255, 0, 0.7)"
                 , style "background-color" "rgba(0, 255, 0, 0.1)"
                 , style "pointer-events" "none"
-                ] []
+                ]
+                []
             , div
                 [ style "position" "absolute"
-                , style "left" "235px"  -- box3 target: 220 + (80-50)/2 = 235
-                , style "top" "215px"   -- 120 + 80 + (80-50)/2 = 215
+                , style "left" "235px" -- box3 target: 220 + (80-50)/2 = 235
+                , style "top" "215px" -- 120 + 80 + (80-50)/2 = 215
                 , style "width" "50px"
                 , style "height" "50px"
                 , style "border" "1px solid rgba(0, 0, 255, 0.7)"
                 , style "background-color" "rgba(0, 0, 255, 0.1)"
                 , style "pointer-events" "none"
-                ] []
+                ]
+                []
             , div
                 [ style "position" "absolute"
-                , style "left" "315px"  -- box4 target: 220 + 80 + (80-50)/2 = 315
-                , style "top" "215px"   -- 120 + 80 + (80-50)/2 = 215
+                , style "left" "315px" -- box4 target: 220 + 80 + (80-50)/2 = 315
+                , style "top" "215px" -- 120 + 80 + (80-50)/2 = 215
                 , style "width" "50px"
                 , style "height" "50px"
                 , style "border" "1px solid rgba(255, 165, 0, 0.7)"
                 , style "background-color" "rgba(255, 165, 0, 0.1)"
                 , style "pointer-events" "none"
-                ] []
-            
+                ]
+                []
+
             -- The actual animated boxes
-            , animatedBox "box1" "#FF6B6B" model.animations  -- Red
-            , animatedBox "box2" "#4ECDC4" model.animations  -- Teal
-            , animatedBox "box3" "#45B7D1" model.animations  -- Blue
-            , animatedBox "box4" "#96CEB4" model.animations  -- Green
+            , animatedBox "box1" "#FF6B6B" model.animations -- Red
+            , animatedBox "box2" "#4ECDC4" model.animations -- Teal
+            , animatedBox "box3" "#45B7D1" model.animations -- Blue
+            , animatedBox "box4" "#96CEB4" model.animations -- Green
             ]
-        
         , div
             [ style "margin-top" "20px"
             , style "font-size" "14px"
@@ -283,12 +302,17 @@ view model =
 animatedBox : String -> String -> SmoothMovePorts.Model -> Html Msg
 animatedBox elementId color animations =
     let
-        position = SmoothMovePorts.getPosition elementId animations
-        isAnimating = SmoothMovePorts.isAnimating animations
-        
-        borderStyle = 
+        position =
+            SmoothMovePorts.getPosition elementId animations
+
+        isAnimating =
+            SmoothMovePorts.isAnimating animations
+
+        borderStyle =
             if isAnimating then
-                "3px solid #FFD700"  -- Gold border when animating
+                "3px solid #FFD700"
+                -- Gold border when animating
+
             else
                 "2px solid " ++ color
     in
@@ -309,10 +333,13 @@ animatedBox elementId color animations =
         , style "box-shadow" "0 2px 4px rgba(0,0,0,0.2)"
         , style "transform" (SmoothMovePorts.transformElement elementId animations)
         ]
-        [ text (String.right 1 elementId) ]  -- Show box number
+        [ text (String.right 1 elementId) ]
 
 
+
+-- Show box number
 -- MAIN --
+
 
 main : Program () Model Msg
 main =

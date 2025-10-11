@@ -5467,9 +5467,11 @@ var $elm_community$easing_functions$Ease$inQuint = function (time) {
 };
 var $elm_community$easing_functions$Ease$outQuint = $elm_community$easing_functions$Ease$flip($elm_community$easing_functions$Ease$inQuint);
 var $author$project$SmoothMoveScroll$defaultConfig = {axis: $author$project$SmoothMoveScroll$Y, container: $author$project$SmoothMoveScroll$DocumentBody, easing: $elm_community$easing_functions$Ease$outQuint, offsetX: 0, offsetY: 12, scrollBar: true, speed: 200};
+var $elm$core$Debug$log = _Debug_log;
 var $author$project$SmoothMoveScrollUI$HorizontalBasic$update = F2(
 	function (msg, model) {
-		switch (msg.$) {
+		var _v0 = A2($elm$core$Debug$log, '', msg);
+		switch (_v0.$) {
 			case 'NoOp':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'ScrollToSectionOne':
@@ -12291,24 +12293,37 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$viewSection = F6(
 var $author$project$SmoothMoveScrollUI$HorizontalBasic$viewContent = function (model) {
 	return _List_fromArray(
 		[
-			$author$project$Common$UI$backButton,
-			$author$project$Common$UI$pageHeader('Horizontal X Axis Scrolling'),
-			$author$project$Common$UI$techInfo(
+			A2(
+			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
 				[
-					$author$project$Common$UI$techParagraph(
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(20),
+					$mdgriffith$elm_ui$Element$centerX,
+					$mdgriffith$elm_ui$Element$htmlAttribute(
+					A2($elm$html$Html$Attributes$style, 'width', '1000vw'))
+				]),
+			_List_fromArray(
+				[
+					$author$project$Common$UI$backButton,
+					$author$project$Common$UI$pageHeader('Horizontal X Axis Scrolling'),
+					$author$project$Common$UI$techInfo(
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$text('This example demonstrates '),
-							$author$project$Common$UI$highlight('X axis scrolling'),
-							$mdgriffith$elm_ui$Element$text(' using '),
-							$author$project$Common$UI$highlight('{ axis = X }'),
-							$mdgriffith$elm_ui$Element$text(' configuration. The sections scroll horizontally instead of vertically, creating a smooth left-to-right navigation experience.')
-						])),
-					$author$project$Common$UI$techParagraph(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$text('Perfect for horizontal layouts, carousels, and side-scrolling interfaces where content flows naturally from left to right.')
+							$author$project$Common$UI$techParagraph(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$text('This example demonstrates '),
+									$author$project$Common$UI$highlight('X axis scrolling'),
+									$mdgriffith$elm_ui$Element$text(' using '),
+									$author$project$Common$UI$highlight('{ axis = X }'),
+									$mdgriffith$elm_ui$Element$text(' configuration. The sections scroll horizontally instead of vertically, creating a smooth left-to-right navigation experience.')
+								])),
+							$author$project$Common$UI$techParagraph(
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$text('Perfect for horizontal layouts, carousels, and side-scrolling interfaces where content flows naturally from left to right.')
+								]))
 						]))
 				])),
 			$author$project$Common$UI$htmlActionButtons(
@@ -12325,8 +12340,6 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$viewContent = function (m
 				[
 					$mdgriffith$elm_ui$Element$spacing(40),
 					A2($mdgriffith$elm_ui$Element$paddingXY, 20, 20),
-					$mdgriffith$elm_ui$Element$htmlAttribute(
-					A2($elm$html$Html$Attributes$style, 'width', '300vw')),
 					$mdgriffith$elm_ui$Element$htmlAttribute(
 					$elm$html$Html$Attributes$class('horizontal-content-row'))
 				]),
