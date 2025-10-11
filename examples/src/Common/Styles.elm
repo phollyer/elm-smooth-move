@@ -185,6 +185,13 @@ responsiveContentCSS =
 responsiveCSS : String
 responsiveCSS =
     """
+    /* Base styles for responsive elements */
+    .responsive-header {
+        font-size: 32px;
+        text-align: center;
+        padding: 0;
+    }
+
     /* Mobile-first responsive design */
     @media (max-width: 768px) {
         .responsive-layout {
