@@ -5950,7 +5950,7 @@ var $author$project$Common$Styles$containerCSS = '\n    .container-layout {\n   
 var $author$project$Common$Styles$diagonalCSS = '\n    body {\n        overflow-x: auto !important;\n        overflow-y: auto !important;\n    }\n\n    .diagonal-layout {\n        min-height: 300vh;\n        height: auto;\n        width: 300vw;\n        padding: 20px 40px !important;\n    }\n\n    .diagonal-content-grid {\n        min-width: 300vw;\n        min-height: 300vh;\n    }\n\n    body::-webkit-scrollbar {\n        width: 12px;\n        height: 12px;\n    }\n\n    body::-webkit-scrollbar-track {\n        background: #F7FAFC;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb {\n        background: #CBD5E0;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb:hover {\n        background: #A0AEC0;\n    }\n\n    @media (max-width: 768px) {\n        .diagonal-layout {\n            min-height: 250vh;\n            width: 250vw;\n            padding: 20px 16px !important;\n        }\n        \n        .diagonal-content-grid {\n            min-width: 250vw;\n            min-height: 250vh;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .diagonal-layout {\n            min-height: 200vh;\n            width: 200vw;\n            padding: 12px !important;\n        }\n        \n        .diagonal-content-grid {\n            min-width: 200vw;\n            min-height: 200vh;\n        }\n    }\n    ';
 var $author$project$Common$Styles$horizontalCSS = '\n    body {\n        overflow-x: auto !important;\n        overflow-y: auto !important;\n    }\n\n    .horizontal-layout {\n        min-height: 100vh;\n        height: auto;\n        width: 500vw;\n        padding: 20px 40px !important;\n    }\n\n    .horizontal-content-row {\n        min-width: 500vw;\n    }\n\n    body::-webkit-scrollbar:horizontal {\n        height: 12px;\n    }\n\n    body::-webkit-scrollbar-track:horizontal {\n        background: #F7FAFC;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb:horizontal {\n        background: #CBD5E0;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb:horizontal:hover {\n        background: #A0AEC0;\n    }\n\n    @media (max-width: 768px) {\n        .horizontal-layout {\n            width: 300vw;\n            padding: 20px 16px !important;\n        }\n        \n        .horizontal-content-row {\n            min-width: 300vw;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .horizontal-layout {\n            width: 200vw;\n            padding: 8px 4px !important;\n        }\n        \n        .horizontal-content-row {\n            min-width: 200vw;\n        }\n    }\n    ';
 var $author$project$Common$Styles$horizontalContainerCSS = '\n    .container-layout {\n        min-height: 100vh;\n    }\n\n    .scroll-container {\n        overflow-x: auto !important;\n        overflow-y: auto !important;\n        scrollbar-width: thin;\n        scrollbar-color: #CBD5E0 #F7FAFC;\n    }\n\n    .scroll-container::-webkit-scrollbar {\n        height: 10px;\n    }\n\n    .scroll-container::-webkit-scrollbar-track {\n        background: #F7FAFC;\n        border-radius: 5px;\n    }\n\n    .scroll-container::-webkit-scrollbar-thumb {\n        background: #CBD5E0;\n        border-radius: 5px;\n    }\n\n    .scroll-container::-webkit-scrollbar-thumb:hover {\n        background: #A0AEC0;\n    }\n\n    /* Navigation buttons responsive layout */\n    .nav-buttons-row {\n        flex-wrap: wrap;\n        justify-content: center;\n    }\n\n    /* Responsive button container - row on desktop, column on mobile */\n    .responsive-button-container {\n        display: flex !important;\n        flex-direction: row !important;\n        justify-content: center !important;\n        align-items: center !important;\n        gap: 20px !important;\n    }\n\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 20px 16px !important;\n        }\n        \n        .responsive-container {\n            gap: 20px !important;\n        }\n        \n        .responsive-button-container {\n            flex-direction: column !important;\n            gap: 16px !important;\n        }\n        \n        .nav-buttons-row {\n            gap: 8px !important;\n        }\n        \n        .nav-buttons-row button {\n            min-width: 80px;\n            padding: 8px 12px !important;\n            font-size: 12px !important;\n        }\n        \n        .container-layout {\n            padding: 10px 15px;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 16px 12px !important;\n        }\n        \n        .responsive-button-container {\n            flex-direction: column !important;\n            gap: 12px !important;\n        }\n        \n        .nav-buttons-row {\n            gap: 6px !important;\n        }\n        \n        .nav-buttons-row button {\n            min-width: 70px;\n            padding: 6px 10px !important;\n            font-size: 11px !important;\n        }\n        \n        .container-layout {\n            padding: 10px;\n        }\n    }\n    ';
-var $author$project$Common$Styles$responsiveCSS = '\n    /* Mobile-first responsive design */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 20px 16px !important;\n        }\n        \n        .responsive-container {\n            gap: 20px !important;\n        }\n        \n        .responsive-header {\n            font-size: 24px !important;\n            text-align: center;\n            padding: 0 16px;\n        }\n        \n        .responsive-tech-info {\n            padding: 16px 20px !important;\n            margin: 0 16px;\n        }\n        \n        .responsive-buttons {\n            gap: 16px !important;\n            padding: 0 16px;\n        }\n        \n        .responsive-buttons button {\n            width: 100%;\n            min-height: 44px;\n            padding: 12px 20px !important;\n        }\n        \n        .responsive-paragraph {\n            padding: 20px 16px !important;\n            margin: 0 16px;\n        }\n        \n        .responsive-paragraph h1,\n        .responsive-paragraph h2,\n        .responsive-paragraph h3 {\n            font-size: 20px !important;\n        }\n    }\n    \n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 16px 12px !important;\n        }\n        \n        .responsive-header {\n            font-size: 20px !important;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px 16px !important;\n            margin: 0 12px;\n        }\n        \n        .responsive-paragraph {\n            padding: 16px 12px !important;\n            margin: 0 12px;\n        }\n        \n        .responsive-buttons {\n            padding: 0 12px;\n        }\n    }\n    ';
+var $author$project$Common$Styles$responsiveCSS = '\n    /* Base styles for responsive elements */\n    .responsive-header {\n        font-size: 32px;\n        text-align: center;\n        padding: 0;\n    }\n\n    /* Mobile-first responsive design */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 20px 16px !important;\n        }\n        \n        .responsive-container {\n            gap: 20px !important;\n        }\n        \n        .responsive-header {\n            font-size: 24px !important;\n            text-align: center;\n            padding: 0 16px;\n        }\n        \n        .responsive-tech-info {\n            padding: 16px 20px !important;\n            margin: 0 16px;\n        }\n        \n        .responsive-buttons {\n            gap: 16px !important;\n            padding: 0 16px;\n        }\n        \n        .responsive-buttons button {\n            width: 100%;\n            min-height: 44px;\n            padding: 12px 20px !important;\n        }\n        \n        .responsive-paragraph {\n            padding: 20px 16px !important;\n            margin: 0 16px;\n        }\n        \n        .responsive-paragraph h1,\n        .responsive-paragraph h2,\n        .responsive-paragraph h3 {\n            font-size: 20px !important;\n        }\n    }\n    \n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 16px 12px !important;\n        }\n        \n        .responsive-header {\n            font-size: 20px !important;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px 16px !important;\n            margin: 0 12px;\n        }\n        \n        .responsive-paragraph {\n            padding: 16px 12px !important;\n            margin: 0 12px;\n        }\n        \n        .responsive-buttons {\n            padding: 0 12px;\n        }\n    }\n    ';
 var $author$project$Common$Styles$responsiveContentCSS = '\n    /* Responsive content block styling */\n    .responsive-content-block {\n        padding: 20px !important;\n    }\n\n    .responsive-content-title {\n        font-size: inherit !important;\n    }\n\n    .responsive-content-description {\n        font-size: inherit !important;\n        line-height: 1.5 !important;\n    }\n\n    .responsive-bullet-list {\n        font-size: inherit !important;\n    }\n\n    .responsive-bullet-point {\n        font-size: inherit !important;\n        line-height: 1.4 !important;\n        margin-bottom: 6px !important;\n    }\n\n    @media (max-width: 768px) {\n        .responsive-content-block {\n            padding: 16px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 18px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 14px !important;\n        }\n        \n        .responsive-bullet-list {\n            font-size: 14px !important;\n        }\n        \n        .responsive-bullet-point {\n            font-size: 14px !important;\n            margin-bottom: 8px !important;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .responsive-content-block {\n            padding: 12px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 16px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 13px !important;\n        }\n        \n        .responsive-bullet-list {\n            font-size: 13px !important;\n        }\n        \n        .responsive-bullet-point {\n            font-size: 13px !important;\n            margin-bottom: 8px !important;\n        }\n    }\n    ';
 var $author$project$Common$UI$getLayoutCSS = function (layoutType) {
 	var baseCSS = $author$project$Common$Styles$responsiveCSS + ('\n' + ($author$project$Common$Styles$buttonGroupCSS + ('\n' + $author$project$Common$Styles$responsiveContentCSS)));
@@ -11924,27 +11924,6 @@ var $mdgriffith$elm_ui$Element$maximum = F2(
 	function (i, l) {
 		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
 	});
-var $mdgriffith$elm_ui$Element$Font$size = function (i) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontSize,
-		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
-};
-var $author$project$Common$Colors$textDark = A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59);
-var $author$project$Common$UI$pageHeader = function (title) {
-	return A2(
-		$mdgriffith$elm_ui$Element$el,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$Font$size(32),
-				$mdgriffith$elm_ui$Element$Font$semiBold,
-				$mdgriffith$elm_ui$Element$Font$color($author$project$Common$Colors$textDark),
-				$mdgriffith$elm_ui$Element$centerX,
-				$mdgriffith$elm_ui$Element$htmlAttribute(
-				$elm$html$Html$Attributes$class('responsive-header'))
-			]),
-		$mdgriffith$elm_ui$Element$text(title));
-};
 var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
 	return {$: 'Describe', a: a};
 };
@@ -11967,6 +11946,23 @@ var $mdgriffith$elm_ui$Element$paragraph = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
+var $author$project$Common$Colors$textDark = A3($mdgriffith$elm_ui$Element$rgb255, 30, 41, 59);
+var $author$project$Common$UI$pageHeader = function (title) {
+	return A2(
+		$mdgriffith$elm_ui$Element$paragraph,
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Font$semiBold,
+				$mdgriffith$elm_ui$Element$Font$color($author$project$Common$Colors$textDark),
+				$mdgriffith$elm_ui$Element$centerX,
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				$elm$html$Html$Attributes$class('responsive-header'))
+			]),
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$text(title)
+			]));
+};
 var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
@@ -11995,6 +11991,12 @@ var $mdgriffith$elm_ui$Element$Border$shadow = function (almostShade) {
 			$mdgriffith$elm_ui$Internal$Model$boxShadowClass(shade),
 			'box-shadow',
 			$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(shade)));
+};
+var $mdgriffith$elm_ui$Element$Font$size = function (i) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$fontSize,
+		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
 var $author$project$Common$Colors$borderLight = A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240);
 var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
