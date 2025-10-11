@@ -184,69 +184,8 @@ viewContent model =
             ]
         ]
     , -- Status display section will be added below
-      column [ spacing 20, centerX ]
-        [ link
-            [ alignLeft
-            , padding 12
-            , Background.gradient
-                { angle = 0
-                , steps = [ rgb255 59 130 246, rgb255 147 197 253 ]
-                }
-            , Font.color (rgb255 255 255 255)  
-            , Font.semiBold
-            , Border.rounded 8
-            ]
-            { url = "../../elmui-examples.html"
-            , label = text "← Back to Examples"
-            }
-
-        , -- Header
-          el
-            [ Font.size 32
-            , Font.semiBold
-            , Font.color (rgb255 30 41 59)
-            , centerX
-            , htmlAttribute (Html.Attributes.class "responsive-header")
-            ]
-            (text "SmoothMoveState Multiple Example")
-
-        , -- Technical information
-          column
-            [ spacing 16
-            , width (maximum 1200 fill)
-            , centerX
-            , paddingXY 32 24
-            , Background.color (rgb255 248 250 252)
-            , htmlAttribute (Html.Attributes.class "responsive-tech-info")
-            , Border.rounded 8
-            , Border.solid
-            , Border.width 1
-            , Border.color (rgb255 226 232 240)
-            ]
-            [ paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "This example demonstrates the SmoothMoveState module managing "
-                , el [ Font.semiBold ] (text "multiple elements simultaneously")
-                , text " with predefined formation patterns. The state wrapper provides "
-                , el [ Font.semiBold ] (text "simplified coordination")
-                , text " of complex multi-element animations while preserving individual element positioning data."
-                ]
-
-            , paragraph
-                [ Font.size 16
-                , Font.color (rgb255 71 85 105)
-                , width fill
-                ]
-                [ text "Perfect for choreographed animations, UI transitions, and formation-based layouts with "
-                , el [ Font.semiBold ] (text "reduced complexity")
-                , text " compared to managing individual subscription states."
-                ]
-            ]
-
-        , -- Element status and positions (6 elements in 2 rows)
+      column [ spacing 20, centerX, width fill ]
+        [    -- Element status and positions (6 elements in 2 rows)
           column
             [ spacing 20
             , centerX
@@ -312,9 +251,17 @@ viewContent model =
             ]
 
         , -- Animation area with moving elements
-          el
-            [ width (px 500)
-            , height (px 400)
+          el 
+            [width <|
+                maximum 500 fill
+            , height <|
+                px 400
+            , paddingXY 5 0
+            ]
+            <|
+            el
+            [ width fill
+            , height fill
             , centerX
             , Background.color (rgb255 255 255 255)
             , Border.rounded 12

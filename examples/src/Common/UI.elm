@@ -376,7 +376,9 @@ htmlActionButtons buttons =
                 Purple -> "linear-gradient(135deg, #9f7aea, #805ad5)"
                 Warning -> "linear-gradient(135deg, #ed8936, #dd6b20)"
     in
-    Element.html
+    el
+        [centerX]
+        <|Element.html
         (Html.div
             [ Html.Attributes.class "example-links" ]
             (List.map createButton buttons)
