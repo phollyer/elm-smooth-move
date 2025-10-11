@@ -146,13 +146,10 @@ viewContent model =
         (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
 
     , -- Buttons for predefined moves
-      column
-        [ spacing 20
-        , centerX
-        ]
-        [ UI.actionButton UI.Primary MoveToCorner "Move to (100, 100)"
-        , UI.actionButton UI.Success MoveToCenter "Move to (300, 200)"
-        , UI.actionButton UI.Purple StopAnimation "Return to Origin"
+      UI.htmlActionButtons
+        [ ( UI.Primary, MoveToCorner, "Move to (100, 100)" )
+        , ( UI.Success, MoveToCenter, "Move to (300, 200)" )
+        , ( UI.Purple, StopAnimation, "Return to Origin" )
         ]
 
     , -- Animation area with moving box

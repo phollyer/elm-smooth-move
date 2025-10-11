@@ -335,11 +335,10 @@ viewContent model =
         [ spacing 15
         , centerX
         ]
-        [ row
-            [ spacing 15 ]
-            [ UI.actionButton UI.Primary Scatter "Scatter"
-            , UI.actionButton UI.Success Circle "Circle Formation"
-            , UI.actionButton UI.Purple Reset "Reset"
+        [ UI.htmlActionButtons
+            [ ( UI.Primary, Scatter, "Scatter" )
+            , ( UI.Success, Circle, "Circle Formation" )
+            , ( UI.Purple, Reset, "Reset" )
             ]
         ]
 
