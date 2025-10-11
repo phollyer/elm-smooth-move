@@ -2,7 +2,7 @@ module Common.UI exposing (..)
 
 import Browser exposing (Document)
 import Html
-import Element exposing (Element, layout, link, el, column, text, alignLeft, centerX, padding, paddingXY, spacing, width, fill, maximum, htmlAttribute, height, rgb255)
+import Element exposing (Element, layout, link, paragraph, el, column, text, alignLeft, centerX, padding, paddingXY, spacing, width, fill, maximum, htmlAttribute, height, rgb255)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -127,14 +127,13 @@ backButton =
 
 pageHeader : String -> Element msg
 pageHeader title =
-    el
-        [ Font.size 32
-        , Font.semiBold
+    paragraph
+        [ Font.semiBold
         , Font.color Colors.textDark
         , centerX
         , htmlAttribute (Html.Attributes.class "responsive-header")
         ]
-        (text title)
+        [text title]
 
 
 -- TECHNICAL INFO CONTAINER
