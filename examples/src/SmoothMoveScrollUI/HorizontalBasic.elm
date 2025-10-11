@@ -129,7 +129,6 @@ viewContent model =
         [ spacing 40
         , paddingXY 20 20
         , htmlAttribute (Html.Attributes.style "width" "1000vw")
-        , htmlAttribute (Html.Attributes.class "horizontal-content-row")
         ]
         [ -- Start Section
           viewSection "start"

@@ -12299,9 +12299,7 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$viewContent = function (m
 				[
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 					$mdgriffith$elm_ui$Element$spacing(20),
-					$mdgriffith$elm_ui$Element$centerX,
-					$mdgriffith$elm_ui$Element$htmlAttribute(
-					A2($elm$html$Html$Attributes$style, 'width', '1000vw'))
+					$mdgriffith$elm_ui$Element$centerX
 				]),
 			_List_fromArray(
 				[
@@ -12341,7 +12339,7 @@ var $author$project$SmoothMoveScrollUI$HorizontalBasic$viewContent = function (m
 					$mdgriffith$elm_ui$Element$spacing(40),
 					A2($mdgriffith$elm_ui$Element$paddingXY, 20, 20),
 					$mdgriffith$elm_ui$Element$htmlAttribute(
-					$elm$html$Html$Attributes$class('horizontal-content-row'))
+					A2($elm$html$Html$Attributes$style, 'width', '1000vw'))
 				]),
 			_List_fromArray(
 				[
