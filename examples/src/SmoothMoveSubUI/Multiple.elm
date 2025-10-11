@@ -242,13 +242,10 @@ viewContent model =
         ]
 
     , -- Control buttons
-      row
-        [ spacing 15
-        , centerX
-        ]
-        [ UI.actionButton UI.Primary ScatterElements "Scatter"
-        , UI.actionButton UI.Success CircleFormation "Circle Formation"
-        , UI.actionButton UI.Purple ResetPositions "Reset"
+      UI.htmlActionButtons
+        [ ( UI.Primary, ScatterElements, "Scatter" )
+        , ( UI.Success, CircleFormation, "Circle Formation" )
+        , ( UI.Purple, ResetPositions, "Reset" )
         ]
 
     , -- Animation area with moving elements

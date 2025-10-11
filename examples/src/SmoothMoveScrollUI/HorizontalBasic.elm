@@ -2,7 +2,7 @@ module SmoothMoveScrollUI.HorizontalBasic exposing (main)
 
 import Browser exposing (Document)
 import Browser.Dom
-import Element exposing (Element, row, column, el, layout, maximum, paddingXY, paddingEach, rgb255, spacing, text, width, fill, centerX, centerY, htmlAttribute, height, px, link, alignLeft, padding, paragraph, wrappedRow)
+import Element exposing (Element, row, column, el, layout, maximum, paddingXY, paddingEach, rgb255, spacing, text, width, fill, centerX, centerY, htmlAttribute, height, px, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -111,15 +111,11 @@ viewContent model =
                 ]
 
             , -- Navigation Buttons
-              wrappedRow
-                [ spacing 12
-                , centerX
-                , paddingXY 32 32
-                ]
-                [ UI.actionButton UI.Primary ScrollToStart "Start"
-                , UI.actionButton UI.Success ScrollToSectionOne "Section 1"
-                , UI.actionButton UI.Purple ScrollToSectionTwo "Section 2"
-                , UI.actionButton UI.Warning ScrollToSectionThree "Section 3"
+              UI.htmlActionButtons
+                [ ( UI.Primary, ScrollToStart, "Start" )
+                , ( UI.Success, ScrollToSectionOne, "Section 1" )
+                , ( UI.Purple, ScrollToSectionTwo, "Section 2" )
+                , ( UI.Warning, ScrollToSectionThree, "Section 3" )
                 ]
 
         , -- Horizontal Content Container (move scrolling to document level)

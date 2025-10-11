@@ -172,14 +172,12 @@ viewContent model =
                 ]
                 (text "Navigate Diagonally:")
 
-            , row
-                [ htmlAttribute (Html.Attributes.class "button-group")
-                ]
-                [ UI.actionButton UI.Primary ScrollToTopLeft "↖ Top Left"
-                , UI.actionButton UI.Success ScrollToTopRight "↗ Top Right" 
-                , UI.actionButton UI.Purple ScrollToCenter "🎯 Center"
-                , UI.actionButton UI.Warning ScrollToBottomLeft "↙ Bottom Left"
-                , UI.actionButton UI.Warning ScrollToBottomRight "↘ Bottom Right"
+            , UI.htmlActionButtons
+                [ ( UI.Primary, ScrollToTopLeft, "↖ Top Left" )
+                , ( UI.Success, ScrollToTopRight, "↗ Top Right" )
+                , ( UI.Purple, ScrollToCenter, "🎯 Center" )
+                , ( UI.Warning, ScrollToBottomLeft, "↙ Bottom Left" )
+                , ( UI.Warning, ScrollToBottomRight, "↘ Bottom Right" )
                 ]
             ]
 

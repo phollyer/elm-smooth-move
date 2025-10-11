@@ -104,14 +104,10 @@ viewContent model =
                         ]
                     ]
 
-                , column
-                    [ centerX
-                    , spacing 20
-                    , htmlAttribute (Html.Attributes.class "responsive-button-container")
-                    ]
-                    [ UI.actionButton UI.Primary ScrollToTop "Scroll to Top"
-                    , UI.actionButton UI.Success ScrollToMiddle "Scroll to Middle"
-                    , UI.actionButton UI.Purple ScrollToBottom "Scroll to Bottom"
+                , UI.htmlActionButtons
+                    [ ( UI.Primary, ScrollToTop, "Scroll to Top" )
+                    , ( UI.Success, ScrollToMiddle, "Scroll to Middle" )
+                    , ( UI.Purple, ScrollToBottom, "Scroll to Bottom" )
                     ]
 
                 , -- The scrollable container

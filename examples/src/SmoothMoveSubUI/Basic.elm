@@ -22,7 +22,7 @@ DEVELOPER EXPERIENCE:
 -}
 
 import Browser exposing (Document)
-import Element exposing (Element, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, moveUp, moveDown, padding, paragraph)
+import Element exposing (Element, row, column, el, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, moveUp, moveDown, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -138,13 +138,10 @@ viewContent model =
         (text ("Position: (" ++ String.fromInt (round position.x) ++ ", " ++ String.fromInt (round position.y) ++ ")"))
 
     , -- Buttons for predefined moves
-      column
-        [ spacing 20
-        , centerX
-        ]
-        [ UI.actionButton UI.Primary (StartMove 100 100) "Move to (100, 100)"
-        , UI.actionButton UI.Success (StartMove 300 200) "Move to (300, 200)"
-        , UI.actionButton UI.Purple (StartMove 0 0) "Return to Origin"
+      UI.htmlActionButtons
+        [ ( UI.Primary, StartMove 100 100, "Move to (100, 100)" )
+        , ( UI.Success, StartMove 300 200, "Move to (300, 200)" )
+        , ( UI.Purple, StartMove 0 0, "Return to Origin" )
         ]
 
     , -- Animation area with moving box
