@@ -5732,23 +5732,26 @@ var $author$project$Common$UI$getLayoutAttributes = function (layoutType) {
 		]);
 	return _Utils_ap(baseAttributes, specificAttributes);
 };
-var $author$project$Common$Styles$containerCSS = '\n    .container-layout {\n        min-height: 100vh;\n        padding: 20px;\n        box-sizing: border-box;\n    }\n    \n    .scroll-container-wrapper {\n        max-width: 1200px;\n        width: 100%;\n        margin: 0 auto;\n    }\n\n    /* Scrollbar styles for the scroll container */\n    #scroll-container {\n        overflow-y: auto !important;\n        scrollbar-width: thin;\n        scrollbar-color: #CBD5E0 #F7FAFC;\n    }\n\n    #scroll-container::-webkit-scrollbar {\n        width: 12px;\n    }\n\n    #scroll-container::-webkit-scrollbar-track {\n        background: #F7FAFC;\n        border-radius: 6px;\n        margin: 6px;\n    }\n\n    #scroll-container::-webkit-scrollbar-thumb {\n        background: #CBD5E0;\n        border-radius: 6px;\n    }\n\n    #scroll-container::-webkit-scrollbar-thumb:hover {\n        background: #A0AEC0;\n    }\n\n    /* Responsive content block styling */\n    .responsive-content-block {\n        padding: 20px !important;\n    }\n\n    .responsive-content-title {\n        font-size: inherit !important;\n    }\n\n    .responsive-content-description {\n        font-size: inherit !important;\n        line-height: 1.5 !important;\n    }\n\n    .responsive-bullet-list {\n        font-size: inherit !important;\n    }\n\n    .responsive-bullet-point {\n        font-size: inherit !important;\n        line-height: 1.4 !important;\n        margin-bottom: 6px !important;\n    }\n\n    @media (max-width: 768px) {\n        .container-layout {\n            padding: 16px;\n        }\n        \n        .responsive-content-block {\n            padding: 16px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 18px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 14px !important;\n        }\n        \n        .responsive-bullet-list {\n            font-size: 14px !important;\n        }\n        \n        .responsive-bullet-point {\n            font-size: 14px !important;\n            margin-bottom: 8px !important;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .container-layout {\n            padding: 12px;\n        }\n        \n        .responsive-content-block {\n            padding: 12px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 16px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 13px !important;\n        }\n        \n        .responsive-bullet-list {\n            font-size: 13px !important;\n        }\n        \n        .responsive-bullet-point {\n            font-size: 13px !important;\n            margin-bottom: 8px !important;\n        }\n    }\n    ';
+var $author$project$Common$Styles$buttonGroupCSS = '\n    /* Example links - matching elmui-examples.html reference implementation */\n    .example-links {\n        display: flex;\n        gap: 6px;\n        flex-wrap: wrap;\n        justify-content: center;\n        margin: 20px 0;\n    }\n\n    .example-link {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        padding: 12px 8px;\n        background: linear-gradient(135deg, #4299e1, #3182ce);\n        color: white;\n        text-decoration: none;\n        border-radius: 6px;\n        font-size: 12px;\n        font-weight: 500;\n        transition: transform 0.2s, box-shadow 0.2s;\n        text-align: center;\n        min-width: 44px;\n        min-height: 44px;\n        cursor: pointer;\n        border: none;\n        font-family: inherit;\n    }\n\n    @media (min-width: 480px) {\n        .example-links {\n            gap: 8px;\n            margin: 24px 0;\n        }\n\n        .example-link {\n            font-size: 13px;\n            padding: 10px 12px;\n        }\n    }\n\n    @media (min-width: 768px) {\n        .example-links {\n            gap: 10px;\n            margin: 32px 0;\n        }\n\n        .example-link {\n            display: inline-block;\n            padding: 8px 16px;\n            font-size: 0.9rem;\n            min-width: auto;\n            min-height: auto;\n        }\n    }\n\n    .example-link:hover {\n        transform: translateY(-2px);\n        box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);\n    }\n\n    /* Backward compatibility for old button-group class */\n    .button-group {\n        display: flex;\n        gap: 6px;\n        flex-wrap: wrap;\n        justify-content: center;\n        margin: 20px 0;\n    }\n\n    @media (min-width: 480px) {\n        .button-group {\n            gap: 8px;\n            margin: 24px 0;\n        }\n    }\n\n    @media (min-width: 768px) {\n        .button-group {\n            gap: 10px;\n            margin: 32px 0;\n        }\n    }\n    ';
+var $author$project$Common$Styles$containerCSS = '\n    .container-layout {\n        min-height: 100vh;\n        padding: 20px;\n        box-sizing: border-box;\n    }\n    \n    .scroll-container-wrapper {\n        max-width: 1200px;\n        width: 100%;\n        margin: 0 auto;\n    }\n\n    /* Scrollbar styles for the scroll container */\n    #scroll-container {\n        overflow-y: auto !important;\n        scrollbar-width: thin;\n        scrollbar-color: #CBD5E0 #F7FAFC;\n    }\n\n    #scroll-container::-webkit-scrollbar {\n        width: 12px;\n    }\n\n    #scroll-container::-webkit-scrollbar-track {\n        background: #F7FAFC;\n        border-radius: 6px;\n        margin: 6px;\n    }\n\n    #scroll-container::-webkit-scrollbar-thumb {\n        background: #CBD5E0;\n        border-radius: 6px;\n    }\n\n    #scroll-container::-webkit-scrollbar-thumb:hover {\n        background: #A0AEC0;\n    }\n\n    @media (max-width: 768px) {\n        .container-layout {\n            padding: 16px;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .container-layout {\n            padding: 12px;\n        }\n    }\n    ';
 var $author$project$Common$Styles$diagonalCSS = '\n    body {\n        overflow-x: auto !important;\n        overflow-y: auto !important;\n    }\n\n    .diagonal-layout {\n        min-height: 300vh;\n        height: auto;\n        width: 300vw;\n        padding: 20px 40px !important;\n    }\n\n    .diagonal-content-grid {\n        min-width: 300vw;\n        min-height: 300vh;\n    }\n\n    body::-webkit-scrollbar {\n        width: 12px;\n        height: 12px;\n    }\n\n    body::-webkit-scrollbar-track {\n        background: #F7FAFC;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb {\n        background: #CBD5E0;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb:hover {\n        background: #A0AEC0;\n    }\n\n    @media (max-width: 768px) {\n        .diagonal-layout {\n            min-height: 250vh;\n            width: 250vw;\n            padding: 20px 16px !important;\n        }\n        \n        .diagonal-content-grid {\n            min-width: 250vw;\n            min-height: 250vh;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .diagonal-layout {\n            min-height: 200vh;\n            width: 200vw;\n            padding: 12px !important;\n        }\n        \n        .diagonal-content-grid {\n            min-width: 200vw;\n            min-height: 200vh;\n        }\n    }\n    ';
 var $author$project$Common$Styles$horizontalCSS = '\n    body {\n        overflow-x: auto !important;\n        overflow-y: auto !important;\n    }\n\n    .horizontal-layout {\n        min-height: 100vh;\n        height: auto;\n        width: 500vw;\n        padding: 20px 40px !important;\n    }\n\n    .horizontal-content-row {\n        min-width: 500vw;\n    }\n\n    body::-webkit-scrollbar:horizontal {\n        height: 12px;\n    }\n\n    body::-webkit-scrollbar-track:horizontal {\n        background: #F7FAFC;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb:horizontal {\n        background: #CBD5E0;\n        border-radius: 6px;\n    }\n\n    body::-webkit-scrollbar-thumb:horizontal:hover {\n        background: #A0AEC0;\n    }\n\n    @media (max-width: 768px) {\n        .horizontal-layout {\n            width: 300vw;\n            padding: 20px 16px !important;\n        }\n        \n        .horizontal-content-row {\n            min-width: 300vw;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .horizontal-layout {\n            width: 200vw;\n            padding: 8px 4px !important;\n        }\n        \n        .horizontal-content-row {\n            min-width: 200vw;\n        }\n    }\n    ';
 var $author$project$Common$Styles$horizontalContainerCSS = '\n    .container-layout {\n        min-height: 100vh;\n    }\n\n    .scroll-container {\n        overflow-x: auto !important;\n        overflow-y: auto !important;\n        scrollbar-width: thin;\n        scrollbar-color: #CBD5E0 #F7FAFC;\n    }\n\n    .scroll-container::-webkit-scrollbar {\n        height: 10px;\n    }\n\n    .scroll-container::-webkit-scrollbar-track {\n        background: #F7FAFC;\n        border-radius: 5px;\n    }\n\n    .scroll-container::-webkit-scrollbar-thumb {\n        background: #CBD5E0;\n        border-radius: 5px;\n    }\n\n    .scroll-container::-webkit-scrollbar-thumb:hover {\n        background: #A0AEC0;\n    }\n\n    /* Navigation buttons responsive layout */\n    .nav-buttons-row {\n        flex-wrap: wrap;\n        justify-content: center;\n    }\n\n    /* Responsive button container - row on desktop, column on mobile */\n    .responsive-button-container {\n        display: flex !important;\n        flex-direction: row !important;\n        justify-content: center !important;\n        align-items: center !important;\n        gap: 20px !important;\n    }\n\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 20px 16px !important;\n        }\n        \n        .responsive-container {\n            gap: 20px !important;\n        }\n        \n        .responsive-button-container {\n            flex-direction: column !important;\n            gap: 16px !important;\n        }\n        \n        .nav-buttons-row {\n            gap: 8px !important;\n        }\n        \n        .nav-buttons-row button {\n            min-width: 80px;\n            padding: 8px 12px !important;\n            font-size: 12px !important;\n        }\n        \n        .container-layout {\n            padding: 10px 15px;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 16px 12px !important;\n        }\n        \n        .responsive-button-container {\n            flex-direction: column !important;\n            gap: 12px !important;\n        }\n        \n        .nav-buttons-row {\n            gap: 6px !important;\n        }\n        \n        .nav-buttons-row button {\n            min-width: 70px;\n            padding: 6px 10px !important;\n            font-size: 11px !important;\n        }\n        \n        .container-layout {\n            padding: 10px;\n        }\n    }\n    ';
 var $author$project$Common$Styles$responsiveCSS = '\n    /* Mobile-first responsive design */\n    @media (max-width: 768px) {\n        .responsive-layout {\n            padding: 20px 16px !important;\n        }\n        \n        .responsive-container {\n            gap: 20px !important;\n        }\n        \n        .responsive-header {\n            font-size: 24px !important;\n            text-align: center;\n            padding: 0 16px;\n        }\n        \n        .responsive-tech-info {\n            padding: 16px 20px !important;\n            margin: 0 16px;\n        }\n        \n        .responsive-buttons {\n            gap: 16px !important;\n            padding: 0 16px;\n        }\n        \n        .responsive-buttons button {\n            width: 100%;\n            min-height: 44px;\n            padding: 12px 20px !important;\n        }\n        \n        .responsive-paragraph {\n            padding: 20px 16px !important;\n            margin: 0 16px;\n        }\n        \n        .responsive-paragraph h1,\n        .responsive-paragraph h2,\n        .responsive-paragraph h3 {\n            font-size: 20px !important;\n        }\n    }\n    \n    @media (max-width: 480px) {\n        .responsive-layout {\n            padding: 16px 12px !important;\n        }\n        \n        .responsive-header {\n            font-size: 20px !important;\n        }\n        \n        .responsive-tech-info {\n            padding: 12px 16px !important;\n            margin: 0 12px;\n        }\n        \n        .responsive-paragraph {\n            padding: 16px 12px !important;\n            margin: 0 12px;\n        }\n        \n        .responsive-buttons {\n            padding: 0 12px;\n        }\n    }\n    ';
+var $author$project$Common$Styles$responsiveContentCSS = '\n    /* Responsive content block styling */\n    .responsive-content-block {\n        padding: 20px !important;\n    }\n\n    .responsive-content-title {\n        font-size: inherit !important;\n    }\n\n    .responsive-content-description {\n        font-size: inherit !important;\n        line-height: 1.5 !important;\n    }\n\n    .responsive-bullet-list {\n        font-size: inherit !important;\n    }\n\n    .responsive-bullet-point {\n        font-size: inherit !important;\n        line-height: 1.4 !important;\n        margin-bottom: 6px !important;\n    }\n\n    @media (max-width: 768px) {\n        .responsive-content-block {\n            padding: 16px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 18px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 14px !important;\n        }\n        \n        .responsive-bullet-list {\n            font-size: 14px !important;\n        }\n        \n        .responsive-bullet-point {\n            font-size: 14px !important;\n            margin-bottom: 8px !important;\n        }\n    }\n\n    @media (max-width: 480px) {\n        .responsive-content-block {\n            padding: 12px !important;\n        }\n        \n        .responsive-content-title {\n            font-size: 16px !important;\n        }\n        \n        .responsive-content-description {\n            font-size: 13px !important;\n        }\n        \n        .responsive-bullet-list {\n            font-size: 13px !important;\n        }\n        \n        .responsive-bullet-point {\n            font-size: 13px !important;\n            margin-bottom: 8px !important;\n        }\n    }\n    ';
 var $author$project$Common$UI$getLayoutCSS = function (layoutType) {
+	var baseCSS = $author$project$Common$Styles$responsiveCSS + ('\n' + ($author$project$Common$Styles$buttonGroupCSS + ('\n' + $author$project$Common$Styles$responsiveContentCSS)));
 	switch (layoutType.$) {
 		case 'Basic':
-			return $author$project$Common$Styles$responsiveCSS;
+			return baseCSS;
 		case 'Horizontal':
-			return $author$project$Common$Styles$responsiveCSS + ('\n' + $author$project$Common$Styles$horizontalCSS);
+			return baseCSS + ('\n' + $author$project$Common$Styles$horizontalCSS);
 		case 'Diagonal':
-			return $author$project$Common$Styles$responsiveCSS + ('\n' + $author$project$Common$Styles$diagonalCSS);
+			return baseCSS + ('\n' + $author$project$Common$Styles$diagonalCSS);
 		case 'Container':
-			return $author$project$Common$Styles$responsiveCSS + ('\n' + $author$project$Common$Styles$containerCSS);
+			return baseCSS + ('\n' + $author$project$Common$Styles$containerCSS);
 		default:
-			return $author$project$Common$Styles$responsiveCSS + ('\n' + $author$project$Common$Styles$horizontalContainerCSS);
+			return baseCSS + ('\n' + $author$project$Common$Styles$horizontalContainerCSS);
 	}
 };
 var $mdgriffith$elm_ui$Internal$Style$classes = {above: 'a', active: 'atv', alignBottom: 'ab', alignCenterX: 'cx', alignCenterY: 'cy', alignContainerBottom: 'acb', alignContainerCenterX: 'accx', alignContainerCenterY: 'accy', alignContainerRight: 'acr', alignLeft: 'al', alignRight: 'ar', alignTop: 'at', alignedHorizontally: 'ah', alignedVertically: 'av', any: 's', behind: 'bh', below: 'b', bold: 'w7', borderDashed: 'bd', borderDotted: 'bdt', borderNone: 'bn', borderSolid: 'bs', capturePointerEvents: 'cpe', clip: 'cp', clipX: 'cpx', clipY: 'cpy', column: 'c', container: 'ctr', contentBottom: 'cb', contentCenterX: 'ccx', contentCenterY: 'ccy', contentLeft: 'cl', contentRight: 'cr', contentTop: 'ct', cursorPointer: 'cptr', cursorText: 'ctxt', focus: 'fcs', focusedWithin: 'focus-within', fullSize: 'fs', grid: 'g', hasBehind: 'hbh', heightContent: 'hc', heightExact: 'he', heightFill: 'hf', heightFillPortion: 'hfp', hover: 'hv', imageContainer: 'ic', inFront: 'fr', inputLabel: 'lbl', inputMultiline: 'iml', inputMultilineFiller: 'imlf', inputMultilineParent: 'imlp', inputMultilineWrapper: 'implw', inputText: 'it', italic: 'i', link: 'lnk', nearby: 'nb', noTextSelection: 'notxt', onLeft: 'ol', onRight: 'or', opaque: 'oq', overflowHidden: 'oh', page: 'pg', paragraph: 'p', passPointerEvents: 'ppe', root: 'ui', row: 'r', scrollbars: 'sb', scrollbarsX: 'sbx', scrollbarsY: 'sby', seButton: 'sbt', single: 'e', sizeByCapital: 'cap', spaceEvenly: 'sev', strike: 'sk', text: 't', textCenter: 'tc', textExtraBold: 'w8', textExtraLight: 'w2', textHeavy: 'w9', textJustify: 'tj', textJustifyAll: 'tja', textLeft: 'tl', textLight: 'w3', textMedium: 'w5', textNormalWeight: 'w4', textRight: 'tr', textSemiBold: 'w6', textThin: 'w1', textUnitalicized: 'tun', transition: 'ts', transparent: 'clr', underline: 'u', widthContent: 'wc', widthExact: 'we', widthFill: 'wf', widthFillPortion: 'wfp', wrapped: 'wrp'};
@@ -11667,158 +11670,9 @@ var $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToTopLeft = {$: 'Scrol
 var $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToTopRight = {$: 'ScrollToTopRight'};
 var $author$project$Common$UI$Success = {$: 'Success'};
 var $author$project$Common$UI$Warning = {$: 'Warning'};
+var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
+var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
 var $author$project$Common$Colors$backgroundWhite = A3($mdgriffith$elm_ui$Element$rgb255, 255, 255, 255);
-var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
-var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
-	return {$: 'Describe', a: a};
-};
-var $elm$json$Json$Encode$bool = _Json_wrap;
-var $elm$html$Html$Attributes$boolProperty = F2(
-	function (key, bool) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$bool(bool));
-	});
-var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
-var $mdgriffith$elm_ui$Element$Input$enter = 'Enter';
-var $mdgriffith$elm_ui$Element$Input$hasFocusStyle = function (attr) {
-	if (((attr.$ === 'StyleClass') && (attr.b.$ === 'PseudoSelector')) && (attr.b.a.$ === 'Focus')) {
-		var _v1 = attr.b;
-		var _v2 = _v1.a;
-		return true;
-	} else {
-		return false;
-	}
-};
-var $mdgriffith$elm_ui$Element$Input$focusDefault = function (attrs) {
-	return A2($elm$core$List$any, $mdgriffith$elm_ui$Element$Input$hasFocusStyle, attrs) ? $mdgriffith$elm_ui$Internal$Model$NoAttribute : $mdgriffith$elm_ui$Internal$Model$htmlClass('focusable');
-};
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
-var $mdgriffith$elm_ui$Element$Events$onClick = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onClick);
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $elm$json$Json$Decode$fail = _Json_fail;
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
-	return {$: 'MayPreventDefault', a: a};
-};
-var $elm$html$Html$Events$preventDefaultOn = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$MayPreventDefault(decoder));
-	});
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $mdgriffith$elm_ui$Element$Input$onKeyLookup = function (lookup) {
-	var decode = function (code) {
-		var _v0 = lookup(code);
-		if (_v0.$ === 'Nothing') {
-			return $elm$json$Json$Decode$fail('No key matched');
-		} else {
-			var msg = _v0.a;
-			return $elm$json$Json$Decode$succeed(msg);
-		}
-	};
-	var isKey = A2(
-		$elm$json$Json$Decode$andThen,
-		decode,
-		A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
-	return $mdgriffith$elm_ui$Internal$Model$Attr(
-		A2(
-			$elm$html$Html$Events$preventDefaultOn,
-			'keydown',
-			A2(
-				$elm$json$Json$Decode$map,
-				function (fired) {
-					return _Utils_Tuple2(fired, true);
-				},
-				isKey)));
-};
-var $mdgriffith$elm_ui$Internal$Model$Class = F2(
-	function (a, b) {
-		return {$: 'Class', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$cursor = $mdgriffith$elm_ui$Internal$Flag$flag(21);
-var $mdgriffith$elm_ui$Element$pointer = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$cursor, $mdgriffith$elm_ui$Internal$Style$classes.cursorPointer);
-var $mdgriffith$elm_ui$Element$Input$space = ' ';
-var $elm$html$Html$Attributes$tabindex = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'tabIndex',
-		$elm$core$String$fromInt(n));
-};
-var $mdgriffith$elm_ui$Element$Input$button = F2(
-	function (attrs, _v0) {
-		var onPress = _v0.onPress;
-		var label = _v0.label;
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.seButton + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.noTextSelection)))))),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$pointer,
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$Input$focusDefault(attrs),
-								A2(
-									$elm$core$List$cons,
-									$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Button),
-									A2(
-										$elm$core$List$cons,
-										$mdgriffith$elm_ui$Internal$Model$Attr(
-											$elm$html$Html$Attributes$tabindex(0)),
-										function () {
-											if (onPress.$ === 'Nothing') {
-												return A2(
-													$elm$core$List$cons,
-													$mdgriffith$elm_ui$Internal$Model$Attr(
-														$elm$html$Html$Attributes$disabled(true)),
-													attrs);
-											} else {
-												var msg = onPress.a;
-												return A2(
-													$elm$core$List$cons,
-													$mdgriffith$elm_ui$Element$Events$onClick(msg),
-													A2(
-														$elm$core$List$cons,
-														$mdgriffith$elm_ui$Element$Input$onKeyLookup(
-															function (code) {
-																return _Utils_eq(code, $mdgriffith$elm_ui$Element$Input$enter) ? $elm$core$Maybe$Just(msg) : (_Utils_eq(code, $mdgriffith$elm_ui$Element$Input$space) ? $elm$core$Maybe$Just(msg) : $elm$core$Maybe$Nothing);
-															}),
-														attrs));
-											}
-										}()))))))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[label])));
-	});
 var $mdgriffith$elm_ui$Element$Font$color = function (fontColor) {
 	return A2(
 		$mdgriffith$elm_ui$Internal$Model$StyleClass,
@@ -11829,73 +11683,6 @@ var $mdgriffith$elm_ui$Element$Font$color = function (fontColor) {
 			'color',
 			fontColor));
 };
-var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
-var $mdgriffith$elm_ui$Element$Font$medium = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textMedium);
-var $author$project$Common$Colors$primary = A3($mdgriffith$elm_ui$Element$rgb255, 59, 130, 246);
-var $author$project$Common$Colors$purple = A3($mdgriffith$elm_ui$Element$rgb255, 168, 85, 247);
-var $author$project$Common$Colors$purpleDark = A3($mdgriffith$elm_ui$Element$rgb255, 147, 51, 234);
-var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
-var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderRound,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Single,
-			'br-' + $elm$core$String$fromInt(radius),
-			'border-radius',
-			$elm$core$String$fromInt(radius) + 'px'));
-};
-var $author$project$Common$Colors$success = A3($mdgriffith$elm_ui$Element$rgb255, 16, 185, 129);
-var $author$project$Common$Colors$successDark = A3($mdgriffith$elm_ui$Element$rgb255, 5, 150, 105);
-var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
-	return {$: 'Text', a: a};
-};
-var $mdgriffith$elm_ui$Element$text = function (content) {
-	return $mdgriffith$elm_ui$Internal$Model$Text(content);
-};
-var $author$project$Common$Colors$warning = A3($mdgriffith$elm_ui$Element$rgb255, 245, 158, 11);
-var $author$project$Common$Colors$warningDark = A3($mdgriffith$elm_ui$Element$rgb255, 217, 119, 6);
-var $author$project$Common$UI$actionButton = F3(
-	function (style, onPress, label) {
-		var _v0 = function () {
-			switch (style.$) {
-				case 'Primary':
-					return _Utils_Tuple2(
-						$author$project$Common$Colors$primary,
-						A3($mdgriffith$elm_ui$Element$rgb255, 37, 99, 235));
-				case 'Success':
-					return _Utils_Tuple2($author$project$Common$Colors$success, $author$project$Common$Colors$successDark);
-				case 'Purple':
-					return _Utils_Tuple2($author$project$Common$Colors$purple, $author$project$Common$Colors$purpleDark);
-				default:
-					return _Utils_Tuple2($author$project$Common$Colors$warning, $author$project$Common$Colors$warningDark);
-			}
-		}();
-		var startColor = _v0.a;
-		var endColor = _v0.b;
-		return A2(
-			$mdgriffith$elm_ui$Element$Input$button,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Background$gradient(
-					{
-						angle: 0,
-						steps: _List_fromArray(
-							[startColor, endColor])
-					}),
-					$mdgriffith$elm_ui$Element$Font$color($author$project$Common$Colors$backgroundWhite),
-					$mdgriffith$elm_ui$Element$Font$medium,
-					A2($mdgriffith$elm_ui$Element$paddingXY, 24, 12),
-					$mdgriffith$elm_ui$Element$Border$rounded(8),
-					$mdgriffith$elm_ui$Element$centerX
-				]),
-			{
-				label: $mdgriffith$elm_ui$Element$text(label),
-				onPress: $elm$core$Maybe$Just(onPress)
-			});
-	});
-var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
-var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
@@ -11947,8 +11734,31 @@ var $mdgriffith$elm_ui$Element$padding = function (x) {
 			f,
 			f));
 };
+var $author$project$Common$Colors$primary = A3($mdgriffith$elm_ui$Element$rgb255, 59, 130, 246);
 var $author$project$Common$Colors$primaryLight = A3($mdgriffith$elm_ui$Element$rgb255, 147, 197, 253);
+var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
+var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderRound,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Single,
+			'br-' + $elm$core$String$fromInt(radius),
+			'border-radius',
+			$elm$core$String$fromInt(radius) + 'px'));
+};
+var $mdgriffith$elm_ui$Internal$Model$Class = F2(
+	function (a, b) {
+		return {$: 'Class', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$semiBold = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textSemiBold);
+var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
+	return {$: 'Text', a: a};
+};
+var $mdgriffith$elm_ui$Element$text = function (content) {
+	return $mdgriffith$elm_ui$Internal$Model$Text(content);
+};
 var $author$project$Common$UI$backButton = A2(
 	$mdgriffith$elm_ui$Element$link,
 	_List_fromArray(
@@ -11995,6 +11805,74 @@ var $author$project$Common$UI$highlight = function (text) {
 			[$mdgriffith$elm_ui$Element$Font$semiBold]),
 		$mdgriffith$elm_ui$Element$text(text));
 };
+var $elm$html$Html$button = _VirtualDom_node('button');
+var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
+var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $author$project$Common$UI$htmlActionButtons = function (buttons) {
+	var getButtonGradient = function (style) {
+		switch (style.$) {
+			case 'Primary':
+				return 'linear-gradient(135deg, #4299e1, #3182ce)';
+			case 'Success':
+				return 'linear-gradient(135deg, #48bb78, #38a169)';
+			case 'Purple':
+				return 'linear-gradient(135deg, #9f7aea, #805ad5)';
+			default:
+				return 'linear-gradient(135deg, #ed8936, #dd6b20)';
+		}
+	};
+	var createButton = function (_v0) {
+		var style = _v0.a;
+		var onPress = _v0.b;
+		var label = _v0.c;
+		return A2(
+			$elm$html$Html$button,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('example-link'),
+					$elm$html$Html$Events$onClick(onPress),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'background',
+					getButtonGradient(style))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(label)
+				]));
+	};
+	return A2(
+		$mdgriffith$elm_ui$Element$el,
+		_List_fromArray(
+			[$mdgriffith$elm_ui$Element$centerX]),
+		$mdgriffith$elm_ui$Element$html(
+			A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('example-links')
+					]),
+				A2($elm$core$List$map, createButton, buttons))));
+};
 var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 	return A2(
 		$mdgriffith$elm_ui$Internal$Model$StyleClass,
@@ -12016,26 +11894,6 @@ var $author$project$Common$UI$pageHeader = function (title) {
 			]),
 		$mdgriffith$elm_ui$Element$text(title));
 };
-var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
-var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
-var $mdgriffith$elm_ui$Element$row = F2(
-	function (attrs, children) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asRow,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.contentCenterY)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-						attrs))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
-	});
 var $author$project$Common$Colors$borderLight = A3($mdgriffith$elm_ui$Element$rgb255, 226, 232, 240);
 var $mdgriffith$elm_ui$Element$Background$color = function (clr) {
 	return A2(
@@ -12104,6 +11962,9 @@ var $author$project$Common$UI$techInfo = function (content) {
 			]),
 		content);
 };
+var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
+	return {$: 'Describe', a: a};
+};
 var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
 var $mdgriffith$elm_ui$Element$paragraph = F2(
 	function (attrs, children) {
@@ -12139,6 +12000,26 @@ var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
 	return {$: 'Px', a: a};
 };
 var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
+var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
+var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
+var $mdgriffith$elm_ui$Element$row = F2(
+	function (attrs, children) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asRow,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.contentCenterY)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+						attrs))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+	});
 var $mdgriffith$elm_ui$Element$rgba = $mdgriffith$elm_ui$Internal$Model$Rgba;
 var $mdgriffith$elm_ui$Internal$Model$boxShadowClass = function (shadow) {
 	return $elm$core$String$concat(
@@ -12383,22 +12264,14 @@ var $author$project$SmoothMoveScrollUI$DiagonalBoth$viewContent = function (mode
 							$mdgriffith$elm_ui$Element$centerX
 						]),
 					$mdgriffith$elm_ui$Element$text('Navigate Diagonally:')),
-					A2(
-					$mdgriffith$elm_ui$Element$row,
+					$author$project$Common$UI$htmlActionButtons(
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$spacing(16),
-							$mdgriffith$elm_ui$Element$centerX,
-							$mdgriffith$elm_ui$Element$htmlAttribute(
-							$elm$html$Html$Attributes$class('responsive-buttons'))
-						]),
-					_List_fromArray(
-						[
-							A3($author$project$Common$UI$actionButton, $author$project$Common$UI$Primary, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToTopLeft, '↖ Top Left'),
-							A3($author$project$Common$UI$actionButton, $author$project$Common$UI$Success, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToTopRight, '↗ Top Right'),
-							A3($author$project$Common$UI$actionButton, $author$project$Common$UI$Purple, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToCenter, '🎯 Center'),
-							A3($author$project$Common$UI$actionButton, $author$project$Common$UI$Warning, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToBottomLeft, '↙ Bottom Left'),
-							A3($author$project$Common$UI$actionButton, $author$project$Common$UI$Warning, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToBottomRight, '↘ Bottom Right')
+							_Utils_Tuple3($author$project$Common$UI$Primary, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToTopLeft, '↖ Top Left'),
+							_Utils_Tuple3($author$project$Common$UI$Success, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToTopRight, '↗ Top Right'),
+							_Utils_Tuple3($author$project$Common$UI$Purple, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToCenter, '🎯 Center'),
+							_Utils_Tuple3($author$project$Common$UI$Warning, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToBottomLeft, '↙ Bottom Left'),
+							_Utils_Tuple3($author$project$Common$UI$Warning, $author$project$SmoothMoveScrollUI$DiagonalBoth$ScrollToBottomRight, '↘ Bottom Right')
 						]))
 				])),
 			$author$project$SmoothMoveScrollUI$DiagonalBoth$viewSimpleGrid
