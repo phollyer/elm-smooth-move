@@ -8,6 +8,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html.Attributes
+import Html.Events
 import Common.Colors as Colors
 import Common.Styles as Styles
 
@@ -345,3 +346,34 @@ darkenColor color =
         (round (rgb.red * 255 * 0.8))
         (round (rgb.green * 255 * 0.8))
         (round (rgb.blue * 255 * 0.8))
+
+
+-- HTML-BASED BUTTON GROUPS
+
+
+{-| Create an HTML-based button group that properly wraps and centers
+This uses native HTML with .example-links class to avoid ElmUI row limitations
+-}
+htmlActionButtons : List ( ButtonStyle, msg, String ) -> Element msg
+htmlActionButtons buttons =
+    let
+        createButton ( style, onPress, label ) =
+            Html.button
+                [ Html.Attributes.class "example-link"
+                , Html.Events.onClick onPress
+                , Html.Attributes.style "background" (getButtonGradient style)
+                ]
+                [ Html.text label ]
+        
+        getButtonGradient style =
+            case style of
+                Primary -> "linear-gradient(135deg, #4299e1, #3182ce)"
+                Success -> "linear-gradient(135deg, #48bb78, #38a169)"  
+                Purple -> "linear-gradient(135deg, #9f7aea, #805ad5)"
+                Warning -> "linear-gradient(135deg, #ed8936, #dd6b20)"
+    in
+    Element.html
+        (Html.div
+            [ Html.Attributes.class "example-links" ]
+            (List.map createButton buttons)
+        )

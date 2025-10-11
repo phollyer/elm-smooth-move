@@ -285,35 +285,87 @@ containerCSS =
         margin-bottom: 6px !important;
     }
 
-    /* Button group with flex wrapping - overrides ElmUI row behavior */
-    .button-group {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 6px !important;
-        margin: 20px 0 !important;
-        width: 100% !important;
+    /* Example links - matching elmui-examples.html reference implementation */
+    .example-links {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px 0;
     }
 
-    /* Override ElmUI's default row spacing behavior */
-    .button-group > * {
-        margin: 0 !important;
-        flex-shrink: 0 !important;
+    .example-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 8px;
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-align: center;
+        min-width: 44px;
+        min-height: 44px;
+        cursor: pointer;
+        border: none;
+        font-family: inherit;
+    }
+
+    @media (min-width: 480px) {
+        .example-links {
+            gap: 8px;
+            margin: 24px 0;
+        }
+
+        .example-link {
+            font-size: 13px;
+            padding: 10px 12px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .example-links {
+            gap: 10px;
+            margin: 32px 0;
+        }
+
+        .example-link {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            min-width: auto;
+            min-height: auto;
+        }
+    }
+
+    .example-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+    }
+
+    /* Backward compatibility for old button-group class */
+    .button-group {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px 0;
     }
 
     @media (min-width: 480px) {
         .button-group {
-            gap: 8px !important;
-            margin: 24px 0 !important;
+            gap: 8px;
+            margin: 24px 0;
         }
     }
 
     @media (min-width: 768px) {
         .button-group {
-            gap: 10px !important;
-            margin: 32px 0 !important;
+            gap: 10px;
+            margin: 32px 0;
         }
     }
 

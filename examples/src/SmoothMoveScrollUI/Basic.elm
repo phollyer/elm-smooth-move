@@ -2,7 +2,7 @@ module SmoothMoveScrollUI.Basic exposing (main)
 
 import Browser exposing (Document)
 import Browser.Dom
-import Element exposing (Element, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, link, alignLeft, padding, paragraph)
+import Element exposing (Element, row, column, el, layout, maximum, paddingXY, rgb255, spacing, text, width, fill, centerX, htmlAttribute, height, px, link, alignLeft, padding, paragraph)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -121,10 +121,10 @@ viewContent model =
             ]
 
         , -- Buttons
-          UI.buttonContainer
-            [ UI.actionButton UI.Primary ScrollToParagraphOne "Scroll to Paragraph One ↓"
-            , UI.actionButton UI.Success ScrollToParagraphTwo "Scroll to Paragraph Two ↓"  
-            , UI.actionButton UI.Purple ScrollToParagraphThree "Scroll to Paragraph Three ↓"
+          UI.htmlActionButtons
+            [ ( UI.Primary, ScrollToParagraphOne, "Scroll to Paragraph One ↓" )
+            , ( UI.Success, ScrollToParagraphTwo, "Scroll to Paragraph Two ↓" )
+            , ( UI.Purple, ScrollToParagraphThree, "Scroll to Paragraph Three ↓" )
             ]
 
         , -- Add some space before content
