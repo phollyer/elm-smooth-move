@@ -33,6 +33,7 @@ suite =
     describe "Anim.Internal.Engine.Transition.Generator"
         [ initTests
         , generateAnimationTests
+        , delayOnlyTests
         , snapModeTests
         ]
 
@@ -82,6 +83,76 @@ generateAnimationTests =
                     |> (\animGroup ->
                             TransitionAnimGroup.getStyles animGroup
                                 |> Expect.notEqual Styles.empty
+                       )
+        ]
+
+
+delayOnlyConfig : Builder.PropertyConfig
+delayOnlyConfig =
+    Builder.OpacityConfig
+        { start = Just (Opacity.fromFloat 0)
+        , end = Opacity.fromFloat 1
+        , distance = 1
+        , timing = Nothing
+        , easing = Nothing
+        , spring = Nothing
+        , delay = Just 300
+        , cssUnit = InternalUnit.emptyCssUnitAxes
+        , mode = Builder.Animate
+        }
+
+
+delayOnlyTests : Test
+delayOnlyTests =
+    describe "delay-only transitions"
+        [ test "property delay is preserved when no duration is supplied" <|
+            \_ ->
+                let
+                    processed =
+                        Builder.processProperties Builder.initDefaults "test" [ delayOnlyConfig ]
+                in
+                Generator.generate False Dict.empty Dict.empty processed
+                    |> (\s ->
+                            Expect.all
+                                [ \str -> Expect.equal False (str == "none")
+                                , \str -> Expect.equal True (String.contains "opacity" str)
+                                , \str -> Expect.equal True (String.contains "300ms" str)
+                                ]
+                                s
+                       )
+        , test "global delay is preserved when no duration is supplied" <|
+            \_ ->
+                let
+                    defaultsBase =
+                        Builder.initDefaults
+
+                    defaults =
+                        { defaultsBase | globalDelay = Just 250 }
+
+                    noLocalDelayConfig =
+                        Builder.OpacityConfig
+                            { start = Just (Opacity.fromFloat 0)
+                            , end = Opacity.fromFloat 1
+                            , distance = 1
+                            , timing = Nothing
+                            , easing = Nothing
+                            , spring = Nothing
+                            , delay = Nothing
+                            , cssUnit = InternalUnit.emptyCssUnitAxes
+                            , mode = Builder.Animate
+                            }
+
+                    processed =
+                        Builder.processProperties defaults "test" [ noLocalDelayConfig ]
+                in
+                Generator.generate False Dict.empty Dict.empty processed
+                    |> (\s ->
+                            Expect.all
+                                [ \str -> Expect.equal False (str == "none")
+                                , \str -> Expect.equal True (String.contains "opacity" str)
+                                , \str -> Expect.equal True (String.contains "250ms" str)
+                                ]
+                                s
                        )
         ]
 

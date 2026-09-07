@@ -3079,7 +3079,7 @@ processStandardAnimation { config, globalData, globalCssUnit, defaultStart, defa
 
         -- Delay must be snapshotted at property build time so later `delay`
         -- calls in the same pipeline do not retroactively affect earlier groups.
-        , delay = resolveDelayWithDefault config.delay Nothing 0
+        , delay = resolveDelayWithDefault config.delay globalData.globalDelay 0
         , mode = config.mode
         }
 

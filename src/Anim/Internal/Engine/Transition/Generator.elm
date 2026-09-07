@@ -77,37 +77,37 @@ generate discreteTransitions discreteEntry discreteExit properties =
         animated =
             (Builder.partitionByMode properties).animate
 
-        allDurationsZero =
+        allDurationsAndDelaysZero =
             animated
                 |> List.all
                     (\prop ->
                         case prop of
                             Builder.ProcessedCustomPropertyConfig _ _ config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedCustomColorPropertyConfig _ config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedOpacityConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedPerspectiveOriginConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedRotateConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedScaleConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedSizeConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedSkewConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
 
                             Builder.ProcessedTranslateConfig config ->
-                                config.duration == 0
+                                config.duration == 0 && config.delay == 0
                     )
 
         discretePropNames =
@@ -117,7 +117,7 @@ generate discreteTransitions discreteEntry discreteExit properties =
             else
                 []
     in
-    if allDurationsZero then
+    if allDurationsAndDelaysZero then
         case discretePropNames of
             [] ->
                 "none"
