@@ -156,9 +156,35 @@ animate setPlayState generateData insertData (AnimState state animGroups) transf
         processedAnimData =
             Builder.process builder
 
-        setAllRunning : AnimGroups a -> AnimGroups a
-        setAllRunning groups =
-            AnimGroups.map (\_ group -> setPlayState PlayState.Running group) groups
+        hasAnimateTiming : Builder.ProcessedAnimGroupConfig -> Bool
+        hasAnimateTiming config =
+            (Builder.partitionByMode config.properties).animate
+                |> List.any
+                    (\prop ->
+                        let
+                            timing =
+                                Builder.processedTimings prop
+                        in
+                        timing.duration > 0 || timing.delay > 0
+                    )
+
+        initialPlayStateFor : AnimGroupName -> PlayState
+        initialPlayStateFor animGroupName =
+            processedAnimData.groups
+                |> AnimGroups.get animGroupName
+                |> Maybe.map
+                    (\config ->
+                        if hasAnimateTiming config then
+                            PlayState.Running
+
+                        else
+                            PlayState.Complete
+                    )
+                |> Maybe.withDefault PlayState.Running
+
+        setInitialPlayState : AnimGroups a -> AnimGroups a
+        setInitialPlayState groups =
+            AnimGroups.map (\name group -> setPlayState (initialPlayStateFor name) group) groups
     in
     AnimState
         { builder =
@@ -170,7 +196,7 @@ animate setPlayState generateData insertData (AnimState state animGroups) transf
         (processedAnimData.groups
             |> AnimGroups.map (\animGroupName config -> generateData config.transformOrder builder animGroupName config)
             |> AnimGroups.foldl (insertData processedAnimData.groups) animGroups
-            |> setAllRunning
+            |> setInitialPlayState
         )
 
 

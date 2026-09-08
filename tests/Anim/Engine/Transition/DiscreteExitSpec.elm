@@ -93,4 +93,17 @@ suite =
                                 |> Query.fromHtml
                        )
                     |> Query.hasNot [ Selector.style "display" "block" ]
+        , test "discrete exit with no duration applies the exit value immediately" <|
+            \_ ->
+                Transition.init []
+                    |> (\state ->
+                            Transition.animate state <|
+                                Transition.for "el"
+                                    >> Transition.discreteExit "display" "block" "none"
+                                    >> Opacity.begin
+                                    >> Opacity.to 0
+                                    >> Opacity.end
+                       )
+                    |> rendered
+                    |> Query.has [ Selector.style "display" "none" ]
         ]
