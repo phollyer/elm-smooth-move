@@ -19,7 +19,10 @@ The two version lines are **not kept in lockstep**. The npm companion can ship J
 
 ## [Unreleased]
 
-Nothing
+### Fixed
+
+**(elm)** Discrete Properties are now handled correctly for the Keyframe, Transition and Sub Engines when there is no property animation or when the property animation has no duration.
+
 
 ## [3.0.4] - 2026-09-08 (elm)
 
