@@ -24,7 +24,7 @@ module Anim.Internal.Engine.Keyframe exposing
 import Anim.Extra.TransformOrder exposing (TransformProperty)
 import Anim.Internal.Builder as Builder
 import Anim.Internal.Engine.CSS.CSS as CSS exposing (AnimState(..))
-import Anim.Internal.Engine.CSS.Styles exposing (Styles)
+import Anim.Internal.Engine.CSS.Styles as Styles exposing (Styles)
 import Anim.Internal.Engine.Keyframe.AnimGroup as AnimGroup exposing (AnimGroup)
 import Anim.Internal.Engine.Keyframe.Animation as Animation
 import Anim.Internal.Engine.Keyframe.Generator as Generator exposing (DiscreteConfig)
@@ -156,11 +156,53 @@ runPipeline finaliseBuilder (AnimState state animGroups) transform =
         processedAnimData =
             Builder.process builder
 
+        hasAnimateTiming : Builder.ProcessedAnimGroupConfig -> Bool
+        hasAnimateTiming config =
+            (Builder.partitionByMode config.properties).animate
+                |> List.any
+                    (\prop ->
+                        let
+                            timing =
+                                Builder.processedTimings prop
+                        in
+                        timing.duration > 0 || timing.delay > 0
+                    )
+
+        initialPlayStateFor : AnimGroupName -> PlayState.PlayState
+        initialPlayStateFor animGroupName =
+            processedAnimData.groups
+                |> AnimGroups.get animGroupName
+                |> Maybe.map
+                    (\config ->
+                        if hasAnimateTiming config then
+                            PlayState.Running
+
+                        else
+                            PlayState.Complete
+                    )
+                |> Maybe.withDefault PlayState.Running
+
         setPlayStateWithStyle : PlayState.PlayState -> AnimGroup -> AnimGroup
         setPlayStateWithStyle playState animGroup =
-            animGroup
-                |> AnimGroup.setPlayState playState
-                |> AnimGroup.addStyle "animation-play-state" (PlayState.toCssString playState)
+            let
+                cssValue =
+                    PlayState.toCssString playState
+            in
+            if String.isEmpty cssValue then
+                animGroup
+                    |> AnimGroup.setPlayState playState
+                    |> (\group ->
+                            AnimGroup.setStyles
+                                (AnimGroup.getStyles group
+                                    |> Styles.remove "animation-play-state"
+                                )
+                                group
+                       )
+
+            else
+                animGroup
+                    |> AnimGroup.setPlayState playState
+                    |> AnimGroup.addStyle "animation-play-state" cssValue
 
         generateAnimGroup : AnimGroupName -> Builder.ProcessedAnimGroupConfig -> AnimGroup
         generateAnimGroup animGroupName config =
@@ -210,7 +252,7 @@ runPipeline finaliseBuilder (AnimState state animGroups) transform =
         (processedAnimData.groups
             |> AnimGroups.map generateAnimGroup
             |> AnimGroups.foldl insertAnimGroup animGroups
-            |> AnimGroups.map (\_ animGroup -> setPlayStateWithStyle PlayState.Running animGroup)
+            |> AnimGroups.map (\name animGroup -> setPlayStateWithStyle (initialPlayStateFor name) animGroup)
         )
 
 

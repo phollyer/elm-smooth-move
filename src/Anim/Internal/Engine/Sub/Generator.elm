@@ -66,6 +66,24 @@ generateAnimation iterationCount directionConfig maybeOrder discreteEntryProps d
             properties
                 |> List.map (scaleInterruptDuration existingAnimation)
 
+        hasAnimateTiming =
+            (Builder.partitionByMode adjustedProperties).animate
+                |> List.any
+                    (\prop ->
+                        let
+                            timing =
+                                Builder.processedTimings prop
+                        in
+                        timing.duration > 0 || timing.delay > 0
+                    )
+
+        initialPlayState =
+            if hasAnimateTiming then
+                PlayState.Running
+
+            else
+                PlayState.Complete
+
         animations =
             List.filterMap (toAnimation False) adjustedProperties
                 |> Animations.fromList
@@ -82,7 +100,7 @@ generateAnimation iterationCount directionConfig maybeOrder discreteEntryProps d
     in
     AnimGroup.init
         |> AnimGroup.setAnimations animations
-        |> AnimGroup.setPlayState PlayState.Running
+        |> AnimGroup.setPlayState initialPlayState
         |> AnimGroup.setIterationCount iterationCount
         |> AnimGroup.setAnimationDirection directionConfig
         |> AnimGroup.setCurrentIteration 1
